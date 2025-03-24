@@ -2,27 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
+    <title>Авторизация</title>
 </head>
 <body>
     <table border="1">
-        <caption>Регистрация</caption>
+        <caption>Авторизация</caption>
         <tr>
             <th>Login</th>
             <th>Password</th>
-            <th>email</th>
         </tr>
         <tr>
             <form method="post">
                 {% csrf_token %}
                 <td><input type="text" name="login" placeholder="Введите логин"></td>
                 <td><input type="password" name="password" placeholder="Введите пароль"></td>
-                <td><input type="email" name="email" placeholder="Введите email"></td>
                 <button type="submit">Отправить</button>
             </form>
         </tr>
-        <a href="/author/afroris">Нажмите после того, как отправили</a>
     </table>
-
 </body>
 </html>
