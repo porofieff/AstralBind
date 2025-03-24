@@ -88,11 +88,11 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'my_django_project',
-        'USER': 'my_django_user',
-        'PASSWORD': 'my_password',
+        'NAME': 'tinder',
+        'USER': 'postgres',
+        'PASSWORD': '14881337',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 '''
