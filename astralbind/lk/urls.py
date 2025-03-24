@@ -1,6 +1,6 @@
 from django.urls import path
-from lk.views import index
+from . import views
 
 urlpatterns = [
-    path('lk/', index),
+    path('lk/', views.Reg),
 ]
