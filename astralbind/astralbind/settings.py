@@ -76,19 +76,19 @@ WSGI_APPLICATION = 'astralbind.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgres',
         'NAME': 'tinder',
     }
-}
+}'''
 
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tinder',
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': '14881337',
         'HOST': '127.0.0.1',
