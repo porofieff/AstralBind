@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from lk.views import page_not_found
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('lk.urls')),
-    path('', include('author.urls')),
+    #path('admin/', admin.site.urls),
+    path('', include('lk.urls'))
 ]
+
+handler404 = page_not_found
