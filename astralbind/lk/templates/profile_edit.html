@@ -1,0 +1,245 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование профиля</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <style>
+        .auth-container {
+            padding: 15px;
+            min-height: 100vh;
+            height: 160vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .auth-card {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .input-group {
+            margin-bottom: 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        textarea {
+            width: 90%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            resize: none;
+        }
+         .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .hobby-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+            min-height: 45px;
+            word-break: break-word;
+        }
+
+        .hobby-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        .hobby-item input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: relative;
+            height: 20px;
+            width: 20px;
+            min-width: 20px;
+            background-color: #fff;
+            border: 2px solid #adb5bd;
+            border-radius: 5px;
+            margin-right: 12px;
+        }
+
+        .hobby-item input:checked ~ .checkmark {
+            background-color: #4dabf7;
+            border-color: #4dabf7;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .hobby-item input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .submit-btn {
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+        .cancel-btn {
+            background: #e9ecef;
+            color: #212529;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            border: 1px solid #424142;
+        }
+
+        .cancel-btn:hover {
+            background: #dee2e6;
+        }
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .hobbies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .hobbies-grid {
+                grid-template-columns: 1fr;
+            }
+
+            input, textarea {
+                padding: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Редактирование профиля ✏️</h2>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="photo">Фото профиля 📸</label>
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label for="first_name">Имя</label>
+                    <input type="text" id="first_name" name="first_name"
+                           value="{{ user.first_name }}" required>
+                </div>
+                <div class="input-group">
+                    <label for="last_name">Фамилия</label>
+                    <input type="text" id="last_name" name="last_name"
+                           value="{{ user.last_name }}" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email 📧</label>
+                    <input type="email" id="email" name="email"
+                           value="{{ user.email }}" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Новый пароль 🔑</label>
+                    <input type="password" id="password" name="password"
+                           placeholder="Новый пароль (необязательно)">
+                </div>
+                <div class="input-group">
+                    <label>Выберите хобби 🎨</label>
+                    <div class="hobbies-grid">
+                        {% for hobby in hobbies %}
+                            <label class="hobby-item">
+                                <input type="checkbox" name="hobbies" value="{{ hobby.id }}"
+                                    {% if hobby in user_profile.hobbies.all %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                                {{ hobby.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="children_count">Дети 👶</label>
+                    <input type="number" id="children_count" name="children_count"
+                           value="{{ user_profile.children_count|default:'0' }}"
+                           placeholder="Количество">
+                </div>
+
+                <div class="input-group">
+                    <label for="hobby_description">О хобби 💬</label>
+                    <textarea id="hobby_description" name="hobby_description"
+                        placeholder="Описание ваших увлечений">{{ user_profile.hobby_description|default:"" }}</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="life_goal">Цель жизни 🎯</label>
+                    <textarea id="life_goal" name="life_goal"
+                        placeholder="Ваша главная цель">{{ user_profile.life_goal|default:"" }}</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="character">Характер 💭</label>
+                    <textarea id="character" name="character"
+                        placeholder="Особенности характера">{{ user_profile.character|default:"" }}</textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Сохранить 💾</button>
+                <a href="{% url 'profile' %}" class="cancel-btn">Выйти без изменений</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

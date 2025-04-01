@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой профиль</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="{% static 'images/logo.svg' %}" alt="Profile Image" class="profile-img">
+            </div>
+            <h1>Профиль пользователя</h1>
+        </div>
+
+        <div class="profile-info">
+            <p><strong>Имя:</strong> {{ user.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+            <p><strong>Логин:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Фотография:</strong>
+                {% if user.profile.photo %}
+                    <img src="{{ user.profile.photo.url }}" alt="Profile Image" class="profile-img">
+                {% else %}
+                    <p>Фотография не загружена</p>
+                {% endif %}
+            </p>
+        </div>
+    
+        <a href="{% url 'profile_edit' %}" class="edit-btn">Редактировать профиль</a>
+        <a href="{% url 'index' %}" class="home-btn">На главную</a>
+    </div>
+</body>
+</html>

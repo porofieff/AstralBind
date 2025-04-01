@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body class="light-theme">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Регистрация</h2>
+            <p class="info-text">Чтобы пользоваться нашим сайтом - необходимо на нем зарегистрироваться</p>
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="username">Логин</label>
+                    <input type="text" id="username" name="username" placeholder="Введите логин" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Введите email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password1">Пароль</label>
+                    <input type="password" id="password1" name="password1" placeholder="Введите пароль" required>
+                </div>
+                <div class="input-group">
+                    <label for="password2">Подтвердите пароль</label>
+                    <input type="password" id="password2" name="password2" placeholder="Подтвердите пароль" required>
+                </div>
+                <button type="submit" class="submit-btn">Зарегистрироваться</button>
+            </form>
+            <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+        </div>
+    </div>
+</body>
+</html>
