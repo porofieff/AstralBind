@@ -13,4 +13,4 @@ class Message(models.Model):
     message = models.TextField()
 
     def __str__(self):
-        return f"{str(self.room)} - {str(self.sender)}"
+        return f"{str(self.room)};{str(self.sender)}"
