@@ -5,24 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="auth/reg and profile(/photo)">
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/css/tilda-blocks-page66834437.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/css/tilda-cover-1.0.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/css/tilda-grid-3.0.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/lib__unsplash__4d8a939e-3880-68ad-e7ec-05c40029b318__-__resize__20x__photo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/lib__unsplash__4d8a939e-3880-68ad-e7ec-05c40029b318__-__resize__504x__photo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/lib__unsplash__4d8a939e-3880-68ad-e7ec-05c40029b318__photo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/js/lazyload-1.3.min.export.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/js/tilda-blocks-page66834437.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/js/tilda-cover-1.0.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/AstralBind.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/css/hero-section.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/css/main-grid.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/astralbind/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/astralbind/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/astralbind/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/astralbind/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/tilda-blocks-page66834437.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/tilda-cover-1.0.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/tilda-grid-3.0.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/images/lib__unsplash__4d8a939e-3880-68ad-e7ec-05c40029b318__-__resize__20x__photo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/images/lib__unsplash__4d8a939e-3880-68ad-e7ec-05c40029b318__-__resize__504x__photo.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/images/lib__unsplash__4d8a939e-3880-68ad-e7ec-05c40029b318__photo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/hero-bg.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,35 +69,62 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/PycharmProjects/AstralBind/astralbind/lk/js&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "django.template.preview.state": "SHOW_EDITOR",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/user/PycharmProjects/AstralBind/astralbind/lk/js",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\js" />
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\static\images\images_reg" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Documents\GitHub\AstralBind\astralbind\lk\static\css" />
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\static\images" />
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\static\css" />
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\templates" />
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\static\images\images_index" />
-      <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\static" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="AstralBind" type="Python.DjangoServer" factoryName="Django server">
+      <module name="AstralBind" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="localhost" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -138,6 +161,7 @@
       <workItem from="1744402333115" duration="1472000" />
       <workItem from="1744404214932" duration="1507000" />
       <workItem from="1744405769284" duration="677000" />
+      <workItem from="1744411835460" duration="3078000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />

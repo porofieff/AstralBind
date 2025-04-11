@@ -34,7 +34,7 @@ def register_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Вы успешно зарегистрированы!')
-            return redirect('index')
+            return redirect('main_page')
         else:
             messages.error(request, 'Ошибка регистрации! Попробуйте снова.')
     else:
@@ -48,7 +48,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('main_page')
         else:
             return render(request, 'login.html', {'error': 'Неверный логин или пароль'})
 
