@@ -11,10 +11,11 @@ from .models import UserProfile, Hobby
 
 
 
-@login_required
 def index(request):
     return render(request, 'index.html')
 
+def main_page(request):
+    return render(request, 'main_page.html')
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
