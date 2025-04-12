@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="db" uuid="72ba417c-fb45-46d1-b86f-c9efa749323e">
+    <data-source source="LOCAL" name="db [2]" uuid="9fc2a86e-2d27-49ae-8db2-04bb11c464ab">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\user\PycharmProjects\AstralBind\astralbind\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\user\Documents\GitHub\AstralBind\astralbind\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

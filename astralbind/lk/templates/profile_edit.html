@@ -8,6 +8,35 @@
     <title>Редактирование профиля</title>
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
     <style>
+         body {
+            background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .auth-container {
+            padding: 15px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-card {
+            max-width: 700px;
+            width: 100%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
         .auth-container {
             padding: 15px;
             min-height: 100vh;

@@ -13,7 +13,7 @@ from .models import UserProfile, Hobby
 
 def index(request):
     return render(request, 'index.html')
-
+@login_required
 def main_page(request):
     return render(request, 'main_page.html')
 def register_view(request):
@@ -76,9 +76,14 @@ def profile_edit(request):
         user_profile.hobbies.set(Hobby.objects.filter(id__in=hobbies))
 
         if 'photo' in request.FILES:
-            user_profile.photo = request.FILES['photo']
+            uploaded_file = request.FILES['photo']
+            if uploaded_file.size > 5 * 1024 * 1024:
+                messages.error(request, "Файл слишком большой (максимум 5MB)")
+                return redirect('profile_edit')
+            user_profile.photo = uploaded_file
+
         user_profile.save()
-        messages.success(request, 'Ваши данные успешно обновлены!')
+        messages.success(request, 'Данные успешно обновлены!')
         return redirect('profile')
     else:
         hobbies = Hobby.objects.all()

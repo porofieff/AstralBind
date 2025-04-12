@@ -7,32 +7,178 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой профиль</title>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <style>
+         body {
+            background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .auth-container {
+            padding: 15px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-card {
+            max-width: 700px;
+            width: 100%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        /* Существующие стили */
+        .profile-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .profile-content {
+            display: flex;
+            gap: 4rem;
+            align-items: flex-start;
+        }
+
+        .profile-image-wrapper {
+            flex: 0 0 300px;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-info {
+            flex: 1;
+            font-size: 1.2rem;
+        }
+
+        .profile-info-section {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .profile-info h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #4dabf7;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hobbies-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .hobby-tag {
+            background: #4dabf7;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .profile-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-image-wrapper {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="profile-container">
-        <div class="profile-header">
-            <div class="profile-image">
-                <img src="{% static 'images/logo.svg' %}" alt="Profile Image" class="profile-img">
+        <div class="profile-content">
+            <div class="profile-image-wrapper">
+                {% if user.userprofile.photo %}
+                    <img src="{{ user.userprofile.photo.url }}"
+                         class="profile-img"
+                         alt="Фото профиля">
+                {% else %}
+                    <img src="{% static 'images/logo.svg' %}"
+                         class="profile-img"
+                         alt="Заглушка">
+                {% endif %}
             </div>
-            <h1>Профиль пользователя</h1>
+
+            <div class="profile-info">
+                <h1>Профиль пользователя</h1>
+
+                <!-- Основная информация -->
+                <div class="profile-info-section">
+                    <h2>Основные данные</h2>
+                    <p><strong>Имя:</strong> {{ user.first_name }}</p>
+                    <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+                    <p><strong>Логин:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    {% if user.userprofile.children_count %}
+                        <p><strong>Дети:</strong> {{ user.userprofile.children_count }} ребёнок(а)</p>
+                    {% endif %}
+                </div>
+
+                <!-- Хобби -->
+                {% if user.userprofile.hobbies.all %}
+                <div class="profile-info-section">
+                    <h2>Хобби и увлечения</h2>
+                    <div class="hobbies-list">
+                        {% for hobby in user.userprofile.hobbies.all %}
+                            <span class="hobby-tag">{{ hobby.name }}</span>
+                        {% endfor %}
+                    </div>
+                    {% if user.userprofile.hobby_description %}
+                        <p style="margin-top: 1rem;">{{ user.userprofile.hobby_description }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- Характер -->
+                {% if user.userprofile.character %}
+                <div class="profile-info-section">
+                    <h2>Особенности характера</h2>
+                    <p>{{ user.userprofile.character }}</p>
+                </div>
+                {% endif %}
+
+                <!-- Цели в жизни -->
+                {% if user.userprofile.life_goal %}
+                <div class="profile-info-section">
+                    <h2>Цель в жизни</h2>
+                    <p>{{ user.userprofile.life_goal }}</p>
+                </div>
+                {% endif %}
+            </div>
         </div>
 
-        <div class="profile-info">
-            <p><strong>Имя:</strong> {{ user.first_name }}</p>
-            <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
-            <p><strong>Логин:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Фотография:</strong>
-                {% if user.profile.photo %}
-                    <img src="{{ user.profile.photo.url }}" alt="Profile Image" class="profile-img">
-                {% else %}
-                    <p>Фотография не загружена</p>
-                {% endif %}
-            </p>
+        <div class="action-buttons">
+            <a href="{% url 'profile_edit' %}" class="edit-btn">Редактировать профиль</a>
+            <a href="{% url 'main_page' %}" class="home-btn">На главную</a>
         </div>
-    
-        <a href="{% url 'profile_edit' %}" class="edit-btn">Редактировать профиль</a>
-        <a href="{% url 'main_page' %}" class="home-btn">На главную</a>
     </div>
 </body>
 </html>
