@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main-container">
+        <header>
+            <div class="logo">
+                <img src="{% static 'images/logo.svg' %}" alt="Logo">
+            </div>
+            <a href="{% url 'logout' %}" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Выйти
+            </a>
+            <h1>Добро пожаловать в сервис подбора супруга</h1>
+        </header>
+
+        <nav class="tabs">
+    <a href="#search" class="tab-item">
+        <i class="fas fa-search"></i> К поиску!
+    </a>
+    <a href="#favorites" class="tab-item">
+        <i class="fas fa-heart" style="color: red;"></i> Избранное
+    </a>
+    <a href="#messages" class="tab-item">
+        <i class="fas fa-comments"></i> Сообщения
+    </a>
+    <a href={% url 'profile' %} class="tab-item">
+        <i class="fas fa-user"></i> Мой профиль
+    </a>
+</nav>
+
+
+        <main>
+            <section id="search" class="tab-content">
+                <h2>Поиск</h2>
+                <p>Начните искать вашего идеального партнера!</p>
+            </section>
+            <section id="favorites" class="tab-content">
+                <h2>Избранное</h2>
+                <p>Просматривайте избранных пользователей.</p>
+            </section>
+            <section id="messages" class="tab-content">
+                <h2>Сообщения</h2>
+                <p>Посмотрите ваши сообщения.</p>
+            </section>
+            <section id="profile" class="tab-content">
+    <h2><i class="fas fa-user"></i> Мой профиль</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" value="{{ user.name }}" placeholder="Введите ваше имя">
+        </div>
+        <div class="input-group">
+            <label for="bio">Описание</label>
+            <textarea id="bio" name="bio" placeholder="О себе">{{ user.bio }}</textarea>
+        </div>
+        <button type="submit" class="submit-btn">Сохранить изменения</button>
+    </form>
+</section>
+        </main>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab-item');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                contents.forEach(content => {
+                    if(content.id === tab.getAttribute('href').substring(1)) {
+                        content.style.display = 'block';
+                    } else {
+                        content.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
