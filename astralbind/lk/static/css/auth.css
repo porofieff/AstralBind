@@ -1,0 +1,46 @@
+/* Кнопка отправки формы */
+.submit-btn {
+    width: 100%;
+    padding: 16px 45px;
+    background: #0056d3;
+    color: #fff !important;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0,86,211,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 25px 0;
+}
+
+.submit-btn:hover {
+    background: #0040a1;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0,86,211,0.4);
+}
+
+/* Ссылка-кнопка регистрации */
+.register-link {
+    width: 100%;
+    padding: 14px 45px;
+    border: 2px solid #0056d3;
+    color: #0056d3 !important;
+    border-radius: 30px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none !important;
+    transition: all 0.3s;
+    display: block;
+}
+
+.register-link:hover {
+    background: #0056d3;
+    color: #fff !important;
+    box-shadow: 0 5px 15px rgba(0,86,211,0.3);
+    transform: translateY(-2px);
+}

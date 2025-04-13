@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f6f6f6;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.logo img {
+    width: 60px;
+    margin-bottom: 20px;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-image: url('{% static "images/people-meeting.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.tab-item {
+    padding: 15px 20px;
+    background-color: #ddd;
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.tab-item:hover {
+    background-color: #bbb;
+}
+
+.tab-item.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.tab-content {
+    display: none;
+}
+
+.tab-content:first-of-type {
+    display: block;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logout-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.logout-btn i {
+    font-size: 1.1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .logout-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .logout-btn i {
+        font-size: 1rem;
+    }
+}
+
