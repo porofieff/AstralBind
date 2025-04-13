@@ -1,92 +1,143 @@
 {% load static %}
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Сердечный Партнер</title>
+        <link rel="stylesheet" href="{% static 'css/tilda-grid2.min.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/tilda-blockpage2.min.css' %}"
+        />
+        <!-- Добавляем кастомные стили -->
+        <style>
+            /* Основные стили */
+            .t-body {
+                font-family: 'Arial', sans-serif;
+                background: #f5f5f5;
+            }
 
-<body>
-    <div class="main-container">
-        <header>
-            <div class="logo">
-                <img src="{% static 'images/logo.svg' %}" alt="Logo">
+            /* Навигация */
+            .t-nav {
+                display: flex;
+                gap: 2rem;
+                padding: 1rem 0;
+                justify-content: flex-end;
+                background: rgba(255,255,255,0.95);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .t-link {
+                text-decoration: none;
+                color: #2c3e50;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .t-link:hover {
+                color: #e74c3c;
+            }
+
+            .exit {
+                color: #e74c3c !important;
+            }
+
+            /* Основной контент */
+            .t-rec_pt_135 {
+                padding-top: 135px;
+                background: linear-gradient(rgba(0,0,0,0.7), url('{% static 'images/bg.jpg' %}');
+                background-size: cover;
+                color: white;
+                min-height: 100vh;
+            }
+
+            .t017__uptitle {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                text-transform: uppercase;
+            }
+
+            .t017__title {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+
+            .t-descr_xl {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .t-btn {
+                display: inline-block;
+                padding: 1rem 2rem;
+                border-radius: 30px;
+                background: #e74c3c;
+                color: white;
+                text-decoration: none;
+                margin: 2rem 0;
+                transition: transform 0.3s;
+            }
+
+            .t-btn:hover {
+                transform: translateY(-3px);
+            }
+
+            .t-uptitle_sm {
+                font-size: 1.1rem;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+        </style>
+    </head>
+    <body class="t-body">
+        <!-- Навигация -->
+        <div class="r t-rec">
+            <div class="t-container">
+                <div class="t-col t-col_12">
+                    <div class="t-nav">
+                        <a href="#" class="t-link t-descr_xl">Избранное</a>
+                        <a href="#" class="t-link t-descr_xl">Сообщения</a>
+                        <a href="#" class="t-link t-descr_xl">Мой профиль</a>
+                        <a href="#" class="t-link t-descr_xl exit">Выйти</a>
+                    </div>
+                </div>
             </div>
-            <a href="{% url 'logout' %}" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Выйти
-            </a>
-            <h1>Добро пожаловать в сервис подбора супруга</h1>
-        </header>
-
-        <nav class="tabs">
-    <a href="#search" class="tab-item">
-        <i class="fas fa-search"></i> К поиску!
-    </a>
-    <a href="#favorites" class="tab-item">
-        <i class="fas fa-heart" style="color: red;"></i> Избранное
-    </a>
-    <a href="#messages" class="tab-item">
-        <i class="fas fa-comments"></i> Сообщения
-    </a>
-    <a href={% url 'profile' %} class="tab-item">
-        <i class="fas fa-user"></i> Мой профиль
-    </a>
-</nav>
-
-
-        <main>
-            <section id="search" class="tab-content">
-                <h2>Поиск</h2>
-                <p>Начните искать вашего идеального партнера!</p>
-            </section>
-            <section id="favorites" class="tab-content">
-                <h2>Избранное</h2>
-                <p>Просматривайте избранных пользователей.</p>
-            </section>
-            <section id="messages" class="tab-content">
-                <h2>Сообщения</h2>
-                <p>Посмотрите ваши сообщения.</p>
-            </section>
-            <section id="profile" class="tab-content">
-    <h2><i class="fas fa-user"></i> Мой профиль</h2>
-    <form method="POST">
-        {% csrf_token %}
-        <div class="input-group">
-            <label for="name">Имя</label>
-            <input type="text" id="name" name="name" value="{{ user.name }}" placeholder="Введите ваше имя">
         </div>
-        <div class="input-group">
-            <label for="bio">Описание</label>
-            <textarea id="bio" name="bio" placeholder="О себе">{{ user.bio }}</textarea>
+
+        <!-- Основной контент -->
+        <div class="r t-rec t-rec_pt_135 t-rec_pb_90">
+            <div class="t-container t-align_center">
+                <div class="t-col t-col_10 t-prefix_1">
+                    <div class="t017__uptitle t-uptitle t-uptitle_md">
+                        Сердечный Партнер
+                    </div>
+                    <h1 class="t017__title t-title t-title_xxs">
+                        Сайт для подбора супруга
+                    </h1>
+
+                    <div class="t-descr t-descr_xl">
+                        <p>
+                            Мы создали уникальную платформу, которая поможет вам
+                            найти идеального партнера для жизни.<br />
+                            Знакомьтесь с людьми, которые разделяют ваши
+                            интересы и ценности.<br />
+                            В нашем приложении вы найдете поддержку в поиске
+                            настоящей любви.
+                        </p>
+
+                        <div class="cta-wrapper">
+                            <a href="#" class="t-btn t-btn_md">К поиску!</a>
+                        </div>
+
+                        <p class="t-uptitle t-uptitle_sm">
+                            Так чего вы ждете? Вперёд!
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="submit-btn">Сохранить изменения</button>
-    </form>
-</section>
-        </main>
-    </div>
-
-    <script>
-        const tabs = document.querySelectorAll('.tab-item');
-        const contents = document.querySelectorAll('.tab-content');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-
-                contents.forEach(content => {
-                    if(content.id === tab.getAttribute('href').substring(1)) {
-                        content.style.display = 'block';
-                    } else {
-                        content.style.display = 'none';
-                    }
-                });
-            });
-        });
-    </script>
-</body>
+    </body>
 </html>

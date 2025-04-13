@@ -16,6 +16,7 @@ def index(request):
 @login_required
 def main_page(request):
     return render(request, 'main_page.html')
+
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
