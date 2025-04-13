@@ -4,29 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="COMEBACK!!!">
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/bg_profile_view_edit.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e.xml" afterDir="false" />
+    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="profile_view/edit in progress">
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/comfort.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/hobbies.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/logo_app.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/map_under.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/messenger.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/photo_base.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/profile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/recom.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/astralbind/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/astralbind/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/astralbind/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/astralbind/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/images/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/5.png" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/5_BmXIwF3.png" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/5_BmXIwF3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/5_ZsQZ9nk.png" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/5_ZsQZ9nk.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/5_hHDtSgE.png" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/5_hHDtSgE.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/5_maKyPbg.png" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/5_maKyPbg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/5_z6scjnt.png" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/5_z6scjnt.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/afro.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/afro.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/media/afro_MtrgQIf.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/media/user_photos/afro_MtrgQIf.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/registration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +172,11 @@
       <workItem from="1744411835460" duration="3194000" />
       <workItem from="1744418980984" duration="131000" />
       <workItem from="1744419138582" duration="112000" />
-      <workItem from="1744464730415" duration="7691000" />
+      <workItem from="1744464730415" duration="9339000" />
+      <workItem from="1744501362919" duration="65000" />
+      <workItem from="1744549067467" duration="61000" />
+      <workItem from="1744550578088" duration="1432000" />
+      <workItem from="1744559946784" duration="7242000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />
@@ -189,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744415025838</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="profile_view/edit in progress">
+      <option name="closed" value="true" />
+      <created>1744475877676</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744475877676</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +211,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="auth/reg and profile(/photo)" />
     <MESSAGE value="COMEBACK!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="COMEBACK!!!" />
+    <MESSAGE value="profile_view/edit in progress" />
+    <option name="LAST_COMMIT_MESSAGE" value="profile_view/edit in progress" />
   </component>
 </project>

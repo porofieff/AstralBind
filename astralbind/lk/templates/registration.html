@@ -6,45 +6,337 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
-</head>
-<body class="light-theme">
-    <div class="auth-container">
-        <div class="auth-card">
-            <h2>Регистрация</h2>
-            <p class="info-text">Чтобы пользоваться нашим сайтом - необходимо на нем зарегистрироваться</p>
-            {% if messages %}
-                <div class="messages">
-                    {% for message in messages %}
-                        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-            <form method="POST">
-                {% csrf_token %}
-                <div class="input-group">
-                    <label for="username">Логин</label>
-                    <input type="text" id="username" name="username" placeholder="Введите логин" required>
-                </div>
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Введите email" required>
-                </div>
-                <div class="input-group">
-                    <label for="password1">Пароль</label>
-                    <input type="password" id="password1" name="password1" placeholder="Введите пароль" required>
-                </div>
-                <div class="input-group">
-                    <label for="password2">Подтвердите пароль</label>
-                    <input type="password" id="password2" name="password2" placeholder="Подтвердите пароль" required>
-                </div>
-                <button type="submit" class="submit-btn">Зарегистрироваться</button>
-            </form>
-            <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            font-size: 2rem;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        .info-text {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: #fff;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0056d3;
+            box-shadow: 0 0 0 4px rgba(0,86,211,0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px 45px;
+            background: #0056d3;
+            color: #fff !important;
+            border: none;
+            border-radius: 35px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,86,211,0.3);
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .submit-btn:hover {
+            background: #0040a1;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,86,211,0.4);
+        }
+
+        .login-link {
+            padding: 16px 45px;
+            border: 2px solid #0056d3;
+            color: #0056d3 !important;
+            border-radius: 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none !important;
+            transition: all 0.3s;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .login-link:hover {
+            background: #0056d3;
+            color: #fff !important;
+            box-shadow: 0 5px 15px rgba(0,86,211,0.3);
+            transform: translateY(-2px);
+        }
+
+        .message {
+            padding: 18px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+
+        .message.error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.success {
+            color: #28a745;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .hint {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .requirements-list {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .requirement.valid {
+            color: #28a745;
+        }
+
+        .password-feedback {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .valid-feedback {
+            color: #28a745;
+        }
+
+        .invalid-feedback {
+            color: #dc3545;
+        }
+
+        @media (max-width: 600px) {
+            .auth-card {
+                padding: 40px 25px;
+                max-width: 90%;
+            }
+
+            h2 {
+                font-size: 1.7rem;
+                margin-bottom: 25px;
+            }
+
+            .input-group input {
+                padding: 14px;
+                font-size: 1rem;
+            }
+        }
+
+                .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin: 0 auto 20px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+    <div class="logo-container">
+            <img src="{% static 'images/logo_app.png' %}"
+                 class="logo"
+                 alt="Логотип сервиса">
         </div>
+        <h2>Регистрация 🚀</h2>
+        <p class="info-text">Создайте аккаунт для доступа ко всем возможностям сервиса</p>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" id="registration-form">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label for="username">Логин</label>
+                <input type="text" id="username" name="username"
+                       placeholder="Придумайте логин" required
+                       pattern="[A-Za-z0-9_]{4,20}"
+                       title="4-20 символов (латинские буквы, цифры и подчеркивание)">
+                <span class="hint">Пример: user_1234</span>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"
+                       placeholder="example@mail.com" required>
+                <span class="hint">На этот адрес придет подтверждение</span>
+            </div>
+
+            <div class="input-group">
+                <label for="password1">Пароль</label>
+                <input type="password" id="password1" name="password1"
+                       placeholder="Не менее 8 символов" required
+                       minlength="8"
+                       pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$">
+                <div class="requirements-list">
+                    <div class="requirement" id="length-req">
+                        <span>✓</span>
+                        <span>Минимум 8 символов</span>
+                    </div>
+                    <div class="requirement" id="complexity-req">
+                        <span>✓</span>
+                        <span>Буквы и цифры</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="password2">Подтверждение пароля</label>
+                <input type="password" id="password2" name="password2"
+                       placeholder="Повторите пароль" required>
+                <div class="password-feedback" id="password-match"></div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Создать аккаунт
+                <span style="font-size: 1.3em;">📝</span>
+            </button>
+        </form>
+
+        <a href="{% url 'login' %}" class="login-link">
+            Уже есть аккаунт? Войти
+        </a>
     </div>
+
+    <script>
+        const password1 = document.getElementById('password1');
+        const password2 = document.getElementById('password2');
+        const requirements = {
+            length: document.getElementById('length-req'),
+            complexity: document.getElementById('complexity-req')
+        };
+        const matchFeedback = document.getElementById('password-match');
+
+        function validatePassword() {
+            const value = password1.value;
+            const isLengthValid = value.length >= 8;
+            const hasLettersAndNumbers = /[A-Za-z]/.test(value) && /\d/.test(value);
+
+            // Обновление требований
+            updateRequirement(requirements.length, isLengthValid);
+            updateRequirement(requirements.complexity, hasLettersAndNumbers);
+
+            // Проверка совпадения паролей
+            const passwordsMatch = password2.value && value === password2.value;
+            showPasswordMatch(passwordsMatch);
+        }
+
+        function updateRequirement(element, isValid) {
+            element.classList.toggle('valid', isValid);
+            element.firstElementChild.textContent = isValid ? '✓' : '✗';
+            element.firstElementChild.style.color = isValid ? '#28a745' : '#dc3545';
+        }
+
+        function showPasswordMatch(isValid) {
+            matchFeedback.textContent = isValid ? '✔ Пароли совпадают' : '✖ Пароли не совпадают';
+            matchFeedback.className = `password-feedback ${isValid ? 'valid-feedback' : 'invalid-feedback'}`;
+            matchFeedback.style.display = 'block';
+        }
+
+        // Обработчики событий
+        password1.addEventListener('input', validatePassword);
+        password2.addEventListener('input', validatePassword);
+
+        // Валидация формы
+        document.getElementById('registration-form').addEventListener('submit', function(e) {
+            if (password1.value !== password2.value) {
+                e.preventDefault();
+                showPasswordMatch(false);
+                alert('Ошибка: Пароли не совпадают!');
+            }
+        });
+
+        // Инициализация валидации
+        validatePassword();
+    </script>
 </body>
 </html>

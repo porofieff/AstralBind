@@ -8,7 +8,7 @@
     <title>Редактирование профиля</title>
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
     <style>
-         body {
+        body {
             background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
             background-size: cover;
             background-position: center;
@@ -16,12 +16,12 @@
             background-attachment: fixed;
             min-height: 100vh;
             margin: 0;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .auth-container {
             padding: 15px;
-            min-height: 100vh;
+            min-height: fit-content;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -37,29 +37,20 @@
             border-radius: 15px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
-        .auth-container {
-            padding: 15px;
-            min-height: 100vh;
-            height: 160vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .auth-card {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 20px;
-            width: 100%;
-        }
+
         h2 {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
             text-align: center;
+            color: #1a1a1a;
         }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
         }
+
         .input-group {
             margin-bottom: 0;
         }
@@ -68,6 +59,8 @@
             display: block;
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
+            color: #444;
+            font-weight: 500;
         }
 
         input[type="text"],
@@ -75,12 +68,21 @@
         input[type="password"],
         input[type="number"],
         textarea {
-            width: 90%;
-            padding: 0.8rem;
+            width: 100%;
+            padding: 12px;
             font-size: 1rem;
-            resize: none;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: border-color 0.3s;
         }
-         .hobbies-grid {
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0056d3;
+        }
+
+        .hobbies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 10px;
@@ -104,6 +106,7 @@
             background: #e9ecef;
             transform: translateY(-2px);
         }
+
         .hobby-item input {
             position: absolute;
             opacity: 0;
@@ -144,40 +147,75 @@
         .hobby-item input:checked ~ .checkmark:after {
             display: block;
         }
+
+        /* Стили для кнопок */
         .submit-btn {
-            margin-top: 1rem;
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-        }
-        .cancel-btn {
-            background: #e9ecef;
-            color: #212529;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
+            background: #0056d3;
+            color: #fff !important;
+            padding: 16px 45px;
+            border-radius: 30px;
             text-decoration: none;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-            border: 1px solid #424142;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            width: auto;
+            margin-top: 2rem;
+            box-shadow: 0 5px 15px rgba(0,86,211,0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,86,211,0.4);
+            background: #0040a1;
+        }
+
+        .cancel-btn {
+            border: 2px solid #0056d3;
+            padding: 14px 35px;
+            border-radius: 30px;
+            color: #0056d3;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            background: transparent;
+            text-align: center;
         }
 
         .cancel-btn:hover {
-            background: #dee2e6;
+            background: #0056d3;
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,86,211,0.3);
         }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+        }
+
         @media (max-width: 768px) {
             .auth-card {
-                padding: 15px;
+                padding: 20px;
             }
 
             h2 {
                 font-size: 1.6rem;
-                margin-bottom: 1.2rem;
             }
 
             .hobbies-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .submit-btn,
+            .cancel-btn {
+                width: 100%;
+                padding: 14px;
             }
         }
 
@@ -191,42 +229,71 @@
             }
 
             input, textarea {
-                padding: 0.7rem;
+                padding: 10px;
             }
         }
+
+                .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin: 0 auto 20px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
     </style>
 </head>
 <body class="light-theme">
     <div class="auth-container">
         <div class="auth-card">
+        <div class="logo-container">
+                <img src="{% static 'images/logo_app.png' %}"
+                     class="logo"
+                     alt="Логотип сервиса">
+            </div>
             <h2>Редактирование профиля ✏️</h2>
 
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+
                 <div class="input-group">
                     <label for="photo">Фото профиля 📸</label>
                     <input type="file" id="photo" name="photo" accept="image/*">
                 </div>
+
                 <div class="input-group">
                     <label for="first_name">Имя</label>
                     <input type="text" id="first_name" name="first_name"
                            value="{{ user.first_name }}" required>
                 </div>
+
                 <div class="input-group">
                     <label for="last_name">Фамилия</label>
                     <input type="text" id="last_name" name="last_name"
                            value="{{ user.last_name }}" required>
                 </div>
+
                 <div class="input-group">
                     <label for="email">Email 📧</label>
                     <input type="email" id="email" name="email"
                            value="{{ user.email }}" required>
                 </div>
+
                 <div class="input-group">
                     <label for="password">Новый пароль 🔑</label>
                     <input type="password" id="password" name="password"
                            placeholder="Новый пароль (необязательно)">
                 </div>
+
                 <div class="input-group">
                     <label>Выберите хобби 🎨</label>
                     <div class="hobbies-grid">
@@ -240,10 +307,12 @@
                         {% endfor %}
                     </div>
                 </div>
+
                 <div class="input-group">
                     <label for="children_count">Дети 👶</label>
                     <input type="number" id="children_count" name="children_count"
                            value="{{ user_profile.children_count|default:'0' }}"
+                           min="0"
                            placeholder="Количество">
                 </div>
 
@@ -265,8 +334,10 @@
                         placeholder="Особенности характера">{{ user_profile.character|default:"" }}</textarea>
                 </div>
 
-                <button type="submit" class="submit-btn">Сохранить 💾</button>
-                <a href="{% url 'profile' %}" class="cancel-btn">Выйти без изменений</a>
+                <div class="button-group">
+                    <button type="submit" class="submit-btn">Сохранить изменения 💾</button>
+                    <a href="{% url 'profile' %}" class="cancel-btn">Отменить изменения</a>
+                </div>
             </form>
         </div>
     </div>

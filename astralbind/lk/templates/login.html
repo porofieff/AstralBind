@@ -6,29 +6,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход</title>
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px; /* Увеличена максимальная ширина */
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        h2 {
+            margin-bottom: 35px;
+            font-size: 2rem;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            transition: border-color 0.3s;
+            background: #fff;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0056d3;
+            box-shadow: 0 0 0 4px rgba(0,86,211,0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px 45px;
+            background: #0056d3;
+            color: #fff !important;
+            border: none;
+            border-radius: 35px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,86,211,0.3);
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .submit-btn:hover {
+            background: #0040a1;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,86,211,0.4);
+        }
+
+        .register-link {
+            padding: 16px 45px;
+            border: 2px solid #0056d3;
+            color: #0056d3 !important;
+            border-radius: 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none !important;
+            transition: all 0.3s;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .register-link:hover {
+            background: #0056d3;
+            color: #fff !important;
+            box-shadow: 0 5px 15px rgba(0,86,211,0.3);
+            transform: translateY(-2px);
+        }
+
+        .message {
+            padding: 18px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+
+        .message.error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 600px) {
+            .auth-card {
+                padding: 40px 25px;
+                max-width: 90%;
+            }
+
+            h2 {
+                font-size: 1.7rem;
+                margin-bottom: 25px;
+            }
+
+            .input-group input {
+                padding: 14px;
+                font-size: 1rem;
+            }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin: 0 auto 20px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+    </style>
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-card">
-            <h2>Войти</h2>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="input-group">
-                    <label for="username">Логин</label>
-                    <input type="text" id="username" name="username" placeholder="Введите логин" required>
-                </div>
-                <div class="input-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" id="password" name="password" placeholder="Введите пароль" required>
-                </div>
-                {% if error %}
-                    <p style="color:red;">{{ error }}</p>
-                {% endif %}
-                <button type="submit" class="submit-btn">ВОЙТИ</button>
-            </form>
-            <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+    <div class="auth-card">
+     <div class="logo-container">
+            <img src="{% static 'images/logo_app.png' %}"
+                 class="logo"
+                 alt="Логотип сервиса">
         </div>
+        <h2>Вход в систему 🔐</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="username">Логин</label>
+                <input type="text" id="username" name="username"
+                       placeholder="Введите ваш логин" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password"
+                       placeholder="Введите ваш пароль" required>
+            </div>
+
+            {% if error %}
+                <div class="message error">{{ error }}</div>
+            {% endif %}
+
+            <button type="submit" class="submit-btn">
+                Продолжить
+                <span style="font-size: 1.3em;">→</span>
+            </button>
+        </form>
+
+        <a href="{% url 'register' %}" class="register-link">
+             Еще нету аккаунта? Зарегистрируйте его!
+        </a>
     </div>
 </body>
 </html>
