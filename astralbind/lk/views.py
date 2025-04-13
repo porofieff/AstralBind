@@ -8,14 +8,17 @@ from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm
 from .forms import UserProfileForm
 from .models import UserProfile, Hobby
+from chat.models import Pair_room, Message
 
 
 
 def index(request):
     return render(request, 'index.html')
+
 @login_required
 def main_page(request):
     return render(request, 'main_page.html')
+
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -41,6 +44,7 @@ def register_view(request):
         form = CustomUserCreationForm()
 
     return render(request, 'registration.html', {'form': form})
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -53,6 +57,7 @@ def login_view(request):
             return render(request, 'login.html', {'error': 'Неверный логин или пароль'})
 
     return render(request, 'login.html')
+
 @login_required
 def profile_edit(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
@@ -95,7 +100,16 @@ def profile_view(request):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
+
 def logout_view(request):
     logout(request)
     messages.success(request, 'Вы успешно вышли из системы.')
     return redirect('login')
+
+def chat_list(request):
+    user_profile = request.user.userprofile
+    user_rooms = Pair_room.objects.filter(
+        message__sender=user_profile
+    ).distinct()
+
+    return render(request, 'chat_list.html', {'chats': user_rooms})

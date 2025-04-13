@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Мои чаты</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                color: #333;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            .chat-list {
+                list-style: none;
+                padding: 0;
+            }
+            .chat-item {
+                padding: 15px;
+                margin: 10px 0;
+                background: #f8f9fa;
+                border-radius: 5px;
+                transition: background 0.3s;
+            }
+            .chat-item:hover {
+                background: #e9ecef;
+            }
+            .chat-link {
+                text-decoration: none;
+                color: #007bff;
+                font-size: 16px;
+                display: block;
+            }
+            .chat-link:hover {
+                text-decoration: underline;
+            }
+            .no-chats {
+                color: #6c757d;
+                text-align: center;
+                font-style: italic;
+            }
+            .back-link {
+                display: block;
+                margin-top: 20px;
+                text-align: center;
+                color: #6c757d;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Ваши чаты</h1>
+
+            {% if chats %}
+            <ul class="chat-list">
+                {% for chat in chats %}
+                <li class="chat-item">
+                    <a
+                        href="{% url 'chat-room' chat.room_name %}"
+                        class="chat-link"
+                    >
+                        Чат: {{ chat.room_name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="no-chats">У вас пока нет активных чатов</p>
+            {% endif %}
+
+            <a href="{% url 'main_page' %}" class="back-link">← На главную</a>
+        </div>
+    </body>
+</html>

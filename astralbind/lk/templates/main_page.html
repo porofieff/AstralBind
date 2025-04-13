@@ -1,456 +1,535 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сервис поиска спутника жизни</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Open Sans', sans-serif;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Сервис поиска спутника жизни</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Open Sans", sans-serif;
+            }
 
-        body {
-            background: #fff;
-            color: #000;
-            line-height: 1.6;
-        }
+            body {
+                background: #fff;
+                color: #000;
+                line-height: 1.6;
+            }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
 
-        /* Навигация */
-        .navbar {
-            background: #fff;
-            padding: 15px 0;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+            /* Навигация */
+            .navbar {
+                background: #fff;
+                padding: 15px 0;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
 
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+            .nav-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
 
-        .logo img {
-            height: 45px;
-            width: auto;
-        }
+            .logo img {
+                height: 45px;
+                width: auto;
+            }
 
-        .nav-links {
-            display: flex;
-            gap: 35px;
-        }
+            .nav-links {
+                display: flex;
+                gap: 35px;
+            }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #000;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+            .nav-links a {
+                text-decoration: none;
+                color: #000;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
 
-        .nav-links a:hover {
-            color: #0056d3;
-        }
+            .nav-links a:hover {
+                color: #0056d3;
+            }
 
-        .logout-btn {
-            border: 2px solid #0056d3;
-            padding: 8px 25px;
-            border-radius: 25px;
-            color: #0056d3;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
+            .logout-btn {
+                border: 2px solid #0056d3;
+                padding: 8px 25px;
+                border-radius: 25px;
+                color: #0056d3;
+                text-decoration: none;
+                transition: all 0.3s;
+            }
 
-        .logout-btn:hover {
-            background: #0056d3;
-            color: #fff!important;
-        }
+            .logout-btn:hover {
+                background: #0056d3;
+                color: #fff !important;
+            }
 
-        /* Герой-секция */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-            background: linear-gradient(45deg, #f8f9fa 0%, #ffffff 100%);
-        }
+            /* Герой-секция */
+            .hero {
+                padding: 120px 0 80px;
+                text-align: center;
+                background: linear-gradient(45deg, #f8f9fa 0%, #ffffff 100%);
+            }
 
-        .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 25px;
-            color: #1a1a1a;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 680px;
-            margin: 0 auto 40px;
-        }
-
-        .cta-button {
-            background: #0056d3;
-            color: #fff!important;
-            padding: 16px 45px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: inline-block;
-            box-shadow: 0 5px 15px rgba(0,86,211,0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(0,86,211,0.4);
-        }
-
-        /* Секция функций */
-        .features {
-            padding: 100px 0;
-        }
-
-        .feature-card {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            margin-bottom: 80px;
-        }
-
-        .feature-card.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .feature-image {
-            flex: 1;
-            max-width: 560px;
-            height: 380px;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            background: #f4f4f4;
-        }
-
-        .feature-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .feature-text {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .feature-text h2 {
-            font-size: 2.4rem;
-            margin-bottom: 25px;
-            color: #1a1a1a;
-        }
-
-        .feature-text p {
-            font-size: 1.1rem;
-            color: #555;
-            line-height: 1.8;
-        }
-
-        /* Секция профилей */
-        .profiles {
-            padding: 80px 0;
-            background: #f8f9fa;
-        }
-
-        .profiles .container {
-            max-width: 1000px;
-        }
-
-        .profile-card {
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .profile-header {
-            padding: 25px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #eee;
-        }
-
-        .profile-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1a1a1a;
-        }
-
-        .profile-age {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .profile-content {
-            padding: 25px;
-        }
-
-        .profile-interests {
-            color: #0056d3;
-            margin: 15px 0;
-            font-weight: 500;
-        }
-
-        .profile-button {
-            background: #0056d3;
-            color: #fff!important;
-            padding: 12px 35px;
-            border-radius: 25px;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: 500;
-            transition: background 0.3s;
-        }
-
-        .profile-button:hover {
-            background: #0040a1;
-        }
-
-        /* Секция преимуществ */
-        .benefits {
-            padding: 100px 0;
-            background: #fff;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .benefit-card {
-            background: #fff;
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-
-        .benefit-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 25px;
-            background: #0056d3;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .benefit-icon img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .benefit-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #1a1a1a;
-        }
-
-        .benefit-card p {
-            color: #666;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 992px) {
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.8rem;
+                margin-bottom: 25px;
+                color: #1a1a1a;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                color: #666;
+                max-width: 680px;
+                margin: 0 auto 40px;
+            }
+
+            .cta-button {
+                background: #0056d3;
+                color: #fff !important;
+                padding: 16px 45px;
+                border-radius: 30px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition:
+                    transform 0.3s,
+                    box-shadow 0.3s;
+                display: inline-block;
+                box-shadow: 0 5px 15px rgba(0, 86, 211, 0.3);
+            }
+
+            .cta-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 7px 20px rgba(0, 86, 211, 0.4);
+            }
+
+            /* Секция функций */
+            .features {
+                padding: 100px 0;
             }
 
             .feature-card {
-                flex-direction: column;
-                gap: 30px;
-                margin-bottom: 60px;
+                display: flex;
+                align-items: center;
+                gap: 60px;
+                margin-bottom: 80px;
+            }
+
+            .feature-card.reverse {
+                flex-direction: row-reverse;
             }
 
             .feature-image {
-                max-width: 100%;
-                height: 300px;
+                flex: 1;
+                max-width: 560px;
+                height: 380px;
+                border-radius: 15px;
+                overflow: hidden;
+                position: relative;
+                background: #f4f4f4;
             }
 
-            .benefits-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                padding: 80px 0 50px;
+            .feature-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
 
-            .benefits-grid {
-                grid-template-columns: 1fr;
+            .feature-text {
+                flex: 1;
+                padding: 20px;
             }
 
             .feature-text h2 {
-                font-size: 2rem;
+                font-size: 2.4rem;
+                margin-bottom: 25px;
+                color: #1a1a1a;
             }
-        }
 
-        /* Ленивая загрузка */
-        .lazy {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
+            .feature-text p {
+                font-size: 1.1rem;
+                color: #555;
+                line-height: 1.8;
+            }
 
-        .lazy.loaded {
-            opacity: 1;
-        }
-    </style>
-</head>
-<body>
-    <!-- Навигация -->
-    <nav class="navbar">
-        <div class="container nav-content">
-            <div class="logo">
-                <img src="{% static 'images/logo_app.png' %}" alt="Логотип" loading="lazy">
+            /* Секция профилей */
+            .profiles {
+                padding: 80px 0;
+                background: #f8f9fa;
+            }
+
+            .profiles .container {
+                max-width: 1000px;
+            }
+
+            .profile-card {
+                background: #fff;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+                margin-bottom: 30px;
+                overflow: hidden;
+            }
+
+            .profile-header {
+                padding: 25px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #eee;
+            }
+
+            .profile-name {
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #1a1a1a;
+            }
+
+            .profile-age {
+                color: #666;
+                font-size: 0.95rem;
+            }
+
+            .profile-content {
+                padding: 25px;
+            }
+
+            .profile-interests {
+                color: #0056d3;
+                margin: 15px 0;
+                font-weight: 500;
+            }
+
+            .profile-button {
+                background: #0056d3;
+                color: #fff !important;
+                padding: 12px 35px;
+                border-radius: 25px;
+                text-decoration: none;
+                display: inline-block;
+                font-weight: 500;
+                transition: background 0.3s;
+            }
+
+            .profile-button:hover {
+                background: #0040a1;
+            }
+
+            /* Секция преимуществ */
+            .benefits {
+                padding: 100px 0;
+                background: #fff;
+            }
+
+            .benefits-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .benefit-card {
+                background: #fff;
+                padding: 35px;
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+                text-align: center;
+            }
+
+            .benefit-icon {
+                width: 70px;
+                height: 70px;
+                margin: 0 auto 25px;
+                background: #0056d3;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .benefit-icon img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .benefit-card h3 {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+                color: #1a1a1a;
+            }
+
+            .benefit-card p {
+                color: #666;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            /* Адаптивность */
+            @media (max-width: 992px) {
+                .hero h1 {
+                    font-size: 2.2rem;
+                }
+
+                .feature-card {
+                    flex-direction: column;
+                    gap: 30px;
+                    margin-bottom: 60px;
+                }
+
+                .feature-image {
+                    max-width: 100%;
+                    height: 300px;
+                }
+
+                .benefits-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+
+                .hero {
+                    padding: 80px 0 50px;
+                }
+
+                .benefits-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .feature-text h2 {
+                    font-size: 2rem;
+                }
+            }
+
+            /* Ленивая загрузка */
+            .lazy {
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
+
+            .lazy.loaded {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Навигация -->
+        <nav class="navbar">
+            <div class="container nav-content">
+                <div class="logo">
+                    <img
+                        src="{% static 'images/logo_app.png' %}"
+                        alt="Логотип"
+                        loading="lazy"
+                    />
+                </div>
+                <div class="nav-links">
+                    <a href="#">Избранное</a>
+                    <a href="{% url 'chats_list' %}">Сообщения</a>
+                    <a href="{% url 'profile' %}">Мой профиль</a>
+                </div>
+                <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
             </div>
-            <div class="nav-links">
-                <a href="#">Избранное</a>
-                <a href="#">Сообщения</a>
-                <a href="{% url 'profile' %}">Мой профиль</a>
+        </nav>
+
+        <!-- Герой-секция -->
+        <section class="hero">
+            <div class="container">
+                <h1>Найдите любовь своей жизни</h1>
+                <p>
+                    Мы помогаем вам обрести настоящие отношения через общие
+                    интересы и современные технологии поиска
+                </p>
+                <a href="#" class="cta-button">Начать поиск</a>
             </div>
-            <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
-        </div>
-    </nav>
+        </section>
 
-    <!-- Герой-секция -->
-    <section class="hero">
-        <div class="container">
-            <h1>Найдите любовь своей жизни</h1>
-            <p>Мы помогаем вам обрести настоящие отношения через общие интересы и современные технологии поиска</p>
-            <a href="#" class="cta-button">Начать поиск</a>
-        </div>
-    </section>
-
-    <!-- Функции -->
-    <section class="features">
-        <div class="container">
-            <div class="feature-card">
-                <div class="feature-image">
-                    <img data-src="{% static 'images/map.png' %}" alt="Поиск по локации" class="lazy" loading="lazy">
-                </div>
-                <div class="feature-text">
-                    <h2>Поиск по местоположению</h2>
-                    <p>Ищите потенциальных партнёров поблизости с помощью наших алгоритмов и фильтров. Используйте ленту, чтобы видеть, кто рядом. Общайтесь и планируйте встречи легко и удобно прямо в приложении.</p>
-                </div>
-            </div>
-
-            <div class="feature-card reverse">
-                <div class="feature-image">
-                    <img data-src="{% static 'images/hobbies.png' %}" alt="Общие интересы" class="lazy" loading="lazy">
-                </div>
-                <div class="feature-text">
-                    <h2>Увлечения партнера совпадают с вашими</h2>
-                    <p>Мы подбираем людей по общим интересам — будь то путешествия, кино, спорт или что-то особенное. Смотрите, чем увлекаются другие, находите точки соприкосновения и начните общение с того, что вам обоим по-настоящему интересно.</p>
-                </div>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-image">
-                    <img data-src="{% static 'images/recom.png' %}" alt="Умный алгоритм" class="lazy" loading="lazy">
-                </div>
-                <div class="feature-text">
-                    <h2>Наши алгоритмы быстро подберут вам партнера</h2>
-                    <p>Интеллектуальные рекомендации учитывают ваши интересы, цели, стиль общения и даже привычки. Общайтесь с подходящими людьми с первых минут и не тратьте время на случайные совпадения — наш алгоритм делает всё за вас.</p>
-                </div>
-            </div>
-        </div>
-    </section>`
-
-    <!-- Преимущества -->
-    <section class="benefits">
-        <div class="container">
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <img src="{% static 'images/comfort.png' %}" alt="Интерфейс">
+        <!-- Функции -->
+        <section class="features">
+            <div class="container">
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img
+                            data-src="{% static 'images/map.png' %}"
+                            alt="Поиск по локации"
+                            class="lazy"
+                            loading="lazy"
+                        />
                     </div>
-                    <h3>Используйте понятный интерфейс</h3>
-                    <p>Мы разработали интуитивный, минималистичный и простой интерфейс, к которому можно легко привыкнуть за минимальное количество времени.</p>
+                    <div class="feature-text">
+                        <h2>Поиск по местоположению</h2>
+                        <p>
+                            Ищите потенциальных партнёров поблизости с помощью
+                            наших алгоритмов и фильтров. Используйте ленту,
+                            чтобы видеть, кто рядом. Общайтесь и планируйте
+                            встречи легко и удобно прямо в приложении.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <img src="{% static 'images/map_under.png' %}" alt="Локация">
+                <div class="feature-card reverse">
+                    <div class="feature-image">
+                        <img
+                            data-src="{% static 'images/hobbies.png' %}"
+                            alt="Общие интересы"
+                            class="lazy"
+                            loading="lazy"
+                        />
                     </div>
-                    <h3>Поиск работает по всей России</h3>
-                    <p>Алгоритм МАИ подбирает людей по интересам и локации. Ищите партнёров рядом или по всему миру — всё зависит от ваших предпочтений.</p>
+                    <div class="feature-text">
+                        <h2>Увлечения партнера совпадают с вашими</h2>
+                        <p>
+                            Мы подбираем людей по общим интересам — будь то
+                            путешествия, кино, спорт или что-то особенное.
+                            Смотрите, чем увлекаются другие, находите точки
+                            соприкосновения и начните общение с того, что вам
+                            обоим по-настоящему интересно.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <img src="{% static 'images/messenger.png' %}" alt="Общение">
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img
+                            data-src="{% static 'images/recom.png' %}"
+                            alt="Умный алгоритм"
+                            class="lazy"
+                            loading="lazy"
+                        />
                     </div>
-                    <h3>Общение без границ</h3>
-                    <p>Мессенджер встроен прямо в приложение. Вы можете общаться, добавлять в избранное, отмечать понравившихся и находить новых людей — свайпайте, выбирайте, знакомьтесь.</p>
-                </div>
-
-                 <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <img src="{% static 'images/profile.png' %}" alt="Профиль">
+                    <div class="feature-text">
+                        <h2>Наши алгоритмы быстро подберут вам партнера</h2>
+                        <p>
+                            Интеллектуальные рекомендации учитывают ваши
+                            интересы, цели, стиль общения и даже привычки.
+                            Общайтесь с подходящими людьми с первых минут и не
+                            тратьте время на случайные совпадения — наш алгоритм
+                            делает всё за вас.
+                        </p>
                     </div>
-                    <h3>Редактируйте профиль, как вам удобно</h3>
-                    <p>Добавляйте информацию о себе, фото, интересы и цели. Обновляйте профиль в пару кликов и повышайте точность подбора.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        `
 
-    <!-- Скрипт ленивой загрузки -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const lazyLoad = targets => {
-                const io = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const img = entry.target;
-                            img.src = img.dataset.src;
-                            img.classList.add('loaded');
-                            observer.unobserve(img);
-                        }
-                    });
-                }, {
-                    rootMargin: '0px 0px 100px 0px',
-                    threshold: 0.01
-                });
+        <!-- Преимущества -->
+        <section class="benefits">
+            <div class="container">
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <img
+                                src="{% static 'images/comfort.png' %}"
+                                alt="Интерфейс"
+                            />
+                        </div>
+                        <h3>Используйте понятный интерфейс</h3>
+                        <p>
+                            Мы разработали интуитивный, минималистичный и
+                            простой интерфейс, к которому можно легко привыкнуть
+                            за минимальное количество времени.
+                        </p>
+                    </div>
 
-                document.querySelectorAll('img.lazy').forEach(image => io.observe(image));
-            };
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <img
+                                src="{% static 'images/map_under.png' %}"
+                                alt="Локация"
+                            />
+                        </div>
+                        <h3>Поиск работает по всей России</h3>
+                        <p>
+                            Алгоритм МАИ подбирает людей по интересам и локации.
+                            Ищите партнёров рядом или по всему миру — всё
+                            зависит от ваших предпочтений.
+                        </p>
+                    </div>
 
-            lazyLoad();
-        });
-    </script>
-</body>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <img
+                                src="{% static 'images/messenger.png' %}"
+                                alt="Общение"
+                            />
+                        </div>
+                        <h3>Общение без границ</h3>
+                        <p>
+                            Мессенджер встроен прямо в приложение. Вы можете
+                            общаться, добавлять в избранное, отмечать
+                            понравившихся и находить новых людей — свайпайте,
+                            выбирайте, знакомьтесь.
+                        </p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <img
+                                src="{% static 'images/profile.png' %}"
+                                alt="Профиль"
+                            />
+                        </div>
+                        <h3>Редактируйте профиль, как вам удобно</h3>
+                        <p>
+                            Добавляйте информацию о себе, фото, интересы и цели.
+                            Обновляйте профиль в пару кликов и повышайте
+                            точность подбора.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Скрипт ленивой загрузки -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const lazyLoad = (targets) => {
+                    const io = new IntersectionObserver(
+                        (entries, observer) => {
+                            entries.forEach((entry) => {
+                                if (entry.isIntersecting) {
+                                    const img = entry.target;
+                                    img.src = img.dataset.src;
+                                    img.classList.add("loaded");
+                                    observer.unobserve(img);
+                                }
+                            });
+                        },
+                        {
+                            rootMargin: "0px 0px 100px 0px",
+                            threshold: 0.01,
+                        },
+                    );
+
+                    document
+                        .querySelectorAll("img.lazy")
+                        .forEach((image) => io.observe(image));
+                };
+
+                lazyLoad();
+            });
+        </script>
+    </body>
 </html>
