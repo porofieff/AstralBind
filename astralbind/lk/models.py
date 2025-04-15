@@ -31,7 +31,7 @@ class UserProfile(models.Model):
         (18, 'Тюмень'),
         (19, 'Тольятти'),
         (20, 'Ижевск'),
-        (21, 'Липец'),
+        (21, 'Липецк'),
         (22, 'Северодвинск'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
