@@ -250,6 +250,28 @@
             .logo:hover {
                 transform: scale(1.05);
             }
+
+            select {
+                width: 100%;
+                padding: 12px;
+                font-size: 1rem;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                transition: border-color 0.3s;
+                background-color: white;
+                appearance: none;
+                -webkit-appearance: none;
+                background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                background-size: 16px;
+            }
+
+            select:focus {
+                outline: none;
+                border-color: #0056d3;
+                box-shadow: 0 0 0 3px rgba(0, 86, 211, 0.1);
+            }
         </style>
     </head>
     <body class="light-theme">
@@ -308,6 +330,31 @@
                             value="{{ user.email }}"
                             required
                         />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="city">Город 🏙️</label>
+                        <select
+                            id="city"
+                            name="city"
+                            class="city-select"
+                            required
+                        >
+                            {% for city_id, city_name in user_profile.CITIES %}
+                            <option
+                                value="{{ city_id }}"
+                                {%
+                                if
+                                user_profile.city=""
+                                ="city_id"
+                                %}selected{%
+                                endif
+                                %}
+                            >
+                                {{ city_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
                     </div>
 
                     <div class="input-group">
