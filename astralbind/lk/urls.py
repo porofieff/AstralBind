@@ -12,4 +12,5 @@ urlpatterns = [
     path('profile/edit/', views.profile_edit, name='profile_edit'),
     path('my_chats/', views.chat_list, name='chats_list'),
     path('chat/', include('chat.urls')),
+    path('select_ahp', views.select_ahp, name='select_ahp'),
 ]

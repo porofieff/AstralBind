@@ -1,0 +1,243 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор критериев AHP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Все предыдущие стили остаются без изменений */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #000;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            background: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .criteria-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .slider-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+        }
+
+        .slider-group {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .slider-label {
+            min-width: 150px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .range-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #0056d3;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .range-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            color: #0056d3;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .submit-btn {
+            padding: 16px 45px;
+            background: #0056d3;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+        }
+
+        .active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .active .slider-container {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="{% static 'images/logo_app.png' %}" alt="Логотип" height="45">
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Аккордеоны -->
+        <div class="criteria-card" onclick="handleHeaderClick(event, this)">
+            <h2 class="section-title">
+                Знаки зодиака
+                <span class="toggle-icon">▼</span>
+            </h2>
+            <div class="slider-container" data-category="zodiac"></div>
+        </div>
+
+        <div class="criteria-card" onclick="handleHeaderClick(event, this)">
+            <h2 class="section-title">
+                Города
+                <span class="toggle-icon">▼</span>
+            </h2>
+            <div class="slider-container" data-category="cities"></div>
+        </div>
+
+        <div class="criteria-card" onclick="handleHeaderClick(event, this)">
+            <h2 class="section-title">
+                Хобби
+                <span class="toggle-icon">▼</span>
+            </h2>
+            <div class="slider-container" data-category="hobbies"></div>
+        </div>
+
+        <div class="criteria-card" onclick="handleHeaderClick(event, this)">
+            <h2 class="section-title">
+                Образование
+                <span class="toggle-icon">▼</span>
+            </h2>
+            <div class="slider-container" data-category="education"></div>
+        </div>
+
+        <div class="button-group">
+            <button class="submit-btn cancel-btn" onclick="window.history.back()">Выйти без изменений</button>
+            <button class="submit-btn">Сохранить настройки</button>
+        </div>
+    </div>
+
+    <script>
+        const criteriaData = {
+            zodiac: ['Овен', 'Телец', 'Близнецы', 'Рак', 'Лев', 'Дева',
+                    'Весы', 'Скорпион', 'Стрелец', 'Козерог', 'Водолей', 'Рыбы'],
+            cities: ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург',
+                    'Казань', 'Нижний Новгород', 'Челябинск', 'Самара', 'Омск',
+                    'Ростов-на-Дону', 'Уфа', 'Красноярск', 'Воронеж', 'Пермь',
+                    'Волгоград', 'Краснодар', 'Саратов', 'Тюмень', 'Тольятти',
+                    'Ижевск', 'Липецк', 'Северодвинск'],
+            hobbies: ['Программирование', 'Рисование', 'Пение', 'Спорт', 'Чтение',
+                     'Путешествия', 'Готовка', 'Фотография', 'Музыка', 'Кино',
+                     'Велоспорт', 'Танцы', 'Психология', 'Йога', 'Программирование игр',
+                     'Ремонт', 'Эксперименты с едой', 'Вязание', 'Плавание'],
+            education: ['Среднее общее', 'Среднее профессиональное',
+                       'Высшее: бакалавриат/специалитет', 'Высшее: магистратура',
+                       'Высшее: аспирантура']
+        };
+
+        function handleHeaderClick(event, element) {
+            // Открываем/закрываем только при клике на заголовок
+            if (event.target.closest('.range-slider')) return;
+
+            element.classList.toggle('active');
+            const container = element.querySelector('.slider-container');
+            if (element.classList.contains('active') && !container.innerHTML) {
+                initSliders(container);
+            }
+        }
+
+        function initSliders(container) {
+            const category = container.dataset.category;
+            criteriaData[category].forEach(item => {
+                const sliderHTML = `
+                    <div class="slider-group">
+                        <span class="slider-label">${item}</span>
+                        <input type="range"
+                               class="range-slider"
+                               min="1"
+                               max="6"
+                               value="3"
+                               oninput="this.nextElementSibling.textContent = this.value"
+                               onclick="event.stopPropagation()">
+                        <span class="range-value">3</span>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', sliderHTML);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="profile_view/edit in progress">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="add edu, zodiac; edit login">
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/select_ahp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -165,6 +162,7 @@
       <workItem from="1744559946784" duration="7242000" />
       <workItem from="1744732065239" duration="4699000" />
       <workItem from="1744747357120" duration="1601000" />
+      <workItem from="1744823024349" duration="3915000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />
@@ -190,16 +188,44 @@
       <option name="project" value="LOCAL" />
       <updated>1744475877676</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add edu, zodiac; edit login">
+      <option name="closed" value="true" />
+      <created>1744823098246</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744823098246</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add edu, zodiac; edit login">
+      <option name="closed" value="true" />
+      <created>1744823175976</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744823175976</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="auth/reg and profile(/photo)" />
     <MESSAGE value="COMEBACK!!!" />
     <MESSAGE value="profile_view/edit in progress" />
-    <option name="LAST_COMMIT_MESSAGE" value="profile_view/edit in progress" />
+    <MESSAGE value="add edu, zodiac; edit login" />
+    <option name="LAST_COMMIT_MESSAGE" value="add edu, zodiac; edit login" />
   </component>
 </project>
