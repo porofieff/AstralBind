@@ -107,6 +107,10 @@ def profile_view(request):
 def select_ahp(request):
     return render(request, 'select_ahp.html')
 
+@login_required
+def main_ahp(request):
+    return render(request, 'main_ahp.html')
+
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
 

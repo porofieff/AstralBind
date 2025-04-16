@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="ahp_select +- work" />
+    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="ahp_select +- work">
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_ahp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/select_ahp.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/select_ahp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +70,7 @@
     "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "django.template.preview.state": "SHOW_EDITOR",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/user/PycharmProjects/AstralBind/astralbind/lk/js",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -156,6 +165,7 @@
       <workItem from="1744732065239" duration="4699000" />
       <workItem from="1744747357120" duration="1601000" />
       <workItem from="1744823024349" duration="4238000" />
+      <workItem from="1744831204488" duration="2128000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />

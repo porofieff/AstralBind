@@ -1,0 +1,143 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск партнера</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url("{% static 'images/bg_profile_view_edit.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container {
+            text-align: center;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .search-title {
+            color: #fff;
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .buttons-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-button {
+            padding: 16px 45px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 280px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        /* Обновленные стили кнопок */
+        .primary-btn {
+            background: #0056d3;
+            color: #fff !important;
+            box-shadow: 0 5px 15px rgba(0, 86, 211, 0.3);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 86, 211, 0.4);
+            background: #0040a1;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: #fff !important;
+            border: 2px solid #fff;
+            backdrop-filter: blur(5px);
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .logout-section {
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .search-title {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .search-subtitle {
+                font-size: 1rem;
+                margin-bottom: 40px;
+            }
+
+            .search-button {
+                padding: 14px 25px;
+                font-size: 1rem;
+            }
+
+            .logout-section {
+                margin-top: 30px;
+                padding-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h1 class="search-title">Персонализированный поиск партнера</h1>
+        <p class="search-subtitle">Используйте расширенные фильтры или начните мгновенный поиск</p>
+
+        <div class="buttons-wrapper">
+            <!-- Измененные кнопки с новыми стилями -->
+            <a href="#" class="search-button primary-btn">Поиск</a>
+            <a href="{% url 'select_ahp' %}" class="search-button secondary-btn">Настроить критерии поиска</a>
+        </div>
+
+        <div class="logout-section">
+            <a href="{% url 'main_page' %}" class="search-button secondary-btn">Выйти в главное меню</a>
+        </div>
+    </div>
+</body>
+</html>
