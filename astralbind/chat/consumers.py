@@ -8,7 +8,7 @@ from lk.models import UserProfile
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         #self.user = self.scope['user']
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_name = self.scope['url_route']['kwargs']['match_id']
         self.group_name = f'chat_{self.room_name}'
 
         await self.channel_layer.group_add(
@@ -24,6 +24,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
+
         try:
             data = json.loads(text_data)
             if not all(key in data for key in ['message', 'sender']):
@@ -41,15 +42,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         except (json.JSONDecodeError, ValueError) as e:
             print(f"Error processing message: {str(e)}")
 
-    '''async def receive(self, text_data):
-            # print("Recieved Data")
-            data_json = json.loads(text_data)
-            # print(data_json)
-
-            event = {"type": "send_message", "message": data_json}
-
-            await self.channel_layer.group_send(self.room_name, event)'''
-
     async def chat_message(self, event):
         await self.save_message(
             event['message'],
@@ -59,7 +51,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.send(text_data=json.dumps({
             'message': event['message'],
-            'sender': event['sender']
+            'sender': event['sender'],
         }))
 
     @database_sync_to_async

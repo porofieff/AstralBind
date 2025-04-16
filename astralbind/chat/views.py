@@ -10,6 +10,7 @@ def chat_view(request, match_id):
     existing_room = Pair_room.objects.get(room_name__icontains=match_id)
     get_messages = Message.objects.filter(room=existing_room)
 
+
     context = {
         "messages": get_messages,
         "user": request.user.username,
