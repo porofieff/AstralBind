@@ -8,6 +8,7 @@
     <title>Мой профиль</title>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <style>
+        /* Все стили остаются без изменений */
         body {
             background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
             background-size: cover;
@@ -94,7 +95,6 @@
             margin-top: 0.5rem;
         }
 
-
         .hobby-tag {
             background: #4dabf7;
             color: white;
@@ -103,7 +103,6 @@
             font-size: 0.9rem;
         }
 
-        /* Новые стили для кнопок */
         .action-buttons {
             display: flex;
             gap: 20px;
@@ -193,60 +192,59 @@
         }
 
         .profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    gap: 20px;
-}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 20px;
+        }
 
-.profile-logo {
-    max-width: 160px;
-    height: auto;
-    transition: transform 0.3s ease;
-}
+        .profile-logo {
+            max-width: 160px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
 
-.profile-logo:hover {
-    transform: scale(1.05);
-}
+        .profile-logo:hover {
+            transform: scale(1.05);
+        }
 
-@media (max-width: 768px) {
-    .profile-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-    .profile-logo {
-        max-width: 120px;
-        order: -1;
-        margin-bottom: 1rem;
-    }
-}
+            .profile-logo {
+                max-width: 120px;
+                order: -1;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="profile-container">
         <div class="profile-content">
             <div class="profile-image-wrapper">
-
-    {% if user.userprofile.photo %}
-        <img src="{{ user.userprofile.photo.url }}"
-             class="profile-img"
-             alt="Фото профиля">
-    {% else %}
-        <img src="{% static 'images/photo_base.png' %}"
-             class="profile-img"
-             alt="Фото профиля по умолчанию">
-    {% endif %}
-</div>
+                {% if user.userprofile.photo %}
+                    <img src="{{ user.userprofile.photo.url }}"
+                         class="profile-img"
+                         alt="Фото профиля">
+                {% else %}
+                    <img src="{% static 'images/photo_base.png' %}"
+                         class="profile-img"
+                         alt="Фото профиля по умолчанию">
+                {% endif %}
+            </div>
 
             <div class="profile-info">
                 <div class="profile-header">
-        <h1>Профиль пользователя</h1>
-        <img src="{% static 'images/logo_app.png' %}"
-             class="profile-logo"
-             alt="Логотип сервиса">
-    </div>
+                    <h1>Профиль пользователя</h1>
+                    <img src="{% static 'images/logo_app.png' %}"
+                         class="profile-logo"
+                         alt="Логотип сервиса">
+                </div>
 
                 <!-- Основная информация -->
                 <div class="profile-info-section">
@@ -255,6 +253,9 @@
                     <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
                     <p><strong>Логин:</strong> {{ user.username }}</p>
                     <p><strong>Email:</strong> {{ user.email }}</p>
+                    {% if user.userprofile.city %}
+                        <p><strong>Город:</strong> {{ user.userprofile.get_city_display }}</p>
+                    {% endif %}
                     {% if user.userprofile.children_count %}
                         <p><strong>Дети:</strong> {{ user.userprofile.children_count }} ребёнок(а)</p>
                     {% endif %}
@@ -269,9 +270,14 @@
                             <span class="hobby-tag">{{ hobby.name }}</span>
                         {% endfor %}
                     </div>
-                    {% if user.userprofile.hobby_description %}
-                        <p style="margin-top: 1rem;">{{ user.userprofile.hobby_description }}</p>
-                    {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- О хобби -->
+                {% if user.userprofile.hobby_description %}
+                <div class="profile-info-section">
+                    <h2>О хобби</h2>
+                    <p>{{ user.userprofile.hobby_description }}</p>
                 </div>
                 {% endif %}
 
@@ -280,6 +286,20 @@
                 <div class="profile-info-section">
                     <h2>Особенности характера</h2>
                     <p>{{ user.userprofile.character }}</p>
+                </div>
+                {% endif %}
+
+                {% if user.userprofile.zodiac_sign %}
+                <div class="profile-info-section">
+                    <h2>Знак зодиака</h2>
+                    <p>{{ user.userprofile.zodiac_sign.name }}</p>
+                </div>
+                {% endif %}
+
+                {% if user.userprofile.education %}
+                <div class="profile-info-section">
+                    <h2>Образование</h2>
+                    <p>{{ user.userprofile.education.name }}</p>
                 </div>
                 {% endif %}
 

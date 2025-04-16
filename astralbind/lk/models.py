@@ -2,6 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 import os
 
+class Education(models.Model):
+    name = models.CharField("Уровень образования", max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class ZodiacSign(models.Model):
+    name = models.CharField("Название знака", max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class City(models.Model):  # Новая модель для городов
+    name = models.CharField("Название города", max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Hobby(models.Model):
     name = models.CharField(max_length=100)
 
@@ -34,6 +52,20 @@ class UserProfile(models.Model):
         (21, 'Липецк'),
         (22, 'Северодвинск'),
     ]
+    zodiac_sign = models.ForeignKey(
+        ZodiacSign,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Знак зодиака"
+    )
+    education = models.ForeignKey(
+        Education,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Образование"
+    )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo = models.ImageField(
         upload_to = 'user_photos/',

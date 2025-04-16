@@ -5,29 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="profile_view/edit in progress">
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/comfort.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/hobbies.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/logo_app.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/map.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/map_under.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/messenger.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/photo_base.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/profile.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/static/images/recom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/72ba417c-fb45-46d1-b86f-c9efa749323e/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/images/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/registration.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,6 +163,8 @@
       <workItem from="1744549067467" duration="61000" />
       <workItem from="1744550578088" duration="1432000" />
       <workItem from="1744559946784" duration="7242000" />
+      <workItem from="1744732065239" duration="4699000" />
+      <workItem from="1744747357120" duration="1601000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />

@@ -7,7 +7,7 @@ from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm
 from .forms import UserProfileForm
-from .models import UserProfile, Hobby
+from .models import UserProfile, Hobby, ZodiacSign, Education
 from chat.models import Pair_room, Message
 
 
@@ -61,6 +61,8 @@ def login_view(request):
 @login_required
 def profile_edit(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    zodiac_signs = ZodiacSign.objects.all()
+    educations = Education.objects.all()
 
     if request.method == 'POST':
         user = request.user
@@ -71,7 +73,9 @@ def profile_edit(request):
         if password:
             user.set_password(password)
         user.save()
-
+        user_profile.education_id = request.POST.get('education')
+        user_profile.zodiac_sign_id = request.POST.get('zodiac_sign')
+        user_profile.city = request.POST.get('city')
         user_profile.children_count = request.POST.get('children_count')
         user_profile.hobby_description = request.POST.get('hobby_description')
         user_profile.life_goal = request.POST.get('life_goal')
@@ -91,8 +95,9 @@ def profile_edit(request):
         messages.success(request, 'Данные успешно обновлены!')
         return redirect('profile')
     else:
+        zodiac_signs = ZodiacSign.objects.all()
         hobbies = Hobby.objects.all()
-        return render(request, 'profile_edit.html', {'user_profile': user_profile, 'hobbies': hobbies})
+        return render(request, 'profile_edit.html', {'user_profile': user_profile, 'hobbies': hobbies, 'zodiac_signs': zodiac_signs, 'educations': educations})
 
 @login_required
 def profile_view(request):
