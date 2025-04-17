@@ -265,11 +265,19 @@
                 {% if user.userprofile.hobbies.all %}
                 <div class="profile-info-section">
                     <h2>Хобби и увлечения</h2>
-                    <div class="hobbies-list">
-                        {% for hobby in user.userprofile.hobbies.all %}
+                    {% regroup user.userprofile.hobbies.all by group as grouped_hobbies %}
+                    {% for group in grouped_hobbies %}
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 style="color: #4dabf7; margin-bottom: 0.5rem; font-size: 1.1rem;">
+                            {{ group.grouper.name|default:"Без группы" }}
+                        </h3>
+                        <div class="hobbies-list">
+                            {% for hobby in group.list %}
                             <span class="hobby-tag">{{ hobby.name }}</span>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
                 {% endif %}
 

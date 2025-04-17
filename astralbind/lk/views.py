@@ -7,7 +7,7 @@ from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm
 from .forms import UserProfileForm
-from .models import UserProfile, Hobby, ZodiacSign, Education
+from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup
 from chat.models import Pair_room, Message
 
 
@@ -96,8 +96,8 @@ def profile_edit(request):
         return redirect('profile')
     else:
         zodiac_signs = ZodiacSign.objects.all()
-        hobbies = Hobby.objects.all()
-        return render(request, 'profile_edit.html', {'user_profile': user_profile, 'hobbies': hobbies, 'zodiac_signs': zodiac_signs, 'educations': educations})
+        hobby_groups = HobbyGroup.objects.prefetch_related('hobby_set').all()
+        return render(request, 'profile_edit.html', {'user_profile': user_profile, 'hobby_groups': hobby_groups, 'zodiac_signs': zodiac_signs, 'educations': educations})
 
 @login_required
 def profile_view(request):

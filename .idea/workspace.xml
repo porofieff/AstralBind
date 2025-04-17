@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="ahp_select +- work">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/select_ahp.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/select_ahp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_ahp.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_ahp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +42,12 @@
     &quot;assignee&quot;: &quot;igorKornya&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/porofieff/AstralBind.git&quot;,
-    &quot;accountId&quot;: &quot;5a2ebc27-a46e-4fa3-abc1-d2ac3651bf96&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/porofieff/AstralBind.git",
+    "accountId": "5a5f92b0-8f9f-4cd6-9b47-463f467fb6c7"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/astralbind/lk/templates/page66834437.html" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
   </component>
@@ -118,8 +125,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
-        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.26053.29" />
+        <option value="bundled-python-sdk-b1dbf8ef85a6-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.26053.29" />
       </set>
     </attachedChunks>
   </component>
@@ -163,6 +170,7 @@
       <workItem from="1744823024349" duration="4238000" />
       <workItem from="1744831204488" duration="2128000" />
       <workItem from="1744835770918" duration="885000" />
+      <workItem from="1744879142817" duration="4355000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />

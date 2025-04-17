@@ -408,20 +408,27 @@
 
                     <div class="input-group">
                         <label>Выберите хобби 🎨</label>
-                        <div class="hobbies-grid">
-                            {% for hobby in hobbies %}
-                            <label class="hobby-item">
-                                <input
-                                    type="checkbox"
-                                    name="hobbies"
-                                    value="{{ hobby.id }}"
-                                    {% if hobby in user_profile.hobbies.all %}checked{% endif %}
-                                />
-                                <span class="checkmark"></span>
-                                {{ hobby.name }}
-                            </label>
-                            {% endfor %}
+                        {% for group in hobby_groups %}
+                        <div class="hobby-group" style="margin-bottom: 2rem;">
+                            <h3 style="color: #2c3e50; margin-bottom: 1rem; border-bottom: 2px solid #4dabf7; padding-bottom: 0.5rem;">
+                                {{ group.name }}
+                            </h3>
+                            <div class="hobbies-grid">
+                                {% for hobby in group.hobby_set.all %}
+                                <label class="hobby-item">
+                                    <input
+                                        type="checkbox"
+                                        name="hobbies"
+                                        value="{{ hobby.id }}"
+                                        {% if hobby in user_profile.hobbies.all %}checked{% endif %}
+                                    />
+                                    <span class="checkmark"></span>
+                                    {{ hobby.name }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
 
                     <div class="input-group">

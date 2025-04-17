@@ -20,8 +20,24 @@ class City(models.Model):  # Новая модель для городов
     def __str__(self):
         return self.name
 
+class HobbyGroup(models.Model):
+    name = models.CharField("Название группы", max_length=100)
+
+    def get_hobby_ids(self):
+        return ", ".join([str(h.id) for h in self.hobby_set.all()])
+
+    def __str__(self):
+        return self.name
+
 class Hobby(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField("Название", max_length=100)
+    group = models.ForeignKey(
+        HobbyGroup,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Группа"
+    )
 
     def __str__(self):
         return self.name
