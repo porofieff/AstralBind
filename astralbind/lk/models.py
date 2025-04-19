@@ -93,6 +93,17 @@ class UserProfile(models.Model):
     hobby_description = models.TextField(blank=True, null=True)
     life_goal = models.TextField(blank=True, null=True)
     character = models.TextField(blank=True, null=True)
+    SEX_CHOICES = [
+        (1, 'Мужской'),
+        (2, 'Женский'),
+    ]
+    sex = models.IntegerField(
+        choices=SEX_CHOICES,
+        null=True,
+        blank=True,
+        default=1,
+        verbose_name="Пол"
+    )
     city = models.PositiveSmallIntegerField(('city'), choices=CITIES, blank=True, default=1) #!временно пустые строки разрешены, сначала раздадим всем пользователям города
 
     def save(self, *args, **kwargs):
@@ -109,3 +120,10 @@ class UserProfile(models.Model):
         super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.user.username}'
+
+class UserFilters(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    city = models.PositiveSmallIntegerField(blank=True, null=True)
+    zodiac_sign = models.ForeignKey(ZodiacSign, null=True, blank=True, on_delete=models.SET_NULL)
+    education = models.ForeignKey(Education, null=True, blank=True, on_delete=models.SET_NULL)
+    hobbies = models.ManyToManyField(Hobby, blank=True)

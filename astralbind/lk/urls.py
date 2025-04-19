@@ -14,4 +14,5 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('select_ahp', views.select_ahp, name='select_ahp'),
     path('main_ahp', views.main_ahp, name='main_ahp'),
+    path('filter_ahp', views.filter_ahp, name='filter_ahp'),
 ]

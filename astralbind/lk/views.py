@@ -7,7 +7,7 @@ from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm
 from .forms import UserProfileForm
-from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup
+from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City
 from chat.models import Pair_room, Message
 
 
@@ -80,6 +80,7 @@ def profile_edit(request):
         user_profile.hobby_description = request.POST.get('hobby_description')
         user_profile.life_goal = request.POST.get('life_goal')
         user_profile.character = request.POST.get('character')
+        user_profile.sex = request.POST.get('sex')
 
         hobbies = request.POST.getlist('hobbies')
         user_profile.hobbies.set(Hobby.objects.filter(id__in=hobbies))
@@ -102,23 +103,18 @@ def profile_edit(request):
 @login_required
 def profile_view(request):
     return render(request, 'profile_view.html')
-
 @login_required
 def select_ahp(request):
     return render(request, 'select_ahp.html')
-
 @login_required
 def main_ahp(request):
     return render(request, 'main_ahp.html')
-
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
-
 def logout_view(request):
     logout(request)
     messages.success(request, 'Вы успешно вышли из системы.')
     return redirect('login')
-
 def chat_list(request):
     user_profile = request.user.userprofile
     user_rooms = Pair_room.objects.filter(
@@ -126,3 +122,27 @@ def chat_list(request):
     ).distinct()
 
     return render(request, 'chat_list.html', {'chats': user_rooms})
+@login_required
+def filter_ahp(request):
+    user_filters, created = UserFilters.objects.get_or_create(user=request.user)
+    zodiac_signs = ZodiacSign.objects.all()
+    cities = City.objects.all()
+    hobbies = Hobby.objects.all()
+    educations = Education.objects.all()
+
+    if request.method == 'POST':
+        user = request.user
+        user_filters.education_id = request.POST.get('education')
+        user_filters.zodiac_sign_id = request.POST.get('zodiac_sign')
+        user_filters.city = request.POST.get('city')
+
+        hobbies = request.POST.getlist('hobbies')
+        user_filters.hobbies.set(Hobby.objects.filter(id__in=hobbies))
+        user_filters.save()
+        return redirect('main_ahp')
+    else:
+        zodiac_signs = ZodiacSign.objects.all()
+        hobby_groups = HobbyGroup.objects.prefetch_related('hobby_set').all()
+        return render(request, 'filter_ahp.html',
+                      {'user_filters': user_filters, 'hobby_groups': hobby_groups, 'zodiac_signs': zodiac_signs, 'cities': cities,
+                       'educations': educations})

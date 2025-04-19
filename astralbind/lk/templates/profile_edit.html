@@ -369,6 +369,18 @@
                         </select>
                     </div>
 
+                <div class="input-group">
+    <label for="sex">Пол 👤</label>
+    <select id="sex" name="sex" required>
+        {% for value, name in user_profile.SEX_CHOICES %}
+            <option value="{{ value }}"
+                {% if user_profile.sex == value %}selected{% endif %}>
+                {{ name }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+
                     <div class="input-group">
                         <label for="education">Образование 🎓</label>
                         <select id="education" name="education">

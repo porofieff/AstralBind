@@ -1,0 +1,273 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фильтры поиска</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <style>
+        body {
+            background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .auth-container {
+            padding: 15px;
+            min-height: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-card {
+            max-width: 700px;
+            width: 100%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #1a1a1a;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+            background-color: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .hobby-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+            min-height: 45px;
+        }
+
+        .hobby-item:hover {
+            background: #e9ecef;
+        }
+
+        .hobby-item input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: relative;
+            height: 20px;
+            width: 20px;
+            min-width: 20px;
+            background-color: #fff;
+            border: 2px solid #adb5bd;
+            border-radius: 5px;
+            margin-right: 12px;
+        }
+
+        .hobby-item input:checked ~ .checkmark {
+            background-color: #4dabf7;
+            border-color: #4dabf7;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .hobby-item input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .submit-btn {
+            background: #0056d3;
+            color: #fff !important;
+            padding: 16px 45px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid #0056d3;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: #f8f9fa;
+            color: #dc3545 !important;
+            padding: 16px 45px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid #dc3545;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin: 0 auto 20px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="logo-container">
+                <img src="{% static 'images/logo_app.png' %}" class="logo" alt="Логотип">
+            </div>
+            <h2>Фильтры поиска 🔍</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Знаки зодиака -->
+<!-- Знаки зодиака -->
+<div class="input-group">
+    <label>Знак зодиака ♋️</label>
+    <select name="zodiac_sign">
+        <option value="">Не важно</option>
+        {% for zodiac in zodiac_signs %}
+        <option value="{{ zodiac.id }}"
+                {% if user_filters.zodiac_sign_id == zodiac.id %}selected{% endif %}>
+            {{ zodiac.name }}
+        </option>
+        {% endfor %}
+    </select>
+</div>
+
+<!-- Города -->
+<div class="input-group">
+    <label>Город 🏙</label>
+    <select name="city">
+        <option value="">Не важно</option>
+        {% for city in cities %}
+        <option value="{{ city.id }}"
+                {% if user_filters.city == city.id %}selected{% endif %}>
+            {{ city.name }}
+        </option>
+        {% endfor %}
+    </select>
+</div>
+
+<!-- Хобби -->
+                    <div class="input-group">
+                        <label>Выберите хобби 🎨</label>
+                        {% for group in hobby_groups %}
+                        <div class="hobby-group" style="margin-bottom: 2rem;">
+                            <h3 style="color: #2c3e50; margin-bottom: 1rem; border-bottom: 2px solid #4dabf7; padding-bottom: 0.5rem;">
+                                {{ group.name }}
+                            </h3>
+                            <div class="hobbies-grid">
+                                {% for hobby in group.hobby_set.all %}
+                                <label class="hobby-item">
+                                    <input
+                                        type="checkbox"
+                                        name="hobbies"
+                                        value="{{ hobby.id }}"
+                                        {% if hobby in user_filters.hobbies.all %}checked{% endif %}
+                                    />
+                                    <span class="checkmark"></span>
+                                    {{ hobby.name }}
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+<!-- Образование -->
+<div class="input-group">
+    <label>Образование 🎓</label>
+    <select name="education">
+        <option value="">Не важно</option>
+        {% for edu in educations %}
+        <option value="{{ edu.id }}"
+                {% if user_filters.education_id == edu.id %}selected{% endif %}>
+            {{ edu.name }}
+        </option>
+        {% endfor %}
+    </select>
+</div>
+
+                <div class="action-buttons">
+                    <a href="{% url 'main_ahp' %}" class="cancel-btn">Отмена</a>
+                    <button type="submit" class="submit-btn">Применить фильтры</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

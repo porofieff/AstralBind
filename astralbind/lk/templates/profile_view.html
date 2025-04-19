@@ -251,6 +251,9 @@
                     <h2>Основные данные</h2>
                     <p><strong>Имя:</strong> {{ user.first_name }}</p>
                     <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+                {% if user.userprofile.sex %}
+    <p><strong>Пол:</strong> {{ user.userprofile.get_sex_display }}</p>
+{% endif %}
                     <p><strong>Логин:</strong> {{ user.username }}</p>
                     <p><strong>Email:</strong> {{ user.email }}</p>
                     {% if user.userprofile.city %}
