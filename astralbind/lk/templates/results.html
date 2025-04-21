@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body {
+        background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        padding: 40px 20px;
+    }
+
+    .results-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .profile-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .average-rating {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 86, 211, 0.9);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .profile-card:hover .average-rating {
+        opacity: 1;
+    }
+
+    .profile-photo {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .profile-name {
+        font-size: 1.3rem;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .profile-info {
+        color: #666;
+        font-size: 0.95rem;
+        margin: 8px 0;
+    }
+
+    .hobbies-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 15px 0;
+    }
+
+    .hobby-tag {
+        background: #4dabf7;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+    }
+
+    .rating-details {
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+        margin-top: 15px;
+    }
+
+    .rating-item {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px 0;
+        font-size: 0.9rem;
+    }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        {% for result in result_data %}
+        <div class="profile-card">
+            <div class="average-rating">
+                Средняя оценка: {{ result.average|floatformat:1 }}
+            </div>
+
+            <!-- Аватарка -->
+            {% if result.user.photo %}
+                <img src="{{ result.user.photo.url }}" class="profile-photo" alt="Фото">
+            {% else %}
+                <img src="{% static 'images/photo_base.png' %}" class="profile-photo" alt="Фото">
+            {% endif %}
+
+            <h3 class="profile-name">{{ result.user.user.first_name }} {{ result.user.user.last_name }}</h3>
+
+            <!-- Город -->
+            <p class="profile-info">📍 Город: {{ result.user.get_city_display }}</p>
+
+            <!-- Знак зодиака -->
+            {% if result.user.zodiac_sign %}
+                <p class="profile-info">♌ Знак зодиака: {{ result.user.zodiac_sign.name }}</p>
+            {% else %}
+                <p class="profile-info">♌ Знак зодиака: <em>Не указан</em></p>
+            {% endif %}
+
+            <!-- Образование -->
+            {% if result.user.education %}
+                <p class="profile-info">🎓 Образование: {{ result.user.education.name }}</p>
+            {% else %}
+                <p class="profile-info">🎓 Образование: <em>Не указано</em></p>
+            {% endif %}
+
+            <!-- Хобби -->
+            {% if result.user.hobbies.all %}
+            <div class="hobbies-list">
+                {% for hobby in result.user.hobbies.all %}
+                <span class="hobby-tag">{{ hobby.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Оценки -->
+            <div class="rating-details">
+                <div class="rating-item">
+                    <span>Хобби:</span>
+                    <span>{{ result.rating.hobby_rating }}</span>
+                </div>
+                <div class="rating-item">
+                    <span>Город:</span>
+                    <span>{{ result.rating.city_rating }}</span>
+                </div>
+                <div class="rating-item">
+                    <span>Знак зодиака:</span>
+                    <span>{{ result.rating.zodiac_rating }}</span>
+                </div>
+                <div class="rating-item">
+                    <span>Образование:</span>
+                    <span>{{ result.rating.education_rating }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

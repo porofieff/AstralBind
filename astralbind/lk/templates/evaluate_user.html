@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оценка анкеты</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    body {
+        background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        padding: 40px 20px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .profile-photo {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-name {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin: 15px 0;
+    }
+
+    .profile-info-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .profile-info-section h2 {
+        color: #2c3e50;
+        border-bottom: 2px solid #4dabf7;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+    }
+
+    .profile-info-item {
+        color: #666;
+        margin: 10px 0;
+        font-size: 1rem;
+    }
+
+    .hobbies-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 15px 0;
+    }
+
+    .hobby-tag {
+        background: #4dabf7;
+        color: white;
+        padding: 6px 15px;
+        border-radius: 15px;
+        font-size: 0.9rem;
+    }
+
+    /* Стили для ползунков */
+    .rating-group {
+        margin: 25px 0;
+    }
+
+    .range-slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: #e0e0e0;
+        outline: none;
+        margin: 15px 0;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #0056d3;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .rating-value {
+        display: inline-block;
+        padding: 8px 20px;
+        background: #f0f5ff;
+        border-radius: 20px;
+        color: #0056d3;
+        font-weight: 600;
+    }
+
+    .cta-button {
+        background: #0056d3;
+        color: #fff !important;
+        padding: 16px 45px;
+        border-radius: 30px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+        max-width: 300px;
+        margin: 30px auto 0;
+        display: block;
+        text-align: center;
+    }
+
+    .cta-button:hover {
+        background: #0040a1;
+        transform: translateY(-2px);
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            {% if user_profile.photo %}
+                <img src="{{ user_profile.photo.url }}" class="profile-photo" alt="Фото">
+            {% else %}
+                <img src="{% static 'images/photo_base.png' %}" class="profile-photo" alt="Фото">
+            {% endif %}
+            <h1 class="profile-name">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h1>
+        </div>
+
+        <!-- Основная информация -->
+        <div class="profile-info-section">
+    <h2>Основные данные</h2>
+    <p class="profile-info-item">📍 Город: {{ user_profile.get_city_display }}</p>
+    {% if user_profile.zodiac_sign %}
+        <p class="profile-info-item">♌ Знак зодиака: {{ user_profile.zodiac_sign.name }}</p>
+    {% else %}
+        <p class="profile-info-item">♌ Знак зодиака: <em>Не указан</em></p>
+    {% endif %}
+    {% if user_profile.education %}
+        <p class="profile-info-item">🎓 Образование: {{ user_profile.education.name }}</p>
+    {% else %}
+        <p class="profile-info-item">🎓 Образование: <em>Не указано</em></p>
+    {% endif %}
+</div>
+
+        <!-- Хобби -->
+        {% if user_profile.hobbies.all %}
+        <div class="profile-info-section">
+            <h2>Хобби</h2>
+            <div class="hobbies-list">
+                {% for hobby in user_profile.hobbies.all %}
+                    <span class="hobby-tag">{{ hobby.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Дополнительные разделы -->
+        {% if user_profile.hobby_description %}
+        <div class="profile-info-section">
+            <h2>О хобби</h2>
+            <p class="profile-info-item">{{ user_profile.hobby_description }}</p>
+        </div>
+        {% endif %}
+
+        {% if user_profile.character %}
+        <div class="profile-info-section">
+            <h2>Характер</h2>
+            <p class="profile-info-item">{{ user_profile.character }}</p>
+        </div>
+        {% endif %}
+
+        {% if user_profile.life_goal %}
+        <div class="profile-info-section">
+            <h2>Цель в жизни</h2>
+            <p class="profile-info-item">{{ user_profile.life_goal }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Форма оценки -->
+        <form method="POST" action="{% url 'next_user' %}">
+            {% csrf_token %}
+            <div class="rating-group">
+                <label class="rating-label">Совпадение по хобби</label>
+                <input type="range" class="range-slider"
+                       id="hobby_rating" name="hobby_rating"
+                       min="1" max="9" value="5">
+                <div class="rating-value" id="hobby_value">5</div>
+            </div>
+
+            <div class="rating-group">
+                <label class="rating-label">Расположение города</label>
+                <input type="range" class="range-slider"
+                       id="city_rating" name="city_rating"
+                       min="1" max="9" value="5">
+                <div class="rating-value" id="city_value">5</div>
+            </div>
+
+            <div class="rating-group">
+                <label class="rating-label">Совместимость по знаку зодиака</label>
+                <input type="range" class="range-slider"
+                       id="zodiac_rating" name="zodiac_rating"
+                       min="1" max="9" value="5">
+                <div class="rating-value" id="zodiac_value">5</div>
+            </div>
+
+            <div class="rating-group">
+                <label class="rating-label">Уровень образования</label>
+                <input type="range" class="range-slider"
+                       id="education_rating" name="education_rating"
+                       min="1" max="9" value="5">
+                <div class="rating-value" id="education_value">5</div>
+            </div>
+
+            <button type="submit" class="cta-button">
+                {% if is_final %}
+                    Посмотреть результаты
+                {% else %}
+                    Следующий профиль
+                {% endif %}
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Обновление значений ползунков
+        const updateValue = (sliderId, valueId) => {
+            const slider = document.getElementById(sliderId);
+            const value = document.getElementById(valueId);
+            slider.oninput = () => {
+                value.textContent = slider.value;
+                value.style.background = `linear-gradient(
+                    90deg,
+                    #f0f5ff 0%,
+                    #f0f5ff ${(slider.value/9)*100}%,
+                    #e0e0e0 ${(slider.value/9)*100}%,
+                    #e0e0e0 100%
+                )`;
+            }
+            slider.dispatchEvent(new Event('input'));
+        }
+
+        updateValue('hobby_rating', 'hobby_value');
+        updateValue('city_rating', 'city_value');
+        updateValue('zodiac_rating', 'zodiac_value');
+        updateValue('education_rating', 'education_value');
+    </script>
+</body>
+</html>

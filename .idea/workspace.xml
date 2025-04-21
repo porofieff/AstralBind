@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="ahp_select +- work">
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/filter_ahp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9c399eba-39d1-4bf0-a7a7-8ff430b70d79/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9fc2a86e-2d27-49ae-8db2-04bb11c464ab.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9fc2a86e-2d27-49ae-8db2-04bb11c464ab/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="add filter page and db">
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/evaluate_user.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/results.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/astralbind/media/user_photos/photo_base.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/astralbind/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/astralbind/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_ahp.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_ahp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
     </list>
@@ -45,12 +41,12 @@
     &quot;assignee&quot;: &quot;igorKornya&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/porofieff/AstralBind.git",
-    "accountId": "5a2ebc27-a46e-4fa3-abc1-d2ac3651bf96"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/porofieff/AstralBind.git&quot;,
+    &quot;accountId&quot;: &quot;5a2ebc27-a46e-4fa3-abc1-d2ac3651bf96&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/astralbind/lk/templates/page66834437.html" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
   </component>
@@ -68,26 +64,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/PycharmProjects/AstralBind/astralbind/lk/js&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "django.template.preview.state": "SHOW_EDITOR",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/user/PycharmProjects/AstralBind/astralbind/media/user_photos",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\media\user_photos" />
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\js" />
       <recent name="C:\Users\user\PycharmProjects\AstralBind\astralbind\lk\static\images\images_reg" />
     </key>
@@ -174,7 +171,8 @@
       <workItem from="1744831204488" duration="2128000" />
       <workItem from="1744835770918" duration="885000" />
       <workItem from="1744879142817" duration="4355000" />
-      <workItem from="1745073019475" duration="6259000" />
+      <workItem from="1745073019475" duration="6297000" />
+      <workItem from="1745247251744" duration="11256000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />
@@ -224,7 +222,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744828125007</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add filter page and db">
+      <option name="closed" value="true" />
+      <created>1745104227565</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745104227565</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +253,7 @@
     <MESSAGE value="profile_view/edit in progress" />
     <MESSAGE value="add edu, zodiac; edit login" />
     <MESSAGE value="ahp_select +- work" />
-    <option name="LAST_COMMIT_MESSAGE" value="ahp_select +- work" />
+    <MESSAGE value="add filter page and db" />
+    <option name="LAST_COMMIT_MESSAGE" value="add filter page and db" />
   </component>
 </project>

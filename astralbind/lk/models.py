@@ -85,6 +85,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo = models.ImageField(
         upload_to = 'user_photos/',
+        default='user_photos/photo_base.jpg',
         null = True,
         blank = True
     )

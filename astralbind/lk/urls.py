@@ -12,7 +12,10 @@ urlpatterns = [
     path('profile/edit/', views.profile_edit, name='profile_edit'),
     path('my_chats/', views.chat_list, name='chats_list'),
     path('chat/', include('chat.urls')),
-    path('select_ahp', views.select_ahp, name='select_ahp'),
-    path('main_ahp', views.main_ahp, name='main_ahp'),
-    path('filter_ahp', views.filter_ahp, name='filter_ahp'),
+    path('select_ahp/', views.select_ahp, name='select_ahp'),
+    path('main_ahp/', views.main_ahp, name='main_ahp'),
+    path('filter_ahp/', views.filter_ahp, name='filter_ahp'),
+    path('evaluate_user/', views.evaluate_user, name='evaluate_user'),
+    path('next_user/', views.next_user, name='next_user'),
+    path('results/', views.results, name='results'),
 ]

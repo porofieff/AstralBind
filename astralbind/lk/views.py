@@ -9,8 +9,7 @@ from .forms import CustomUserCreationForm
 from .forms import UserProfileForm
 from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City
 from chat.models import Pair_room, Message
-
-
+import random
 
 def index(request):
     return render(request, 'index.html')
@@ -125,6 +124,7 @@ def chat_list(request):
 @login_required
 def filter_ahp(request):
     user_filters, created = UserFilters.objects.get_or_create(user=request.user)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     zodiac_signs = ZodiacSign.objects.all()
     cities = City.objects.all()
     hobbies = Hobby.objects.all()
@@ -135,6 +135,8 @@ def filter_ahp(request):
         user_filters.education_id = request.POST.get('education')
         user_filters.zodiac_sign_id = request.POST.get('zodiac_sign')
         user_filters.city = request.POST.get('city')
+        if request.POST.get('city') == '':
+            user_filters.city =  user_profile.city
 
         hobbies = request.POST.getlist('hobbies')
         user_filters.hobbies.set(Hobby.objects.filter(id__in=hobbies))
@@ -146,3 +148,124 @@ def filter_ahp(request):
         return render(request, 'filter_ahp.html',
                       {'user_filters': user_filters, 'hobby_groups': hobby_groups, 'zodiac_signs': zodiac_signs, 'cities': cities,
                        'educations': educations})
+
+@login_required
+def view_form(request):
+    return render(request, 'evaluate_user.html')
+
+
+
+from django.db.models import Q
+
+
+
+@login_required
+def evaluate_user(request):
+    # Сброс сессии при новом поиске
+    if 'new_search' in request.GET:
+        request.session['shown_users'] = []
+        request.session['ratings'] = []
+        request.session['current_user_id'] = None
+        request.session.modified = True
+
+    # Получаем фильтры пользователя
+    try:
+        user_filters = UserFilters.objects.get(user=request.user)
+    except UserFilters.DoesNotExist:
+        user_filters = None
+
+    # Базовый запрос (исключаем текущего пользователя)
+    users = UserProfile.objects.exclude(user=request.user)
+
+    # Применяем фильтры
+    if user_filters:
+        if user_filters.city:
+            users = users.filter(city=user_filters.city)
+        if user_filters.zodiac_sign:
+            users = users.filter(zodiac_sign=user_filters.zodiac_sign)
+        if user_filters.education:
+            users = users.filter(education=user_filters.education)
+        if user_filters.hobbies.exists():
+            query = Q()
+            for hobby in user_filters.hobbies.all():
+                query |= Q(hobbies=hobby)
+            users = users.filter(query).distinct()
+
+    # Получаем список показанных пользователей
+    shown_users = request.session.get('shown_users', [])
+    available_users = users.exclude(id__in=shown_users)
+
+    # Если пользователей нет и не было показано ранее
+    if not available_users.exists() and not shown_users:
+        messages.error(request, "По вашим фильтрам не найдено пользователей.")
+        return redirect('filter_ahp')
+
+    # Обработка POST-запроса (сохранение оценок)
+    if request.method == 'POST':
+        current_user_id = request.session.get('current_user_id')
+        if current_user_id:
+            ratings = request.session.get('ratings', [])
+            ratings.append({
+                'user_id': current_user_id,
+                'hobby_rating': request.POST.get('hobby_rating', 5),
+                'city_rating': request.POST.get('city_rating', 5),
+                'zodiac_rating': request.POST.get('zodiac_rating', 5),
+                'education_rating': request.POST.get('education_rating', 5)
+            })
+            request.session['ratings'] = ratings
+            request.session.modified = True
+
+    # Выбор случайного пользователя
+    try:
+        random_user = random.choice(available_users)
+    except IndexError:
+        return redirect('results')
+
+    # Обновляем сессию
+    shown_users.append(random_user.id)
+    request.session['shown_users'] = shown_users
+    request.session['current_user_id'] = random_user.id
+    request.session.modified = True
+
+    # Проверка на завершение оценки
+    is_final = len(shown_users) >= 5 or len(shown_users) >= available_users.count()
+
+    return render(request, 'evaluate_user.html', {
+        'user_profile': random_user,
+        'is_final': is_final
+    })
+
+@login_required
+def results(request):
+    ratings = request.session.get('ratings', [])
+    user_ids = [r['user_id'] for r in ratings]
+    users = UserProfile.objects.filter(id__in=user_ids)
+
+    # Формируем данные для результатов
+    result_data = []
+    for rating in ratings:
+        try:
+            user = users.get(id=rating['user_id'])
+            avg_score = (int(rating['hobby_rating']) +
+                        int(rating['city_rating']) +
+                        int(rating['zodiac_rating']) +
+                        int(rating['education_rating'])) / 4
+            result_data.append({
+                'user': user,
+                'rating': rating,
+                'average': round(avg_score, 1)
+            })
+        except UserProfile.DoesNotExist:
+            continue
+
+    # Сортируем по убыванию средней оценки
+    result_data.sort(key=lambda x: x['average'], reverse=True)
+
+    # Очищаем сессию ПОСЛЕ рендеринга
+    response = render(request, 'results.html', {'result_data': result_data})
+    request.session['shown_users'] = []
+    request.session['ratings'] = []
+    request.session.modified = True
+    return response
+def next_user(request):
+    return evaluate_user(request)
