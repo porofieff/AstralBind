@@ -290,6 +290,46 @@
                 border-color: #0056d3;
                 box-shadow: 0 0 0 3px rgba(0,86,211,0.1);
             }
+                .rating-group {
+                    margin: 25px 0;
+                }
+
+                .rating-label {
+                    display: block;
+                    margin-bottom: 10px;
+                    color: #444;
+                    font-weight: 500;
+                    font-size: 0.95rem;
+                }
+
+                .range-slider {
+                    -webkit-appearance: none;
+                    width: 100%;
+                    height: 8px;
+                    border-radius: 5px;
+                    background: #e0e0e0;
+                    outline: none;
+                    margin: 15px 0;
+                }
+
+                .range-slider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    background: #0056d3;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                }
+
+                .rating-value {
+                    display: inline-block;
+                    padding: 8px 20px;
+                    background: #f0f5ff;
+                    border-radius: 20px;
+                    color: #0056d3;
+                    font-weight: 600;
+                }
         </style>
     </head>
     <body class="light-theme">
@@ -483,6 +523,92 @@
                         >{{ user_profile.character|default:"" }}</textarea>
                     </div>
 
+                    <div class="input-group">
+                        <div class="rating-group">
+                            <label class="rating-label">Сравнение города с хобби</label>
+                            <input
+                                type="range"
+                                class="range-slider"
+                                id="city_vs_hobby"
+                                name="city_vs_hobby"
+                                min="1"
+                                max="5"
+                                value="{{ user_profile.city_vs_hobby|default:'3' }}"
+                            >
+                            <div class="rating-value" id="city_vs_hobby_value">{{ user_profile.city_vs_hobby|default:"3" }}</div>
+                        </div>
+
+                        <div class="rating-group">
+                            <label class="rating-label">Город vs Знак зодиака</label>
+                            <input
+                                type="range"
+                                class="range-slider"
+                                id="city_vs_zodiac"
+                                name="city_vs_zodiac"
+                                min="1"
+                                max="5"
+                                value="{{ user_profile.city_vs_zodiac|default:'3' }}"
+                            >
+                            <div class="rating-value" id="city_vs_zodiac_value">{{ user_profile.city_vs_zodiac|default:"3" }}</div>
+                        </div>
+
+                        <div class="rating-group">
+                            <label class="rating-label">Город vs Образование</label>
+                            <input
+                                type="range"
+                                class="range-slider"
+                                id="city_vs_education"
+                                name="city_vs_education"
+                                min="1"
+                                max="5"
+                                value="{{ user_profile.city_vs_education|default:'3' }}"
+                            >
+                            <div class="rating-value" id="city_vs_education_value">{{ user_profile.city_vs_education|default:"3" }}</div>
+                        </div>
+
+                        <div class="rating-group">
+                            <label class="rating-label">Образование vs Хобби</label>
+                            <input
+                                type="range"
+                                class="range-slider"
+                                id="education_vs_hobby"
+                                name="education_vs_hobby"
+                                min="1"
+                                max="5"
+                                value="{{ user_profile.education_vs_hobby|default:'3' }}"
+                            >
+                            <div class="rating-value" id="education_vs_hobby_value">{{ user_profile.education_vs_hobby|default:"3" }}</div>
+                        </div>
+
+                        <div class="rating-group">
+                            <label class="rating-label">Образование vs Знак зодиака</label>
+                            <input
+                                type="range"
+                                class="range-slider"
+                                id="education_vs_zodiac"
+                                name="education_vs_zodiac"
+                                min="1"
+                                max="5"
+                                value="{{ user_profile.education_vs_zodiac|default:'3' }}"
+                            >
+                            <div class="rating-value" id="education_vs_zodiac_value">{{ user_profile.education_vs_zodiac|default:"3" }}</div>
+                        </div>
+
+                        <div class="rating-group">
+                            <label class="rating-label">Хобби vs Знак зодиака</label>
+                            <input
+                                type="range"
+                                class="range-slider"
+                                id="hobby_vs_zodiac"
+                                name="hobby_vs_zodiac"
+                                min="1"
+                                max="5"
+                                value="{{ user_profile.hobby_vs_zodiac|default:'3' }}"
+                            >
+                            <div class="rating-value" id="hobby_vs_zodiac_value">{{ user_profile.hobby_vs_zodiac|default:"3" }}</div>
+                        </div>
+                    </div>
+
                     <div class="action-buttons">
                         <button type="submit" class="submit-btn">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
@@ -501,5 +627,32 @@
                 </form>
             </div>
         </div>
+        <script>
+            const initSlider = (sliderId, valueId) => {
+                const slider = document.getElementById(sliderId);
+                const value = document.getElementById(valueId);
+
+                const update = () => {
+                    value.textContent = slider.value;
+                    value.style.background = `linear-gradient(
+                        90deg,
+                        #f0f5ff 0%,
+                        #f0f5ff ${(slider.value/9)*100}%,
+                        #e0e0e0 ${(slider.value/9)*100}%,
+                        #e0e0e0 100%
+                    )`;
+                }
+
+                slider.addEventListener('input', update);
+                update();
+            }
+
+            initSlider('city_vs_hobby', 'city_vs_hobby_value');
+            initSlider('city_vs_zodiac', 'city_vs_zodiac_value');
+            initSlider('city_vs_education', 'city_vs_education_value');
+            initSlider('education_vs_hobby', 'education_vs_hobby_value');
+            initSlider('education_vs_zodiac', 'education_vs_zodiac_value');
+            initSlider('hobby_vs_zodiac', 'hobby_vs_zodiac_value');
+        </script>
     </body>
 </html>

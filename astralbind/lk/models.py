@@ -107,6 +107,9 @@ class UserProfile(models.Model):
     )
     city = models.PositiveSmallIntegerField(('city'), choices=CITIES, blank=True, default=1) #!временно пустые строки разрешены, сначала раздадим всем пользователям города
 
+    weights_for_ahp = models.CharField(max_length = 100, null=True)
+    user_CR = models.PositiveSmallIntegerField(default=0)
+
     def save(self, *args, **kwargs):
         if self.pk:  # Только для существующих объектов
             try:

@@ -10,6 +10,9 @@ from .forms import UserProfileForm
 from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City
 from chat.models import Pair_room, Message
 import random
+import numpy as np
+import statistics as stat
+import json
 
 def index(request):
     return render(request, 'index.html')
@@ -84,6 +87,71 @@ def profile_edit(request):
         hobbies = request.POST.getlist('hobbies')
         user_profile.hobbies.set(Hobby.objects.filter(id__in=hobbies))
 
+        translate = {
+            '1': 0.2,
+            '2': 0.3,
+            '3': 1.0,
+            '4': 3.0,
+            '5': 5.0
+        }
+
+        RI = {
+            1: 0.00,
+            2: 0.00,
+            3: 0.58,
+            4: 0.90,
+            5: 1.12,
+        }
+
+        self_city_vs_hobby = translate[request.POST.get('city_vs_hobby')]
+        self_city_vs_zodiac = translate[request.POST.get('city_vs_zodiac')]
+        self_city_vs_education = translate[request.POST.get('city_vs_education')]
+        self_education_vs_hobby = translate[request.POST.get('education_vs_hobby')]
+        self_education_vs_zodiac = translate[request.POST.get('education_vs_zodiac')]
+        self_hobby_vs_zodiac = translate[request.POST.get('hobby_vs_zodiac')]
+
+        self_matrix = np.ones((4, 4), dtype=float)
+        self_matrix[0][1] = self_city_vs_hobby
+        self_matrix[1][0] = 1 / self_city_vs_hobby
+        self_matrix[0][2] = self_city_vs_zodiac
+        self_matrix[2][0] = 1 / self_city_vs_zodiac
+        self_matrix[0][3] = self_city_vs_education
+        self_matrix[3][0] = 1 / self_city_vs_education
+        self_matrix[1][3] = 1 / self_education_vs_hobby
+        self_matrix[3][1] = self_education_vs_hobby
+        self_matrix[2][3] = 1 / self_education_vs_zodiac
+        self_matrix[3][2] = self_education_vs_zodiac
+        self_matrix[1][2] = self_hobby_vs_zodiac
+        self_matrix[2][1] = 1 / self_hobby_vs_zodiac
+
+        print(type(self_city_vs_hobby), self_city_vs_hobby, self_city_vs_zodiac, self_city_vs_education,
+              self_education_vs_hobby, self_education_vs_zodiac, self_hobby_vs_zodiac)
+        print(self_matrix)
+
+        weight_criter = []
+        arr_avg_geom = []
+        for i in self_matrix:
+            elem_self_matrix = [float(j) for j in i]
+            avg_geom = stat.geometric_mean(elem_self_matrix)
+            arr_avg_geom.append(avg_geom)
+        for i in range(len(arr_avg_geom)):
+            value = arr_avg_geom[i] / sum(arr_avg_geom)
+            weight_criter.append(value)
+
+        json_weight_criter = json.dumps(weight_criter)
+        user_profile.weights_for_ahp = json_weight_criter
+
+        w = self_matrix.sum(axis=0)
+        normalized_self_matrix = self_matrix / w
+        w = normalized_self_matrix.mean(axis=1)
+        self_matrixw = self_matrix.dot(w)
+        lambda_max = np.mean(self_matrixw / w)
+        n = self_matrix.shape[0]
+        CI = (lambda_max - n) / (n - 1)
+
+        CR = CI / RI.get(len(self_matrix)) * 100
+        user_profile.user_CR = CR
+
         if 'photo' in request.FILES:
             uploaded_file = request.FILES['photo']
             if uploaded_file.size > 5 * 1024 * 1024:
@@ -153,11 +221,7 @@ def filter_ahp(request):
 def view_form(request):
     return render(request, 'evaluate_user.html')
 
-
-
 from django.db.models import Q
-
-
 
 @login_required
 def evaluate_user(request):
