@@ -12,6 +12,7 @@ from chat.models import Pair_room, Message
 import random
 import numpy as np
 import statistics as stat
+from django.urls import reverse
 import json
 
 def index(request):
@@ -225,23 +226,19 @@ from django.db.models import Q
 
 @login_required
 def evaluate_user(request):
-    # Сброс сессии при новом поиске
     if 'new_search' in request.GET:
         request.session['shown_users'] = []
         request.session['ratings'] = []
         request.session['current_user_id'] = None
         request.session.modified = True
 
-    # Получаем фильтры пользователя
     try:
         user_filters = UserFilters.objects.get(user=request.user)
     except UserFilters.DoesNotExist:
         user_filters = None
 
-    # Базовый запрос (исключаем текущего пользователя)
     users = UserProfile.objects.exclude(user=request.user)
 
-    # Применяем фильтры
     if user_filters:
         if user_filters.city:
             users = users.filter(city=user_filters.city)
@@ -255,16 +252,18 @@ def evaluate_user(request):
                 query |= Q(hobbies=hobby)
             users = users.filter(query).distinct()
 
-    # Получаем список показанных пользователей
     shown_users = request.session.get('shown_users', [])
     available_users = users.exclude(id__in=shown_users)
 
-    # Если пользователей нет и не было показано ранее
     if not available_users.exists() and not shown_users:
-        messages.error(request, "По вашим фильтрам не найдено пользователей.")
-        return redirect('filter_ahp')
+        # Рендерим шаблон с сообщением и JS-редиректом
+        return render(
+            request,
+            'no_users_found.html',
+            {'redirect_url': reverse('filter_ahp')},
+            status=404
+        )
 
-    # Обработка POST-запроса (сохранение оценок)
     if request.method == 'POST':
         current_user_id = request.session.get('current_user_id')
         if current_user_id:
@@ -279,19 +278,15 @@ def evaluate_user(request):
             request.session['ratings'] = ratings
             request.session.modified = True
 
-    # Выбор случайного пользователя
     try:
         random_user = random.choice(available_users)
     except IndexError:
         return redirect('results')
 
-    # Обновляем сессию
     shown_users.append(random_user.id)
     request.session['shown_users'] = shown_users
     request.session['current_user_id'] = random_user.id
     request.session.modified = True
-
-    # Проверка на завершение оценки
     is_final = len(shown_users) >= 5 or len(shown_users) >= available_users.count()
 
     return render(request, 'evaluate_user.html', {
@@ -305,7 +300,6 @@ def results(request):
     user_ids = [r['user_id'] for r in ratings]
     users = UserProfile.objects.filter(id__in=user_ids)
 
-    # Формируем данные для результатов
     result_data = []
     for rating in ratings:
         try:
@@ -322,10 +316,8 @@ def results(request):
         except UserProfile.DoesNotExist:
             continue
 
-    # Сортируем по убыванию средней оценки
     result_data.sort(key=lambda x: x['average'], reverse=True)
 
-    # Очищаем сессию ПОСЛЕ рендеринга
     response = render(request, 'results.html', {'result_data': result_data})
     request.session['shown_users'] = []
     request.session['ratings'] = []
