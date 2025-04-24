@@ -15,6 +15,27 @@ import statistics as stat
 from django.urls import reverse
 import json
 
+translate = {
+    '1': 0.2,
+    '2': 0.3,
+    '3': 1.0,
+    '4': 3.0,
+    '5': 5.0
+}
+
+
+def norm_calculate(matrix):
+    weight_criter = []
+    arr_avg_geom = []
+    for i in matrix:
+        elem_matrix = [float(j) for j in i]
+        avg_geom = stat.geometric_mean(elem_matrix)
+        arr_avg_geom.append(avg_geom)
+    for i in range(len(arr_avg_geom)):
+        value = arr_avg_geom[i] / sum(arr_avg_geom)
+        weight_criter.append(value)
+    return weight_criter
+
 def index(request):
     return render(request, 'index.html')
 
@@ -61,6 +82,8 @@ def login_view(request):
 
     return render(request, 'login.html')
 
+
+weight_criter = []
 @login_required
 def profile_edit(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
@@ -88,13 +111,6 @@ def profile_edit(request):
         hobbies = request.POST.getlist('hobbies')
         user_profile.hobbies.set(Hobby.objects.filter(id__in=hobbies))
 
-        translate = {
-            '1': 0.2,
-            '2': 0.3,
-            '3': 1.0,
-            '4': 3.0,
-            '5': 5.0
-        }
 
         RI = {
             1: 0.00,
@@ -256,7 +272,6 @@ def evaluate_user(request):
     available_users = users.exclude(id__in=shown_users)
 
     if not available_users.exists() and not shown_users:
-        # Рендерим шаблон с сообщением и JS-редиректом
         return render(
             request,
             'no_users_found.html',
@@ -294,29 +309,64 @@ def evaluate_user(request):
         'is_final': is_final
     })
 
+
+
 @login_required
 def results(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     ratings = request.session.get('ratings', [])
     user_ids = [r['user_id'] for r in ratings]
     users = UserProfile.objects.filter(id__in=user_ids)
+    cnt_users = len(ratings)
+
+    if cnt_users == 0:
+        return render(request, 'results.html', {'result_data': []})
+
+    matrix_hobby = np.ones((cnt_users, cnt_users))
+    matrix_zodiac = np.ones((cnt_users, cnt_users))
+    matrix_education = np.ones((cnt_users, cnt_users))
+    matrix_city = np.ones((cnt_users, cnt_users))
+
+    for i, rating in enumerate(ratings):
+        user_hobby_rating = int(rating['hobby_rating'])
+        user_city_rating = int(rating['city_rating'])
+        user_zodiac_rating = int(rating['zodiac_rating'])
+        user_education_rating = int(rating['education_rating'])
+
+        for j in range(i + 1, cnt_users):
+            matrix_hobby[i][j] = user_hobby_rating
+            matrix_hobby[j][i] = 1 / user_hobby_rating
+            matrix_city[i][j] = user_city_rating
+            matrix_city[j][i] = 1 / user_city_rating
+            matrix_zodiac[i][j] = user_zodiac_rating
+            matrix_zodiac[j][i] = 1 / user_zodiac_rating
+            matrix_education[i][j] = user_education_rating
+            matrix_education[j][i] = 1 / user_education_rating
+
+    norm_hobbies = norm_calculate(matrix_hobby)
+    norm_zodiac = norm_calculate(matrix_zodiac)
+    norm_education = norm_calculate(matrix_education)
+    norm_city = norm_calculate(matrix_city)
+
+    norm_all_matrix = np.array([norm_hobbies, norm_zodiac, norm_education, norm_city])
+
+    user_weights = json.loads(user_profile.weights_for_ahp)
+    result = np.dot(user_weights, norm_all_matrix)
 
     result_data = []
-    for rating in ratings:
+    for i, rating in enumerate(ratings):
         try:
             user = users.get(id=rating['user_id'])
-            avg_score = (int(rating['hobby_rating']) +
-                        int(rating['city_rating']) +
-                        int(rating['zodiac_rating']) +
-                        int(rating['education_rating'])) / 4
+            compatibility_percent = round(result[i] * 100, 1)
             result_data.append({
                 'user': user,
                 'rating': rating,
-                'average': round(avg_score, 1)
+                'compatibility': compatibility_percent
             })
         except UserProfile.DoesNotExist:
             continue
 
-    result_data.sort(key=lambda x: x['average'], reverse=True)
+    result_data.sort(key=lambda x: x['compatibility'], reverse=True)
 
     response = render(request, 'results.html', {'result_data': result_data})
     request.session['shown_users'] = []

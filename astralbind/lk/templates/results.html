@@ -7,6 +7,7 @@
     <title>Результаты поиска</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+    /* Стили остаются без изменений */
     body {
         background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
         background-size: cover;
@@ -43,7 +44,7 @@
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     }
 
-    .average-rating {
+    .compatibility-percent {
         position: absolute;
         top: 0;
         left: 0;
@@ -60,65 +61,19 @@
         transition: opacity 0.3s;
     }
 
-    .profile-card:hover .average-rating {
+    .profile-card:hover .compatibility-percent {
         opacity: 1;
     }
 
-    .profile-photo {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 10px;
-        margin-bottom: 15px;
-    }
-
-    .profile-name {
-        font-size: 1.3rem;
-        color: #2c3e50;
-        margin-bottom: 10px;
-    }
-
-    .profile-info {
-        color: #666;
-        font-size: 0.95rem;
-        margin: 8px 0;
-    }
-
-    .hobbies-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin: 15px 0;
-    }
-
-    .hobby-tag {
-        background: #4dabf7;
-        color: white;
-        padding: 4px 12px;
-        border-radius: 15px;
-        font-size: 0.85rem;
-    }
-
-    .rating-details {
-        border-top: 1px solid #eee;
-        padding-top: 15px;
-        margin-top: 15px;
-    }
-
-    .rating-item {
-        display: flex;
-        justify-content: space-between;
-        margin: 5px 0;
-        font-size: 0.9rem;
-    }
+    /* Остальные стили без изменений */
     </style>
 </head>
 <body>
     <div class="results-container">
         {% for result in result_data %}
         <div class="profile-card">
-            <div class="average-rating">
-                Средняя оценка: {{ result.average|floatformat:1 }}
+            <div class="compatibility-percent">
+                Совместимость: {{ result.compatibility|floatformat:1 }}%
             </div>
 
             <!-- Аватарка -->
