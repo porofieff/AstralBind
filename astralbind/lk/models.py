@@ -110,6 +110,13 @@ class UserProfile(models.Model):
     weights_for_ahp = models.CharField(max_length = 100, null=True)
     user_CR = models.PositiveSmallIntegerField(default=0)
 
+    city_vs_hobby = models.PositiveIntegerField(default=3)
+    city_vs_zodiac = models.PositiveIntegerField(default=3)
+    city_vs_education = models.PositiveIntegerField(default=3)
+    education_vs_hobby = models.PositiveIntegerField(default=3)
+    education_vs_zodiac = models.PositiveIntegerField(default=3)
+    hobby_vs_zodiac = models.PositiveIntegerField(default=3)
+
     def save(self, *args, **kwargs):
         if self.pk:  # Только для существующих объектов
             try:

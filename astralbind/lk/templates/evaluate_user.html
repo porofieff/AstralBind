@@ -7,6 +7,25 @@
     <title>Оценка анкеты</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+    .back-main {
+        border: 2px solid #0056d3;
+        padding: 8px 25px;
+        border-radius: 25px;
+        color: #0056d3;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-weight: 500;
+        background: transparent;
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        z-index: 1000;
+    }
+
+    .back-main:hover {
+        background: #0056d3;
+        color: #fff !important;
+    }
     body {
         background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
         background-size: cover;
@@ -143,6 +162,7 @@
     </style>
 </head>
 <body>
+    <a href="{% url 'main_page' %}" class="back-main">На главную</a>
     <div class="container">
         <div class="profile-header">
             {% if user_profile.photo %}

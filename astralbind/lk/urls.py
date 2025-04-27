@@ -18,4 +18,5 @@ urlpatterns = [
     path('evaluate_user/', views.evaluate_user, name='evaluate_user'),
     path('next_user/', views.next_user, name='next_user'),
     path('results/', views.results, name='results'),
+    path('start_chat/<int:user_id>/', views.start_chat, name='start_chat'),
 ]

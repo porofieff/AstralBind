@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from .forms import CustomUserCreationForm
 from .forms import UserProfileForm
 from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City
@@ -23,6 +24,13 @@ translate = {
     '5': 5.0
 }
 
+RI = {
+    1: 0.00,
+    2: 0.00,
+    3: 0.58,
+    4: 0.90,
+    5: 1.12,
+}
 
 def norm_calculate(matrix):
     weight_criter = []
@@ -111,14 +119,12 @@ def profile_edit(request):
         hobbies = request.POST.getlist('hobbies')
         user_profile.hobbies.set(Hobby.objects.filter(id__in=hobbies))
 
-
-        RI = {
-            1: 0.00,
-            2: 0.00,
-            3: 0.58,
-            4: 0.90,
-            5: 1.12,
-        }
+        user_profile.city_vs_hobby = request.POST.get('city_vs_hobby')
+        user_profile.city_vs_zodiac = request.POST.get('city_vs_zodiac')
+        user_profile.city_vs_education = request.POST.get('city_vs_education')
+        user_profile.education_vs_hobby = request.POST.get('education_vs_hobby')
+        user_profile.education_vs_zodiac = request.POST.get('education_vs_zodiac')
+        user_profile.hobby_vs_zodiac = request.POST.get('hobby_vs_zodiac')
 
         self_city_vs_hobby = translate[request.POST.get('city_vs_hobby')]
         self_city_vs_zodiac = translate[request.POST.get('city_vs_zodiac')]
@@ -140,10 +146,6 @@ def profile_edit(request):
         self_matrix[3][2] = self_education_vs_zodiac
         self_matrix[1][2] = self_hobby_vs_zodiac
         self_matrix[2][1] = 1 / self_hobby_vs_zodiac
-
-        print(type(self_city_vs_hobby), self_city_vs_hobby, self_city_vs_zodiac, self_city_vs_education,
-              self_education_vs_hobby, self_education_vs_zodiac, self_hobby_vs_zodiac)
-        print(self_matrix)
 
         weight_criter = []
         arr_avg_geom = []
@@ -187,18 +189,46 @@ def profile_edit(request):
 @login_required
 def profile_view(request):
     return render(request, 'profile_view.html')
+
+@login_required
+def start_chat(request, user_id):
+    current_user = request.user.userprofile
+    target_user = get_object_or_404(UserProfile, user__id=user_id)
+
+    room = Pair_room.objects.filter((Q(user1=current_user) & Q(user2=target_user)) | (Q(user1=target_user) & Q(user2=current_user))).first()
+
+    if not room:
+        room_name = f"chat_{current_user.id}_{target_user.id}"
+        room = Pair_room.objects.create(
+            room_name=room_name,
+            user1=current_user,
+            user2=target_user
+        )
+        Message.objects.create(
+            room=room,
+            sender=current_user,
+            receiver=target_user,
+            message="Чат начат!"
+        )
+
+    return redirect('chat-room', room_name=room.room_name)
+
 @login_required
 def select_ahp(request):
     return render(request, 'select_ahp.html')
+
 @login_required
 def main_ahp(request):
     return render(request, 'main_ahp.html')
+
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
+
 def logout_view(request):
     logout(request)
     messages.success(request, 'Вы успешно вышли из системы.')
     return redirect('login')
+
 def chat_list(request):
     user_profile = request.user.userprofile
     user_rooms = Pair_room.objects.filter(
@@ -206,6 +236,7 @@ def chat_list(request):
     ).distinct()
 
     return render(request, 'chat_list.html', {'chats': user_rooms})
+
 @login_required
 def filter_ahp(request):
     user_filters, created = UserFilters.objects.get_or_create(user=request.user)

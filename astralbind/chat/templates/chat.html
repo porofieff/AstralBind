@@ -1,11 +1,11 @@
 {% load static %}
 
 <!doctype html>
-<html lang="en">
+<html lang="ru">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Чаты</title>
+        <title>Чат: {{ room_name }}</title>
         <link rel="stylesheet" href="{% static 'chat.css' %}" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     </head>
@@ -20,18 +20,21 @@
             </div>
 
             <div class="content">
-                <h1>Welcome to {{ room_name }}</h1>
+                <h1>Чат: {{ room_name }}</h1>
                 <div class="chats-container" id="chats-container">
                     {% for message in messages %}
-                        {% if message.sender.user.username == user %}
-                            <div class="single-message sent">
-                                <div class="msg-body">{{ message.message }}</div>
-                            </div>
-                        {% else %}
-                            <div class="single-message">
-                                <div class="msg-body">{{ message.message }}</div>
-                            </div>
-                        {% endif %}
+                        <div class="single-message {% if message.sender.user.username == user %}sent{% endif %}">
+                            <div class="msg-body">{{ message.message }}</div>
+                            <p class="sender">
+                                {% if message.sender.user.username == user %}
+                                    Вы
+                                {% else %}
+                                    {{ message.sender.user.username }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    {% empty %}
+                        <div class="no-messages">Сообщений пока нет.</div>
                     {% endfor %}
                 </div>
                 <form action="" id="msg-form" method="post">
@@ -40,7 +43,7 @@
                         id="message"
                         cols="30"
                         rows="2"
-                        placeholder="Enter your message"
+                        placeholder="Введите сообщение..."
                     ></textarea>
                     <button type="submit">&#10003;</button>
                 </form>
@@ -54,6 +57,9 @@
                 const messageForm = document.getElementById("msg-form");
                 const messageInput = document.getElementById("message");
                 const chatsDiv = document.getElementById("chats-container");
+
+                // Автопрокрутка при загрузке страницы
+                scrollToBottom();
 
                 messageForm.addEventListener("submit", (event) => {
                     event.preventDefault();
@@ -86,7 +92,6 @@
                             message: message,
                             sender: "{{ user }}"
                         }));
-                        //appendMessage("{{ user }}", message);
                         messageInput.value = "";
                         messageInput.style.height = "auto";
                     }

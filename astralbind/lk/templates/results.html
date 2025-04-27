@@ -1,137 +1,197 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результаты поиска</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-    /* Стили остаются без изменений */
-    body {
-        background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        min-height: 100vh;
-        margin: 0;
-        font-family: 'Open Sans', sans-serif;
-        padding: 40px 20px;
-    }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Результаты поиска</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            /* Стили остаются без изменений */
+            body {
+                background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                min-height: 100vh;
+                margin: 0;
+                font-family: "Open Sans", sans-serif;
+                padding: 40px 20px;
+            }
 
-    .results-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
-    }
+            .back-main {
+                border: 2px solid #0056d3;
+                padding: 8px 25px;
+                border-radius: 25px;
+                color: #0056d3;
+                text-decoration: none;
+                transition: all 0.3s;
+                font-weight: 500;
+                background: transparent;
+                position: absolute;
+                top: 25px;
+                left: 25px;
+                z-index: 1000;
+            }
 
-    .profile-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(8px);
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
-        position: relative;
-        overflow: hidden;
-    }
+            .back-main:hover {
+                background: #0056d3;
+                color: #fff !important;
+            }
 
-    .profile-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-    }
+            .results-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 30px;
+            }
 
-    .compatibility-percent {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 86, 211, 0.9);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        font-weight: 600;
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
+            .profile-card {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(8px);
+                border-radius: 15px;
+                padding: 25px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                position: relative;
+                overflow: hidden;
+            }
 
-    .profile-card:hover .compatibility-percent {
-        opacity: 1;
-    }
+            .compatibility-percent {
+                color: #0056d3;
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                padding: 8px 12px;
+                background: #f0f5ff;
+                border-radius: 8px;
+                display: inline-block;
+            }
 
-    /* Остальные стили без изменений */
-    </style>
-</head>
-<body>
-    <div class="results-container">
-        {% for result in result_data %}
-        <div class="profile-card">
-            <div class="compatibility-percent">
-                Совместимость: {{ result.compatibility|floatformat:1 }}%
-            </div>
+            .profile-card:hover .compatibility-percent {
+                opacity: 1;
+            }
 
-            <!-- Аватарка -->
-            {% if result.user.photo %}
-                <img src="{{ result.user.photo.url }}" class="profile-photo" alt="Фото">
-            {% else %}
-                <img src="{% static 'images/photo_base.png' %}" class="profile-photo" alt="Фото">
-            {% endif %}
+            .chat-button {
+                border: 2px solid #0056d3;
+                padding: 8px 25px;
+                border-radius: 25px;
+                color: #0056d3;
+                text-decoration: none;
+                transition: all 0.3s;
+                font-weight: 500;
+                background: transparent;
+                display: inline-block;
+                margin-top: 15px;
+            }
 
-            <h3 class="profile-name">{{ result.user.user.first_name }} {{ result.user.user.last_name }}</h3>
+            .chat-button:hover {
+                background: #0056d3;
+                color: #fff !important;
+                transform: none;
+            }
 
-            <!-- Город -->
-            <p class="profile-info">📍 Город: {{ result.user.get_city_display }}</p>
+            .chat-button-container {
+                margin-top: 15px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <a href="{% url 'main_page' %}" class="back-main">На главную</a>
+        <div class="results-container">
+            {% for result in result_data %}
+            <div class="profile-card">
+                <div class="compatibility-percent">
+                    Совместимость: {{ result.compatibility|floatformat:1 }}%
+                </div>
 
-            <!-- Знак зодиака -->
-            {% if result.user.zodiac_sign %}
-                <p class="profile-info">♌ Знак зодиака: {{ result.user.zodiac_sign.name }}</p>
-            {% else %}
+                <!-- Аватарка -->
+                {% if result.user.photo %}
+                <img
+                    src="{{ result.user.photo.url }}"
+                    class="profile-photo"
+                    alt="Фото"
+                />
+                {% else %}
+                <img
+                    src="{% static 'images/photo_base.png' %}"
+                    class="profile-photo"
+                    alt="Фото"
+                />
+                {% endif %}
+
+                <h3 class="profile-name">
+                    {{ result.user.user.first_name }} {{
+                    result.user.user.last_name }}
+                </h3>
+
+                <!-- Город -->
+                <p class="profile-info">
+                    📍 Город: {{ result.user.get_city_display }}
+                </p>
+
+                <!-- Знак зодиака -->
+                {% if result.user.zodiac_sign %}
+                <p class="profile-info">
+                    ♌ Знак зодиака: {{ result.user.zodiac_sign.name }}
+                </p>
+                {% else %}
                 <p class="profile-info">♌ Знак зодиака: <em>Не указан</em></p>
-            {% endif %}
+                {% endif %}
 
-            <!-- Образование -->
-            {% if result.user.education %}
-                <p class="profile-info">🎓 Образование: {{ result.user.education.name }}</p>
-            {% else %}
+                <!-- Образование -->
+                {% if result.user.education %}
+                <p class="profile-info">
+                    🎓 Образование: {{ result.user.education.name }}
+                </p>
+                {% else %}
                 <p class="profile-info">🎓 Образование: <em>Не указано</em></p>
-            {% endif %}
+                {% endif %}
 
-            <!-- Хобби -->
-            {% if result.user.hobbies.all %}
-            <div class="hobbies-list">
-                {% for hobby in result.user.hobbies.all %}
-                <span class="hobby-tag">{{ hobby.name }}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
+                <!-- Хобби -->
+                {% if result.user.hobbies.all %}
+                <div class="hobbies-list">
+                    {% for hobby in result.user.hobbies.all %}
+                    <span class="hobby-tag">{{ hobby.name }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
 
-            <!-- Оценки -->
-            <div class="rating-details">
-                <div class="rating-item">
-                    <span>Хобби:</span>
-                    <span>{{ result.rating.hobby_rating }}</span>
+                <!-- Оценки -->
+                <div class="rating-details">
+                    <div class="rating-item">
+                        <span>Хобби:</span>
+                        <span>{{ result.rating.hobby_rating }}</span>
+                    </div>
+                    <div class="rating-item">
+                        <span>Город:</span>
+                        <span>{{ result.rating.city_rating }}</span>
+                    </div>
+                    <div class="rating-item">
+                        <span>Знак зодиака:</span>
+                        <span>{{ result.rating.zodiac_rating }}</span>
+                    </div>
+                    <div class="rating-item">
+                        <span>Образование:</span>
+                        <span>{{ result.rating.education_rating }}</span>
+                    </div>
                 </div>
-                <div class="rating-item">
-                    <span>Город:</span>
-                    <span>{{ result.rating.city_rating }}</span>
-                </div>
-                <div class="rating-item">
-                    <span>Знак зодиака:</span>
-                    <span>{{ result.rating.zodiac_rating }}</span>
-                </div>
-                <div class="rating-item">
-                    <span>Образование:</span>
-                    <span>{{ result.rating.education_rating }}</span>
+                <div class="chat-button-container">
+                    <a
+                        href="{% url 'start_chat' result.user.user.id %}"
+                        class="chat-button"
+                    >
+                        💬 Начать общение
+                    </a>
                 </div>
             </div>
+
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-</body>
+    </body>
 </html>
