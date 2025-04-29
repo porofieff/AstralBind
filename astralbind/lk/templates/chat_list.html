@@ -13,8 +13,8 @@
             <div class="nav-buttons">
                 <div>
                     <a href="{% url 'main_page' %}" class="back-main">Главная страница</a>
+                    <a href="{% url 'profile' %}" class="back-profile">Профиль</a>
                 </div>
-                <div></div>
             </div>
 
             <div class="content">
@@ -23,30 +23,32 @@
                 {% if chats %}
                 <ul class="chats-container" style="height: auto; padding: 0">
                     {% for chat in chats %}
-                    <li
-                        class="single-message"
-                        style="margin: 10px 0; list-style: none"
-                    >
+                    <li class="single-chat" style="margin: 10px 0; list-style: none">
                         <a
                             href="{% url 'chat-room' chat.room_name %}"
-                            class="msg-body"
+                            class="chat-link"
                             style="
                                 text-decoration: none;
                                 color: #0056d3;
                                 display: block;
+                                padding: 10px;
+                                border: 1px solid #ddd;
+                                border-radius: 5px;
                             "
                         >
-                            {{ chat.room_name }}
+                            Чат с
+                            {% if chat.user1.user == request.user %}
+                                {{ chat.user2.user.first_name }}
+                            {% else %}
+                                {{ chat.user1.user.first_name }}
+                            {% endif %}
                         </a>
                     </li>
                     {% endfor %}
                 </ul>
                 {% else %}
-                <div
-                    class="single-message"
-                    style="text-align: center; color: #666"
-                >
-                    <p class="msg-body">У вас пока нет активных чатов</p>
+                <div class="no-chats" style="text-align: center; color: #666; padding: 20px">
+                    <p>У вас пока нет активных чатов</p>
                 </div>
                 {% endif %}
             </div>

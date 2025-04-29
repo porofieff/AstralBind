@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
@@ -229,13 +230,13 @@ def logout_view(request):
     messages.success(request, 'Вы успешно вышли из системы.')
     return redirect('login')
 
+@login_required
 def chat_list(request):
     user_profile = request.user.userprofile
-    user_rooms = Pair_room.objects.filter(
-        message__sender=user_profile
-    ).distinct()
+    user_rooms = Pair_room.objects.filter(Q(user1=user_profile) | Q(user2=user_profile)).distinct()
 
     return render(request, 'chat_list.html', {'chats': user_rooms})
+
 
 @login_required
 def filter_ahp(request):

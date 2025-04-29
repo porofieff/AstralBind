@@ -10,7 +10,6 @@
             rel="stylesheet"
         />
         <style>
-            /* Стили остаются без изменений */
             body {
                 background-image: url("{% static 'images/bg_profile_view_edit.jpg' %}");
                 background-size: cover;
@@ -126,8 +125,7 @@
                 {% endif %}
 
                 <h3 class="profile-name">
-                    {{ result.user.user.first_name }} {{
-                    result.user.user.last_name }}
+                    {{ result.user.user.first_name }} {{ result.user.user.last_name }}
                 </h3>
 
                 <!-- Город -->

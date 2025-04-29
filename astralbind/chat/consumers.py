@@ -1,13 +1,11 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
-
 from .models import Pair_room, Message
 from lk.models import UserProfile
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        #self.user = self.scope['user']
         self.room_name = self.scope['url_route']['kwargs']['match_id']
         self.group_name = f'chat_{self.room_name}'
 
@@ -24,7 +22,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
-
         try:
             data = json.loads(text_data)
             if not all(key in data for key in ['message', 'sender']):
@@ -35,23 +32,26 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 {
                     'type': 'chat_message',
                     'message': data['message'],
-                    'sender': data['sender']
+                    'sender': data['sender'],
+                    'saved': False
                 }
+            )
+
+            # Затем сохраняем в БД
+            await self.save_message(
+                data['message'],
+                data['sender'],
+                self.room_name
             )
 
         except (json.JSONDecodeError, ValueError) as e:
             print(f"Error processing message: {str(e)}")
 
     async def chat_message(self, event):
-        await self.save_message(
-            event['message'],
-            event['sender'],
-            self.room_name
-        )
-
         await self.send(text_data=json.dumps({
             'message': event['message'],
             'sender': event['sender'],
+            'saved': True
         }))
 
     @database_sync_to_async

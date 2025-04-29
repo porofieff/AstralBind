@@ -20,7 +20,6 @@
             </div>
 
             <div class="content">
-                <h1>Чат: {{ room_name }}</h1>
                 <div class="chats-container" id="chats-container">
                     {% for message in messages %}
                         <div class="single-message {% if message.sender.user.username == user %}sent{% endif %}">
@@ -58,7 +57,6 @@
                 const messageInput = document.getElementById("message");
                 const chatsDiv = document.getElementById("chats-container");
 
-                // Автопрокрутка при загрузке страницы
                 scrollToBottom();
 
                 messageForm.addEventListener("submit", (event) => {
@@ -80,8 +78,15 @@
 
                 socket.addEventListener("message", (e) => {
                     const data = JSON.parse(e.data);
+
                     if (!data.saved) {
                         appendMessage(data.sender, data.message);
+                    }
+                    else {
+                        const lastMessage = chatsDiv.lastElementChild;
+                        if (lastMessage && !lastMessage.querySelector('.msg-body').textContent.includes(data.message)) {
+                            appendMessage(data.sender, data.message);
+                        }
                     }
                 });
 
