@@ -189,7 +189,7 @@ def profile_edit(request):
 
 @login_required
 def profile_view(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
     criteria_names = ['Город', 'Хобби', 'Знак зодиака', 'Образование']
     weights = []
@@ -206,7 +206,7 @@ def profile_view(request):
         'profile_view': user_profile,
         'weights_with_names': weights_with_names
     })
-    
+
 @login_required
 def start_chat(request, user_id):
     current_user = request.user.userprofile
@@ -351,7 +351,7 @@ def evaluate_user(request):
     # Если доступных пользователей меньше 5 - переходим к результатам
     if not available_users.exists() and len(shown_users) >= 1:
         return redirect('results')
-    
+
     if not available_users.exists() and not shown_users:
         return render(
             request,
@@ -393,20 +393,20 @@ def results(request):
     matrix_city = np.ones((cnt_users, cnt_users))
 
     for i, rating in enumerate(ratings):
-        user_hobby_rating = float(rating['hobby_rating'])
-        user_city_rating = float(rating['city_rating'])
-        user_zodiac_rating = float(rating['zodiac_rating'])
-        user_education_rating = float(rating['education_rating'])
+        user_hobby_rating = str(rating['hobby_rating'])
+        user_city_rating = str(rating['city_rating'])
+        user_zodiac_rating = str(rating['zodiac_rating'])
+        user_education_rating = str(rating['education_rating'])
 
         for j in range(i + 1, cnt_users):
-            matrix_hobby[i][j] = user_hobby_rating
-            matrix_hobby[j][i] = 1 / user_hobby_rating
-            matrix_city[i][j] = user_city_rating
-            matrix_city[j][i] = 1 / user_city_rating
-            matrix_zodiac[i][j] = user_zodiac_rating
-            matrix_zodiac[j][i] = 1 / user_zodiac_rating
-            matrix_education[i][j] = user_education_rating
-            matrix_education[j][i] = 1 / user_education_rating
+            matrix_hobby[i][j] = translate[user_hobby_rating]
+            matrix_hobby[j][i] = 1 / translate[user_hobby_rating]
+            matrix_city[i][j] = translate[user_city_rating]
+            matrix_city[j][i] = 1 / translate[user_city_rating]
+            matrix_zodiac[i][j] = translate[user_zodiac_rating]
+            matrix_zodiac[j][i] = 1 / translate[user_zodiac_rating]
+            matrix_education[i][j] = translate[user_education_rating]
+            matrix_education[j][i] = 1 / translate[user_education_rating]
 
     norm_hobbies = norm_calculate(matrix_hobby)
     norm_zodiac = norm_calculate(matrix_zodiac)
