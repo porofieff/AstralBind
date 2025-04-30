@@ -88,6 +88,37 @@
                 margin-top: 15px;
             }
 
+            .photo-container {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        padding: 6px;
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 2px solid #e0e0e0;
+        overflow: hidden;
+    }
+
+    .profile-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        transition: transform 0.3s;
+    }
+
+    .profile-card:hover .profile-photo {
+        transform: scale(1.05);
+    }
+
+    /* Для базового изображения */
+    .profile-photo[src*="photo_base.png"] {
+        object-fit: contain;
+        padding: 20%;
+        background: #f8f9fa;
+    }
+
             .chat-button:hover {
                 background: #0056d3;
                 color: #fff !important;
@@ -110,19 +141,13 @@
                 </div>
 
                 <!-- Аватарка -->
-                {% if result.user.photo %}
-                <img
-                    src="{{ result.user.photo.url }}"
-                    class="profile-photo"
-                    alt="Фото"
-                />
-                {% else %}
-                <img
-                    src="{% static 'images/photo_base.png' %}"
-                    class="profile-photo"
-                    alt="Фото"
-                />
-                {% endif %}
+                <div class="photo-container">
+        {% if result.user.photo %}
+        <img src="{{ result.user.photo.url }}" class="profile-photo" alt="Фото">
+        {% else %}
+        <img src="{% static 'images/photo_base.png' %}" class="profile-photo" alt="Фото">
+        {% endif %}
+    </div>
 
                 <h3 class="profile-name">
                     {{ result.user.user.first_name }} {{ result.user.user.last_name }}

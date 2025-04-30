@@ -272,6 +272,7 @@ def view_form(request):
 
 from django.db.models import Q
 
+
 @login_required
 def evaluate_user(request):
     if 'new_search' in request.GET:
@@ -280,20 +281,30 @@ def evaluate_user(request):
         request.session['current_user_id'] = None
         request.session.modified = True
 
+    user_filters = UserFilters.objects.get(user=request.user)
     try:
-        user_filters = UserFilters.objects.get(user=request.user)
-    except UserFilters.DoesNotExist:
-        user_filters = None
-
+        current_user_sex = request.user.userprofile.sex
+    except UserProfile.DoesNotExist:
+        return redirect('profile_edit')
     users = UserProfile.objects.exclude(user=request.user)
 
+    opposite_sex = 2 if current_user_sex == 1 else 1
+    users = UserProfile.objects.exclude(user=request.user).filter(sex=opposite_sex)
+
     if user_filters:
+        # Фильтр по городу
         if user_filters.city:
             users = users.filter(city=user_filters.city)
+
+        # Фильтр по знаку зодиака
         if user_filters.zodiac_sign:
             users = users.filter(zodiac_sign=user_filters.zodiac_sign)
+
+        # Фильтр по образованию
         if user_filters.education:
             users = users.filter(education=user_filters.education)
+
+        # Фильтр по хобби (хотя бы одно совпадение)
         if user_filters.hobbies.exists():
             query = Q()
             for hobby in user_filters.hobbies.all():
@@ -302,14 +313,6 @@ def evaluate_user(request):
 
     shown_users = request.session.get('shown_users', [])
     available_users = users.exclude(id__in=shown_users)
-
-    if not available_users.exists() and not shown_users:
-        return render(
-            request,
-            'no_users_found.html',
-            {'redirect_url': reverse('filter_ahp')},
-            status=404
-        )
 
     if request.method == 'POST':
         current_user_id = request.session.get('current_user_id')
@@ -325,6 +328,14 @@ def evaluate_user(request):
             request.session['ratings'] = ratings
             request.session.modified = True
 
+            # Перенос проверки СЮДА после сохранения рейтинга
+            if len(ratings) >= 5:
+                return redirect('results')  # Немедленный редирект при достижении 5
+
+    # Если доступных пользователей меньше 5 - переходим к результатам
+    if not available_users.exists() and len(shown_users) >= 1:
+        return redirect('results')
+
     try:
         random_user = random.choice(available_users)
     except IndexError:
@@ -334,15 +345,14 @@ def evaluate_user(request):
     request.session['shown_users'] = shown_users
     request.session['current_user_id'] = random_user.id
     request.session.modified = True
-    is_final = len(shown_users) >= 5 or len(shown_users) >= available_users.count()
+
+    # Всегда показываем кнопку "Далее", но ограничиваем максимум 5 оценок
+    is_final = len(shown_users) >= 5 or len(available_users) == 1
 
     return render(request, 'evaluate_user.html', {
         'user_profile': random_user,
         'is_final': is_final
     })
-
-
-
 @login_required
 def results(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
