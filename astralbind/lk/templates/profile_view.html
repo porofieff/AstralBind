@@ -320,6 +320,27 @@
                     <p>{{ user.userprofile.life_goal }}</p>
                 </div>
                 {% endif %}
+                {% if user.userprofile.weights_for_ahp %}
+                <div class="profile-info-section">
+                    <h2>Вес критериев</h2>
+                    <ul>
+                        {% for name, weight in weights_with_names %}
+                          <li><strong>{{ name }}:</strong> {{ weight|floatformat:2 }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% if user.userprofile.user_CR is not None %}
+                <div class="profile-info-section">
+                    <h2>Индекс согласованности (CR)</h2>
+                    {% if user.userprofile.user_CR <= 10 %} <p style="color: green;"><strong>{{ user.userprofile.user_CR|floatformat:1}}
+                    </strong> — хорошая согласованность</p>
+                    {% else %}
+                        <p style="color: red;"><strong>{{ user.userprofile.user_CR|floatformat:1 }}</strong> — низкая согласованность
+                            (следует пересмотреть оценки)</p>
+                    {% endif %}
+                </div>
+                {% endif %}
             </div>
         </div>
 

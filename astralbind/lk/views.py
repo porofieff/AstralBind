@@ -189,8 +189,24 @@ def profile_edit(request):
 
 @login_required
 def profile_view(request):
-    return render(request, 'profile_view.html')
+    user_profile = UserProfile.objects.get(user=request.user)
 
+    criteria_names = ['Город', 'Хобби', 'Знак зодиака', 'Образование']
+    weights = []
+
+    if user_profile.weights_for_ahp:
+        try:
+            weights = json.loads(user_profile.weights_for_ahp)
+        except json.JSONDecodeError:
+            weights = []
+
+    weights_with_names = list(zip(criteria_names, weights))
+
+    return render(request, 'profile_view.html', {
+        'profile_view': user_profile,
+        'weights_with_names': weights_with_names
+    })
+    
 @login_required
 def start_chat(request, user_id):
     current_user = request.user.userprofile
@@ -335,7 +351,14 @@ def evaluate_user(request):
     # Если доступных пользователей меньше 5 - переходим к результатам
     if not available_users.exists() and len(shown_users) >= 1:
         return redirect('results')
-
+    
+    if not available_users.exists() and not shown_users:
+        return render(
+            request,
+            'no_users_found.html',
+            {'redirect_url': reverse('filter_ahp')},
+            status=404
+        )
     try:
         random_user = random.choice(available_users)
     except IndexError:
@@ -370,10 +393,10 @@ def results(request):
     matrix_city = np.ones((cnt_users, cnt_users))
 
     for i, rating in enumerate(ratings):
-        user_hobby_rating = int(rating['hobby_rating'])
-        user_city_rating = int(rating['city_rating'])
-        user_zodiac_rating = int(rating['zodiac_rating'])
-        user_education_rating = int(rating['education_rating'])
+        user_hobby_rating = float(rating['hobby_rating'])
+        user_city_rating = float(rating['city_rating'])
+        user_zodiac_rating = float(rating['zodiac_rating'])
+        user_education_rating = float(rating['education_rating'])
 
         for j in range(i + 1, cnt_users):
             matrix_hobby[i][j] = user_hobby_rating
