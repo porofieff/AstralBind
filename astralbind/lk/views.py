@@ -413,6 +413,19 @@ def results(request):
     norm_education = norm_calculate(matrix_education)
     norm_city = norm_calculate(matrix_city)
 
+    print('------------------------')
+    print('matrix_city')
+    print(matrix_city)
+    print('------------------------')
+    print('matrix_education')
+    print(matrix_education)
+    print('------------------------')
+    print('matrix_zodiac')
+    print(matrix_zodiac)
+    print('------------------------')
+    print('matrix_hobby')
+    print(matrix_hobby)
+
     norm_all_matrix = np.array([norm_hobbies, norm_zodiac, norm_education, norm_city])
 
     user_weights = json.loads(user_profile.weights_for_ahp)
