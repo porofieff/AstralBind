@@ -220,6 +220,62 @@
                 margin-bottom: 1rem;
             }
         }
+        .comments-section {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comments-section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #4dabf7;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .comments-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .comment-card {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border-left: 4px solid #4dabf7;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .comment-author {
+            color: #2c3e50;
+        }
+        
+        .comment-date {
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .comment-body {
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .comment-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -244,8 +300,6 @@
                          class="profile-logo"
                          alt="Логотип сервиса">
                 </div>
-
-                <!-- Основная информация -->
                 <div class="profile-info-section">
                     <h2>Основные данные</h2>
                     <p><strong>Имя:</strong> {{ user.first_name }}</p>
@@ -262,8 +316,6 @@
                         <p><strong>Дети:</strong> {{ user.userprofile.children_count }} ребёнок(а)</p>
                     {% endif %}
                 </div>
-
-                <!-- Хобби -->
                 {% if user.userprofile.hobbies.all %}
                 <div class="profile-info-section">
                     <h2>Хобби и увлечения</h2>
@@ -282,16 +334,12 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-
-                <!-- О хобби -->
                 {% if user.userprofile.hobby_description %}
                 <div class="profile-info-section">
                     <h2>О хобби</h2>
                     <p>{{ user.userprofile.hobby_description }}</p>
                 </div>
                 {% endif %}
-
-                <!-- Характер -->
                 {% if user.userprofile.character %}
                 <div class="profile-info-section">
                     <h2>Особенности характера</h2>
@@ -312,8 +360,6 @@
                     <p>{{ user.userprofile.education.name }}</p>
                 </div>
                 {% endif %}
-
-                <!-- Цели в жизни -->
                 {% if user.userprofile.life_goal %}
                 <div class="profile-info-section">
                     <h2>Цель в жизни</h2>
@@ -343,6 +389,28 @@
                 {% endif %}
             </div>
         </div>
+        {% if comments %}
+        <div class="comments-section">
+            <h2>Комментарии от других пользователей</h2>
+            <div class="comments-container">
+                {% for comment in comments %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <strong>{{ comment.author.user.get_full_name|default:comment.author.user.username }}</strong>
+                        </div>
+                        <div class="comment-date">
+                            {{ comment.created_at|date:"d.m.Y в H:i" }}
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        {{ comment.text }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
         <div class="action-buttons">
             <a href="{% url 'profile_edit' %}" class="edit-btn">Редактировать профиль ✏️</a>

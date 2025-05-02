@@ -97,6 +97,16 @@
             color: #fff !important;
         }
 
+        .comment-button {
+            border-color: #4CAF50;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+
+        .comment-button:hover {
+            background: #4CAF50;
+        }
+
         .favorite-heart {
             position: absolute;
             top: 20px;
@@ -142,61 +152,139 @@
             opacity: 0.7;
             margin-bottom: 20px;
         }
+
+        a.profile-link {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a.profile-link:hover {
+            color: #0056d3;
+        }
+
+        .requirements-hint {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #666;
+            border-left: 4px solid #4dabf7;
+        }
+
+        .hint-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+        }
+
+        .status-check {
+            color: #4CAF50;
+            font-size: 1.2rem;
+            min-width: 20px;
+        }
+
+        .status-cross {
+            color: #ff4081;
+            font-size: 1.2rem;
+            min-width: 20px;
+        }
+
+        .condition-progress {
+            font-size: 0.85em;
+            color: #999;
+            margin: 10px 0 0 28px;
+        }
     </style>
 </head>
 <body>
     <div class="results-container">
-        {% for favorite in favorites %}
+        {% for favorite_data in favorites_data %}
         <div class="profile-card">
-            <form method="post" action="{% url 'toggle_favorite' favorite.favorite_user.id %}">
+            <form method="post" action="{% url 'toggle_favorite' favorite_data.favorite.favorite_user.user.id %}">
                 {% csrf_token %}
+                <input type="hidden" name="redirect_to" value="favorites">
                 <button type="submit" class="favorite-heart">♥</button>
             </form>
 
             <div class="photo-container">
-                {% if favorite.favorite_user.photo %}
-                <img src="{{ favorite.favorite_user.photo.url }}" class="profile-photo" alt="Фото профиля">
+                {% if favorite_data.favorite.favorite_user.photo %}
+                <img src="{{ favorite_data.favorite.favorite_user.photo.url }}" class="profile-photo" alt="Фото профиля">
                 {% else %}
                 <img src="{% static 'images/photo_base.png' %}" class="profile-photo" alt="Фото профиля">
                 {% endif %}
             </div>
 
             <h3 class="profile-name">
-                {{ favorite.favorite_user.user.first_name }} {{ favorite.favorite_user.user.last_name }}
+                <a href="{% url 'user_profile' favorite_data.favorite.favorite_user.user.id %}" class="profile-link">
+                    {{ favorite_data.favorite.favorite_user.user.first_name }}
+                    {{ favorite_data.favorite.favorite_user.user.last_name }}
+                </a>
             </h3>
 
             <p class="profile-info">
-                📍 Город: {{ favorite.favorite_user.get_city_display }}
+                📍 Город: {{ favorite_data.favorite.favorite_user.get_city_display }}
             </p>
 
-            {% if favorite.favorite_user.zodiac_sign %}
+            {% if favorite_data.favorite.favorite_user.zodiac_sign %}
             <p class="profile-info">
-                ♌ Знак зодиака: {{ favorite.favorite_user.zodiac_sign.name }}
+                ♌ Знак зодиака: {{ favorite_data.favorite.favorite_user.zodiac_sign.name }}
             </p>
             {% else %}
             <p class="profile-info">♌ Знак зодиака: <em>Не указан</em></p>
             {% endif %}
 
-            {% if favorite.favorite_user.education %}
+            {% if favorite_data.favorite.favorite_user.education %}
             <p class="profile-info">
-                🎓 Образование: {{ favorite.favorite_user.education.name }}
+                🎓 Образование: {{ favorite_data.favorite.favorite_user.education.name }}
             </p>
             {% else %}
             <p class="profile-info">🎓 Образование: <em>Не указано</em></p>
             {% endif %}
 
-            {% if favorite.favorite_user.hobbies.all %}
+            {% if favorite_data.favorite.favorite_user.hobbies.all %}
             <div class="profile-info">
                 <strong>Хобби:</strong>
-                {% for hobby in favorite.favorite_user.hobbies.all %}
+                {% for hobby in favorite_data.favorite.favorite_user.hobbies.all %}
                 <span class="hobby-tag">{{ hobby.name }}</span>
                 {% endfor %}
             </div>
             {% endif %}
 
-            <a href="{% url 'start_chat' favorite.favorite_user.user.id %}" class="chat-button">
+            <a href="{% url 'start_chat' favorite_data.favorite.favorite_user.user.id %}" class="chat-button">
                 💬 Начать общение
             </a>
+
+            <div class="comment-section">
+                {% if favorite_data.is_mutual and favorite_data.message_count > 10 %}
+                    <a href="{% url 'add_comment' favorite_data.favorite.favorite_user.user.id %}"
+                       class="chat-button comment-button">
+                        📝 Оставить комментарий
+                    </a>
+                {% else %}
+                    <div class="requirements-hint">
+                        <div class="hint-item">
+                            <span class="{% if favorite_data.is_mutual %}status-check{% else %}status-cross{% endif %}">
+                                {% if favorite_data.is_mutual %}✓{% else %}✕{% endif %}
+                            </span>
+                            <span>Взаимное добавление в избранное</span>
+                        </div>
+
+                        <div class="hint-item">
+                            <span class="{% if favorite_data.message_count > 10 %}status-check{% else %}status-cross{% endif %}">
+                                {% if favorite_data.message_count > 10 %}✓{% else %}✕{% endif %}
+                            </span>
+                            <span>Сообщений в чате: {{ favorite_data.message_count }}/10</span>
+                        </div>
+
+                        <p class="condition-progress">
+                            Для комментирования должны быть выполнены оба условия
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
         {% empty %}
         <div class="empty-state">

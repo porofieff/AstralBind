@@ -185,10 +185,11 @@
         <div class="results-container">
             {% for result in result_data %}
             <div class="profile-card">
-                 <form method="post" action="{% url 'toggle_favorite' result.user.id %}" class="favorite-form">
-                    {% csrf_token %}
-                    <button type="submit" class="favorite-heart {% if result.is_favorite %}active{% endif %}"></button>
-                </form>
+                 <form method="post" action="{% url 'toggle_favorite' result.user.user.id %}" class="favorite-form">
+    {% csrf_token %}
+    <input type="hidden" name="redirect_to" value="results">
+    <button type="submit" class="favorite-heart {% if result.is_favorite %}active{% endif %}"></button>
+</form>
 
                 <div class="compatibility-percent">
                     Совместимость: {{ result.compatibility|floatformat:1 }}%
@@ -206,13 +207,9 @@
                 <h3 class="profile-name">
                     {{ result.user.user.first_name }} {{ result.user.user.last_name }}
                 </h3>
-
-                <!-- Город -->
                 <p class="profile-info">
                     📍 Город: {{ result.user.get_city_display }}
                 </p>
-
-                <!-- Знак зодиака -->
                 {% if result.user.zodiac_sign %}
                 <p class="profile-info">
                     ♌ Знак зодиака: {{ result.user.zodiac_sign.name }}
@@ -220,8 +217,6 @@
                 {% else %}
                 <p class="profile-info">♌ Знак зодиака: <em>Не указан</em></p>
                 {% endif %}
-
-                <!-- Образование -->
                 {% if result.user.education %}
                 <p class="profile-info">
                     🎓 Образование: {{ result.user.education.name }}
@@ -229,8 +224,6 @@
                 {% else %}
                 <p class="profile-info">🎓 Образование: <em>Не указано</em></p>
                 {% endif %}
-
-                <!-- Хобби -->
                 {% if result.user.hobbies.all %}
                 <div class="hobbies-list">
                     {% for hobby in result.user.hobbies.all %}
@@ -238,8 +231,6 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-
-                <!-- Оценки -->
                 <div class="rating-details">
                     <div class="rating-item">
                         <span>Хобби:</span>

@@ -193,8 +193,6 @@
             <form method="POST">
                 {% csrf_token %}
 
-                <!-- Знаки зодиака -->
-<!-- Знаки зодиака -->
 <div class="input-group">
     <label>Знак зодиака ♋️</label>
     <select name="zodiac_sign">
@@ -208,7 +206,6 @@
     </select>
 </div>
 
-<!-- Города -->
 <div class="input-group">
     <label>Город 🏙</label>
     <select name="city">
@@ -221,8 +218,6 @@
         {% endfor %}
     </select>
 </div>
-
-<!-- Хобби -->
                     <div class="input-group">
                         <label>Выберите хобби 🎨</label>
                         {% for group in hobby_groups %}
@@ -248,7 +243,6 @@
                         {% endfor %}
                     </div>
 
-<!-- Образование -->
 <div class="input-group">
     <label>Образование 🎓</label>
     <select name="education">

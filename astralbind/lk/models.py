@@ -14,7 +14,7 @@ class ZodiacSign(models.Model):
     def __str__(self):
         return self.name
 
-class City(models.Model):  # Новая модель для городов
+class City(models.Model):
     name = models.CharField("Название города", max_length=100)
 
     def __str__(self):
@@ -105,7 +105,7 @@ class UserProfile(models.Model):
         default=1,
         verbose_name="Пол"
     )
-    city = models.PositiveSmallIntegerField(('city'), choices=CITIES, blank=True, default=1) #!временно пустые строки разрешены, сначала раздадим всем пользователям города
+    city = models.PositiveSmallIntegerField(('city'), choices=CITIES, blank=True, default=1)
 
     weights_for_ahp = models.CharField(max_length = 100, null=True)
     user_CR = models.PositiveSmallIntegerField(default=0)
@@ -117,8 +117,11 @@ class UserProfile(models.Model):
     education_vs_zodiac = models.PositiveIntegerField(default=3)
     hobby_vs_zodiac = models.PositiveIntegerField(default=3)
 
+    def is_favorite(self, target_profile):
+        return self.favorites.filter(favorite_user=target_profile).exists()
+
     def save(self, *args, **kwargs):
-        if self.pk:  # Только для существующих объектов
+        if self.pk:
             try:
                 old_instance = UserProfile.objects.get(pk=self.pk)
                 if old_instance.photo and old_instance.photo != self.photo:
@@ -127,7 +130,6 @@ class UserProfile(models.Model):
             except UserProfile.DoesNotExist:
                 pass
 
-        # Сохраняем новое фото
         super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.user.username}'
@@ -159,3 +161,12 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.user} → {self.favorite_user}"
+
+class Comment(models.Model):
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='authored_comments')
+    target_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='comments')
+    text = models.TextField("Текст комментария")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Комментарий от {self.author.user.username} к {self.target_user.user.username}"

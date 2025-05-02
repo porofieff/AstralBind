@@ -131,14 +131,12 @@
     transform: scale(1.05);
 }
 
-/* Для базового изображения (заглушки) */
 .photo-frame img[src*="photo_base.png"] {
     object-fit: contain;
     padding: 15%;
     background: #f8f9fa;
 }
 
-    /* Стили для ползунков */
     .rating-group {
         margin: 25px 0;
     }
@@ -208,7 +206,6 @@
     <h1 class="profile-name">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h1>
 </div>
 
-        <!-- Основная информация -->
         <div class="profile-info-section">
     <h2>Основные данные</h2>
     <p class="profile-info-item">📍 Город: {{ user_profile.get_city_display }}</p>
@@ -224,7 +221,6 @@
     {% endif %}
 </div>
 
-        <!-- Хобби -->
         {% if user_profile.hobbies.all %}
         <div class="profile-info-section">
             <h2>Хобби</h2>
@@ -236,7 +232,6 @@
         </div>
         {% endif %}
 
-        <!-- Дополнительные разделы -->
         {% if user_profile.hobby_description %}
         <div class="profile-info-section">
             <h2>О хобби</h2>
@@ -258,7 +253,6 @@
         </div>
         {% endif %}
 
-        <!-- Форма оценки -->
         <form method="POST" action="{% url 'next_user' %}">
             {% csrf_token %}
             <div class="rating-group">
@@ -304,7 +298,6 @@
     </div>
 
     <script>
-        // Обновление значений ползунков
         const updateValue = (sliderId, valueId) => {
             const slider = document.getElementById(sliderId);
             const value = document.getElementById(valueId);

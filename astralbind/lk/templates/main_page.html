@@ -29,8 +29,6 @@
                 margin: 0 auto;
                 padding: 0 20px;
             }
-
-            /* Навигация */
             .navbar {
                 background: #fff;
                 padding: 15px 0;
@@ -80,8 +78,6 @@
                 background: #0056d3;
                 color: #fff !important;
             }
-
-            /* Герой-секция */
             .hero {
                 padding: 120px 0 80px;
                 text-align: center;
@@ -120,8 +116,6 @@
                 transform: translateY(-2px);
                 box-shadow: 0 7px 20px rgba(0, 86, 211, 0.4);
             }
-
-            /* Секция функций */
             .features {
                 padding: 100px 0;
             }
@@ -173,7 +167,6 @@
                 line-height: 1.8;
             }
 
-            /* Секция профилей */
             .profiles {
                 padding: 80px 0;
                 background: #f8f9fa;
@@ -233,7 +226,6 @@
                 background: #0040a1;
             }
 
-            /* Секция преимуществ */
             .benefits {
                 padding: 100px 0;
                 background: #fff;
@@ -282,8 +274,6 @@
                 font-size: 1rem;
                 line-height: 1.6;
             }
-
-            /* Адаптивность */
             @media (max-width: 992px) {
                 .hero h1 {
                     font-size: 2.2rem;
@@ -322,8 +312,6 @@
                     font-size: 2rem;
                 }
             }
-
-            /* Ленивая загрузка */
             .lazy {
                 opacity: 0;
                 transition: opacity 0.5s ease;
@@ -335,7 +323,6 @@
         </style>
     </head>
     <body>
-        <!-- Навигация -->
         <nav class="navbar">
             <div class="container nav-content">
                 <div class="logo">
@@ -353,8 +340,6 @@
                 <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
             </div>
         </nav>
-
-        <!-- Герой-секция -->
         <section class="hero">
             <div class="container">
                 <h1>Найдите любовь своей жизни</h1>
@@ -365,8 +350,6 @@
                 <a href="{% url 'main_ahp' %}" class="cta-button">Начать поиск</a>
             </div>
         </section>
-
-        <!-- Функции -->
         <section class="features">
             <div class="container">
                 <div class="feature-card">
@@ -432,9 +415,6 @@
                 </div>
             </div>
         </section>
-        `
-
-        <!-- Преимущества -->
         <section class="benefits">
             <div class="container">
                 <div class="benefits-grid">
@@ -501,8 +481,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Скрипт ленивой загрузки -->
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const lazyLoad = (targets) => {

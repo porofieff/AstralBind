@@ -4,14 +4,14 @@ from django.contrib.auth import authenticate, login, update_session_auth_hash, l
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Exists, OuterRef
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponseForbidden
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CommentForm
 from .forms import UserProfileForm
-from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City, Favorite
+from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City, Favorite, Comment
 from chat.models import Pair_room, Message
 import random
 import numpy as np
@@ -203,10 +203,12 @@ def profile_view(request):
             weights = []
 
     weights_with_names = list(zip(criteria_names, weights))
+    comments = Comment.objects.filter(target_user=user_profile).select_related('author__user').order_by('-created_at')
 
     return render(request, 'profile_view.html', {
         'profile_view': user_profile,
-        'weights_with_names': weights_with_names
+        'weights_with_names': weights_with_names,
+        'comments': comments
     })
 
 @login_required
@@ -300,7 +302,6 @@ def evaluate_user(request):
         request.session.modified = True
 
     user_profile = request.user.userprofile
-    # Получаем ID пользователей, которые уже в избранном
     favorite_users = Favorite.objects.filter(user=user_profile).values_list('favorite_user_id', flat=True)
 
 
@@ -319,19 +320,12 @@ def evaluate_user(request):
 
     user_filters = UserFilters.objects.get(user=request.user)
     if user_filters:
-        # Фильтр по городу
         if user_filters.city:
             users = users.filter(city=user_filters.city)
-
-        # Фильтр по знаку зодиака
         if user_filters.zodiac_sign:
             users = users.filter(zodiac_sign=user_filters.zodiac_sign)
-
-        # Фильтр по образованию
         if user_filters.education:
             users = users.filter(education=user_filters.education)
-
-        # Фильтр по хобби (хотя бы одно совпадение)
         if user_filters.hobbies.exists():
             query = Q()
             for hobby in user_filters.hobbies.all():
@@ -355,11 +349,9 @@ def evaluate_user(request):
             request.session['ratings'] = ratings
             request.session.modified = True
 
-            # Перенос проверки СЮДА после сохранения рейтинга
             if len(ratings) >= 5:
-                return redirect('results')  # Немедленный редирект при достижении 5
+                return redirect('results')
 
-    # Если доступных пользователей меньше 5 - переходим к результатам
     if not available_users.exists() and len(shown_users) >= 1:
         return redirect('results')
 
@@ -453,8 +445,6 @@ def results(request):
     result_data.sort(key=lambda x: x['compatibility'], reverse=True)
 
     response = render(request, 'results.html', {'result_data': result_data})
-    #request.session['shown_users'] = []
-    #request.session['ratings'] = []
     request.session.modified = True
     return response
 
@@ -462,30 +452,64 @@ def results(request):
 @login_required
 @require_POST
 def toggle_favorite(request, user_id):
-    if request.method == 'POST':
+    try:
         user_profile = request.user.userprofile
-        target_user = get_object_or_404(UserProfile, id=user_id)
-
-        # Добавляем/удаляем из избранного
-        favorite, created = Favorite.objects.get_or_create(
-            user=user_profile,
-            favorite_user=target_user
-        )
-
-        if not created:
+        target_user = get_object_or_404(UserProfile, user__id=user_id)
+        favorite = Favorite.objects.filter(user=user_profile, favorite_user=target_user).first()
+        if favorite:
             favorite.delete()
+        else:
+            Favorite.objects.create(user=user_profile, favorite_user=target_user)
 
-    # Определяем, откуда пришел запрос
-    referer = request.META.get('HTTP_REFERER')
-    if 'favorites' in referer:
-        return redirect('favorite_list')
-    else:
-        return redirect('results')
+        redirect_to = request.POST.get('redirect_to', '')
+
+        if redirect_to == 'chat':
+            room_name = request.POST.get('room_name', '')
+            if room_name:
+                return redirect('chat-room', room_name=room_name)
+            return redirect('chats_list')
+        
+        elif redirect_to == 'results':
+            return redirect('results')
+        elif redirect_to == 'favorites':
+            return redirect('favorite_list')
+        else:
+            return redirect('main_page')
+            
+    except Exception as e:
+        return redirect('main_page')
+
 
 @login_required
 def favorite_list(request):
-    favorites = Favorite.objects.filter(user=request.user.userprofile).select_related('favorite_user')
-    return render(request, 'favorites.html', {'favorites': favorites})
+    try:
+        user_profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        return redirect('profile_edit')
+
+    favorites = Favorite.objects.filter(user=user_profile).select_related('favorite_user')
+    favorites_data = []
+
+    for favorite in favorites:
+        target_user = favorite.favorite_user
+        is_mutual = Favorite.objects.filter(
+            user=target_user,
+            favorite_user=user_profile
+        ).exists()
+        room = Pair_room.objects.filter(
+            Q(user1=user_profile, user2=target_user) |
+            Q(user1=target_user, user2=user_profile)
+        ).first()
+
+        message_count = Message.objects.filter(room=room).count() if room else 0
+
+        favorites_data.append({
+            'favorite': favorite,
+            'is_mutual': is_mutual,
+            'message_count': message_count
+        })
+
+    return render(request, 'favorites.html', {'favorites_data': favorites_data})
 
 @login_required
 def clear_session(request):
@@ -496,3 +520,50 @@ def clear_session(request):
 
 def next_user(request):
     return evaluate_user(request)
+
+
+@login_required
+def add_comment(request, user_id):
+    target_user = get_object_or_404(UserProfile, user__id=user_id)
+    author_profile = request.user.userprofile
+
+    # Проверка условий
+    is_mutual = Favorite.objects.filter(
+        user=target_user,
+        favorite_user=author_profile
+    ).exists()
+
+    room = Pair_room.objects.filter(
+        (Q(user1=author_profile) & Q(user2=target_user)) |
+        (Q(user1=target_user) & Q(user2=author_profile))
+    ).first()
+    message_count = Message.objects.filter(room=room).count() if room else 0
+
+    if not is_mutual or message_count <= 10:
+        return HttpResponseForbidden("У вас нет прав оставлять комментарии этому пользователю")
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = author_profile
+            comment.target_user = target_user
+            comment.save()
+            return redirect('user_profile', user_id=user_id)
+    else:
+        form = CommentForm()
+
+    return render(request, 'add_comment.html', {
+        'form': form,
+        'target_user': target_user
+    })
+
+
+@login_required
+def user_profile(request, user_id):
+    target_user = get_object_or_404(UserProfile, user__id=user_id)
+    comments = Comment.objects.filter(target_user=target_user).select_related('author__user')
+    return render(request, 'user_profile.html', {
+        'target_user': target_user,
+        'comments': comments
+    })

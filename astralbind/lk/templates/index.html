@@ -30,7 +30,6 @@
 
 <body>
     <div class="page-wrapper">
-        <!-- Header Section -->
         <section class="section-header">
             <div class="grid-container">
                 <div class="grid-row centered header-content">
@@ -41,8 +40,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Hero Section -->
         <section class="hero-section dark-bg" style="position: relative; overflow: hidden;">
             <div class="hero-background"></div>
                 <div class="hero-overlay"></div>
@@ -50,7 +47,6 @@
                     <div class="grid-row">
                         <div class="col-12">
                             <div class="hero-content">
-                                <!-- Добавлены классы анимации -->
                                 <div class="hero-subtitle animate-fade-in">Найдите своего супруга вместе с нами</div>
                                 <h2 class="hero-title animate-fade-in">Мы помогаем вам найти настоящую любовь и построить крепкие отношения на основе совместных интересов, ценностей и стремлений.</h2>
                                 <div class="hero-cta animate-fade-in">
@@ -69,7 +65,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Плавная прокрутка для якорных ссылок
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -83,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 2. Анимация элементов при скролле
     const animateElements = () => {
         document.querySelectorAll('.animate-fade-in').forEach(el => {
             const elementTop = el.getBoundingClientRect().top;
@@ -95,8 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     };
-
-    // 3. Оптимизация производительности
     let lastScroll = 0;
     let ticking = false;
 
@@ -111,11 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ticking = true;
         }
     });
-
-    // 4. Инициализация при загрузке
     animateElements();
-
-    // 5. Ресайз-обработчик
     window.addEventListener('resize', animateElements);
 });
 </script>

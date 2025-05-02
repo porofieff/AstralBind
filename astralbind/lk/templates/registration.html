@@ -301,11 +301,9 @@
             const isLengthValid = value.length >= 8;
             const hasLettersAndNumbers = /[A-Za-z]/.test(value) && /\d/.test(value);
 
-            // Обновление требований
             updateRequirement(requirements.length, isLengthValid);
             updateRequirement(requirements.complexity, hasLettersAndNumbers);
 
-            // Проверка совпадения паролей
             const passwordsMatch = password2.value && value === password2.value;
             showPasswordMatch(passwordsMatch);
         }
@@ -321,12 +319,9 @@
             matchFeedback.className = `password-feedback ${isValid ? 'valid-feedback' : 'invalid-feedback'}`;
             matchFeedback.style.display = 'block';
         }
-
-        // Обработчики событий
         password1.addEventListener('input', validatePassword);
         password2.addEventListener('input', validatePassword);
 
-        // Валидация формы
         document.getElementById('registration-form').addEventListener('submit', function(e) {
             if (password1.value !== password2.value) {
                 e.preventDefault();
@@ -334,8 +329,6 @@
                 alert('Ошибка: Пароли не совпадают!');
             }
         });
-
-        // Инициализация валидации
         validatePassword();
     </script>
 </body>
