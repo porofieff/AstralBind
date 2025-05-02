@@ -4,42 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="favorites add and work">
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/add_comment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/user_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3b7f3fc0-a380-4c05-9af7-20991ef25e6b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3b7f3fc0-a380-4c05-9af7-20991ef25e6b.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/chat/consumers.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/chat/consumers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/chat/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/chat/templates/chat/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/chat/templates/chat/chat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/chat/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/chat/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/chat/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/auth.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/hero-section.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/hero-section.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/main-grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/main-grid.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/static/css/profile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/js/lazyload-1.3.min.export.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/js/tilda-blocks-page66834437.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/static/js/tilda-cover-1.0.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/evaluate_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/evaluate_user.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/favorites.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/favorites.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/filter_ahp.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/filter_ahp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_ahp.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_ahp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/profile_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/registration.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/results.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/select_ahp.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/select_ahp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="maybe work? need test" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +23,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -205,7 +171,7 @@
       <workItem from="1746142644055" duration="5652000" />
       <workItem from="1746208269594" duration="5565000" />
       <workItem from="1746213955258" duration="11000" />
-      <workItem from="1746215020091" duration="642000" />
+      <workItem from="1746215020091" duration="742000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />
@@ -295,7 +261,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746148094336</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="maybe work? need test">
+      <option name="closed" value="true" />
+      <created>1746215726572</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1746215726573</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,6 +297,7 @@
     <MESSAGE value="ahp 60%" />
     <MESSAGE value="mini update" />
     <MESSAGE value="favorites add and work" />
-    <option name="LAST_COMMIT_MESSAGE" value="favorites add and work" />
+    <MESSAGE value="maybe work? need test" />
+    <option name="LAST_COMMIT_MESSAGE" value="maybe work? need test" />
   </component>
 </project>
