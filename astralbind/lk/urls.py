@@ -19,4 +19,8 @@ urlpatterns = [
     path('next_user/', views.next_user, name='next_user'),
     path('results/', views.results, name='results'),
     path('start_chat/<int:user_id>/', views.start_chat, name='start_chat'),
+    path('favorite/toggle/<int:user_id>/', views.toggle_favorite, name='toggle_favorite'),
+    path('favorites/', views.favorite_list, name='favorite_list'),
+
+    path('clear-session/', views.clear_session, name='clear_session'),
 ]

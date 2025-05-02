@@ -129,6 +129,55 @@
                 margin-top: 15px;
                 text-align: center;
             }
+
+            .favorite-heart {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                cursor: pointer;
+                font-size: 24px;
+                transition: all 0.3s;
+                background: none;
+                border: none;
+                padding: 0;
+            }
+
+            .favorite-heart:hover {
+                transform: scale(1.2);
+            }
+
+            .favorite-heart.active {
+                color: #ff4081;
+            }
+
+            .favorite-heart::before {
+                content: "♥";
+            }
+
+            .favorite-form {
+                display: inline;
+            }
+
+            .clear-session-button {
+            display: block;
+            width: 300px;
+            margin: 30px auto;
+            padding: 15px 25px;
+            background: #0056d3;
+            color: white !important;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .clear-session-button:hover {
+            background: #0040a1;
+            transform: scale(1.05);
+        }
         </style>
     </head>
     <body>
@@ -136,6 +185,11 @@
         <div class="results-container">
             {% for result in result_data %}
             <div class="profile-card">
+                 <form method="post" action="{% url 'toggle_favorite' result.user.id %}" class="favorite-form">
+                    {% csrf_token %}
+                    <button type="submit" class="favorite-heart {% if result.is_favorite %}active{% endif %}"></button>
+                </form>
+
                 <div class="compatibility-percent">
                     Совместимость: {{ result.compatibility|floatformat:1 }}%
                 </div>
@@ -216,5 +270,11 @@
 
             {% endfor %}
         </div>
+    <form method="post" action="{% url 'clear_session' %}">
+        {% csrf_token %}
+        <button type="submit" class="clear-session-button">
+            🎯 Новый поиск с новыми фильтрами
+        </button>
+    </form>
     </body>
 </html>

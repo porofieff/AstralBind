@@ -1,0 +1,212 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избранное</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+            padding: 40px 20px;
+        }
+
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            padding: 6px;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e0e0e0;
+            overflow: hidden;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .profile-card:hover .profile-photo {
+            transform: scale(1.05);
+        }
+
+        .profile-photo[src*="photo_base.png"] {
+            object-fit: contain;
+            padding: 20%;
+            background: #f8f9fa;
+        }
+
+        .profile-name {
+            margin: 15px 0;
+            color: #1a1a1a;
+            text-align: center;
+        }
+
+        .profile-info {
+            margin: 8px 0;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .chat-button {
+            border: 2px solid #0056d3;
+            padding: 8px 25px;
+            border-radius: 25px;
+            color: #0056d3;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            background: transparent;
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .chat-button:hover {
+            background: #0056d3;
+            color: #fff !important;
+        }
+
+        .favorite-heart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #ff4081;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .favorite-heart:hover {
+            transform: scale(1.2);
+        }
+
+        .back-button {
+            display: block;
+            width: 250px;
+            margin: 40px auto;
+            padding: 12px 25px;
+            background: #0056d3;
+            color: white !important;
+            border-radius: 25px;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            background: #0040a1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state img {
+            width: 200px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        {% for favorite in favorites %}
+        <div class="profile-card">
+            <form method="post" action="{% url 'toggle_favorite' favorite.favorite_user.id %}">
+                {% csrf_token %}
+                <button type="submit" class="favorite-heart">♥</button>
+            </form>
+
+            <div class="photo-container">
+                {% if favorite.favorite_user.photo %}
+                <img src="{{ favorite.favorite_user.photo.url }}" class="profile-photo" alt="Фото профиля">
+                {% else %}
+                <img src="{% static 'images/photo_base.png' %}" class="profile-photo" alt="Фото профиля">
+                {% endif %}
+            </div>
+
+            <h3 class="profile-name">
+                {{ favorite.favorite_user.user.first_name }} {{ favorite.favorite_user.user.last_name }}
+            </h3>
+
+            <p class="profile-info">
+                📍 Город: {{ favorite.favorite_user.get_city_display }}
+            </p>
+
+            {% if favorite.favorite_user.zodiac_sign %}
+            <p class="profile-info">
+                ♌ Знак зодиака: {{ favorite.favorite_user.zodiac_sign.name }}
+            </p>
+            {% else %}
+            <p class="profile-info">♌ Знак зодиака: <em>Не указан</em></p>
+            {% endif %}
+
+            {% if favorite.favorite_user.education %}
+            <p class="profile-info">
+                🎓 Образование: {{ favorite.favorite_user.education.name }}
+            </p>
+            {% else %}
+            <p class="profile-info">🎓 Образование: <em>Не указано</em></p>
+            {% endif %}
+
+            {% if favorite.favorite_user.hobbies.all %}
+            <div class="profile-info">
+                <strong>Хобби:</strong>
+                {% for hobby in favorite.favorite_user.hobbies.all %}
+                <span class="hobby-tag">{{ hobby.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <a href="{% url 'start_chat' favorite.favorite_user.user.id %}" class="chat-button">
+                💬 Начать общение
+            </a>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <p>Вы пока не добавили никого в избранное</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'main_page' %}" class="back-button">
+        ← Вернуться на главную
+    </a>
+</body>
+</html>

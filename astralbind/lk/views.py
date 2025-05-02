@@ -3,13 +3,15 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Exists, OuterRef
 from django.http import HttpResponseNotFound
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
+
 from .forms import CustomUserCreationForm
 from .forms import UserProfileForm
-from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City
+from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City, Favorite
 from chat.models import Pair_room, Message
 import random
 import numpy as np
@@ -297,6 +299,19 @@ def evaluate_user(request):
         request.session['current_user_id'] = None
         request.session.modified = True
 
+    favorite_subquery = Favorite.objects.filter(
+        user=request.user.userprofile,
+        favorite_user_id=OuterRef('pk')  # Ссылка на id UserProfile
+    )
+
+    # Исключаем из результатов:
+    # - Текущего пользователя
+    # - Пользователей из избранного
+    users = UserProfile.objects.exclude(
+        Q(user=request.user) |
+        Exists(favorite_subquery)
+    )
+
     user_filters = UserFilters.objects.get(user=request.user)
     try:
         current_user_sex = request.user.userprofile.sex
@@ -413,19 +428,6 @@ def results(request):
     norm_education = norm_calculate(matrix_education)
     norm_city = norm_calculate(matrix_city)
 
-    print('------------------------')
-    print('matrix_city')
-    print(matrix_city)
-    print('------------------------')
-    print('matrix_education')
-    print(matrix_education)
-    print('------------------------')
-    print('matrix_zodiac')
-    print(matrix_zodiac)
-    print('------------------------')
-    print('matrix_hobby')
-    print(matrix_hobby)
-
     norm_all_matrix = np.array([norm_hobbies, norm_zodiac, norm_education, norm_city])
 
     user_weights = json.loads(user_profile.weights_for_ahp)
@@ -436,10 +438,17 @@ def results(request):
         try:
             user = users.get(id=rating['user_id'])
             compatibility_percent = round(result[i] * 100, 1)
+
+            is_favorite = Favorite.objects.filter(
+                user=user_profile,
+                favorite_user=user
+            ).exists()
+
             result_data.append({
                 'user': user,
                 'rating': rating,
-                'compatibility': compatibility_percent
+                'compatibility': compatibility_percent,
+                'is_favorite': is_favorite,
             })
         except UserProfile.DoesNotExist:
             continue
@@ -447,9 +456,46 @@ def results(request):
     result_data.sort(key=lambda x: x['compatibility'], reverse=True)
 
     response = render(request, 'results.html', {'result_data': result_data})
-    request.session['shown_users'] = []
-    request.session['ratings'] = []
+    #request.session['shown_users'] = []
+    #request.session['ratings'] = []
     request.session.modified = True
     return response
+
+
+@login_required
+@require_POST
+def toggle_favorite(request, user_id):
+    if request.method == 'POST':
+        user_profile = request.user.userprofile
+        target_user = get_object_or_404(UserProfile, id=user_id)
+
+        # Добавляем/удаляем из избранного
+        favorite, created = Favorite.objects.get_or_create(
+            user=user_profile,
+            favorite_user=target_user
+        )
+
+        if not created:
+            favorite.delete()
+
+    # Определяем, откуда пришел запрос
+    referer = request.META.get('HTTP_REFERER')
+    if 'favorites' in referer:
+        return redirect('favorite_list')
+    else:
+        return redirect('results')
+
+@login_required
+def favorite_list(request):
+    favorites = Favorite.objects.filter(user=request.user.userprofile).select_related('favorite_user')
+    return render(request, 'favorites.html', {'favorites': favorites})
+
+@login_required
+def clear_session(request):
+    if request.method == 'POST':
+        request.session.pop('ratings', None)
+        request.session.pop('shown_users', None)
+    return redirect('main_ahp')
+
 def next_user(request):
     return evaluate_user(request)

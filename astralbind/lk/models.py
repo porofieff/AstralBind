@@ -138,3 +138,24 @@ class UserFilters(models.Model):
     zodiac_sign = models.ForeignKey(ZodiacSign, null=True, blank=True, on_delete=models.SET_NULL)
     education = models.ForeignKey(Education, null=True, blank=True, on_delete=models.SET_NULL)
     hobbies = models.ManyToManyField(Hobby, blank=True)
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name='favorites'
+    )
+    favorite_user = models.ForeignKey(
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name='favorited_by'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'favorite_user')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user} → {self.favorite_user}"

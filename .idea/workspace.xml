@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="mini update">
+      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/favorites.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3b7f3fc0-a380-4c05-9af7-20991ef25e6b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3b7f3fc0-a380-4c05-9af7-20991ef25e6b.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/evaluate_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/evaluate_user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,6 +176,7 @@
       <workItem from="1745270947851" duration="1147000" />
       <workItem from="1745508856014" duration="9118000" />
       <workItem from="1746009852681" duration="4256000" />
+      <workItem from="1746142644055" duration="5199000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />
