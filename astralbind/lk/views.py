@@ -299,20 +299,11 @@ def evaluate_user(request):
         request.session['current_user_id'] = None
         request.session.modified = True
 
-    favorite_subquery = Favorite.objects.filter(
-        user=request.user.userprofile,
-        favorite_user_id=OuterRef('pk')  # Ссылка на id UserProfile
-    )
+    user_profile = request.user.userprofile
+    # Получаем ID пользователей, которые уже в избранном
+    favorite_users = Favorite.objects.filter(user=user_profile).values_list('favorite_user_id', flat=True)
 
-    # Исключаем из результатов:
-    # - Текущего пользователя
-    # - Пользователей из избранного
-    users = UserProfile.objects.exclude(
-        Q(user=request.user) |
-        Exists(favorite_subquery)
-    )
 
-    user_filters = UserFilters.objects.get(user=request.user)
     try:
         current_user_sex = request.user.userprofile.sex
     except UserProfile.DoesNotExist:
@@ -320,8 +311,13 @@ def evaluate_user(request):
     users = UserProfile.objects.exclude(user=request.user)
 
     opposite_sex = 2 if current_user_sex == 1 else 1
-    users = UserProfile.objects.exclude(user=request.user).filter(sex=opposite_sex)
 
+    users = UserProfile.objects.exclude(
+        Q(user=request.user) | 
+        Q(id__in=favorite_users)
+    ).filter(sex=opposite_sex)
+
+    user_filters = UserFilters.objects.get(user=request.user)
     if user_filters:
         # Фильтр по городу
         if user_filters.city:
@@ -391,6 +387,7 @@ def evaluate_user(request):
         'user_profile': random_user,
         'is_final': is_final
     })
+
 @login_required
 def results(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)

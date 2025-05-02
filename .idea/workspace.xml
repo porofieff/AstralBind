@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="mini update">
-      <change afterPath="$PROJECT_DIR$/astralbind/lk/templates/favorites.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/3b7f3fc0-a380-4c05-9af7-20991ef25e6b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/3b7f3fc0-a380-4c05-9af7-20991ef25e6b.xml" afterDir="false" />
+    <list default="true" id="5a2252cd-dfba-4c0d-870e-940e3e11da7f" name="Changes" comment="favorites add and work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/main_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/templates/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/templates/results.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astralbind/lk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/astralbind/lk/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/astralbind/lk/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,7 +169,7 @@
       <workItem from="1745270947851" duration="1147000" />
       <workItem from="1745508856014" duration="9118000" />
       <workItem from="1746009852681" duration="4256000" />
-      <workItem from="1746142644055" duration="5199000" />
+      <workItem from="1746142644055" duration="5652000" />
     </task>
     <task id="LOCAL-00001" summary="auth/reg and profile(/photo)">
       <option name="closed" value="true" />
@@ -258,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745515756125</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="favorites add and work">
+      <option name="closed" value="true" />
+      <created>1746148094336</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746148094336</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,6 +286,7 @@
     <MESSAGE value="filter work, evaluate work wo ahp" />
     <MESSAGE value="ahp 60%" />
     <MESSAGE value="mini update" />
-    <option name="LAST_COMMIT_MESSAGE" value="mini update" />
+    <MESSAGE value="favorites add and work" />
+    <option name="LAST_COMMIT_MESSAGE" value="favorites add and work" />
   </component>
 </project>
