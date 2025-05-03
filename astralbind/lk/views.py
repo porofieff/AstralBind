@@ -71,7 +71,6 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, 'Вы успешно зарегистрированы!')
             return redirect('main_page')
         else:
             messages.error(request, 'Ошибка регистрации! Попробуйте снова.')
@@ -182,7 +181,6 @@ def profile_edit(request):
             user_profile.photo = uploaded_file
 
         user_profile.save()
-        messages.success(request, 'Данные успешно обновлены!')
         return redirect('profile')
     else:
         zodiac_signs = ZodiacSign.objects.all()
@@ -293,6 +291,7 @@ def view_form(request):
 from django.db.models import Q
 
 
+
 @login_required
 def evaluate_user(request):
     if 'new_search' in request.GET:
@@ -301,9 +300,13 @@ def evaluate_user(request):
         request.session['current_user_id'] = None
         request.session.modified = True
 
-    user_profile = request.user.userprofile
-    favorite_users = Favorite.objects.filter(user=user_profile).values_list('favorite_user_id', flat=True)
+    try:
+        user_profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        return redirect('profile_edit')
 
+    favorite_users = Favorite.objects.filter(user=user_profile).values_list('favorite_user_id', flat=True)
+    
 
     try:
         current_user_sex = request.user.userprofile.sex
@@ -318,7 +321,11 @@ def evaluate_user(request):
         Q(id__in=favorite_users)
     ).filter(sex=opposite_sex)
 
-    user_filters = UserFilters.objects.get(user=request.user)
+    try:
+        user_filters = UserFilters.objects.get(user=request.user)
+    except UserFilters.DoesNotExist:
+        return redirect('profile_edit')  
+
     if user_filters:
         if user_filters.city:
             users = users.filter(city=user_filters.city)
@@ -331,6 +338,8 @@ def evaluate_user(request):
             for hobby in user_filters.hobbies.all():
                 query |= Q(hobbies=hobby)
             users = users.filter(query).distinct()
+    else:
+        return redirect('profile_edit')
 
     shown_users = request.session.get('shown_users', [])
     available_users = users.exclude(id__in=shown_users)
@@ -372,7 +381,6 @@ def evaluate_user(request):
     request.session['current_user_id'] = random_user.id
     request.session.modified = True
 
-    # Всегда показываем кнопку "Далее", но ограничиваем максимум 5 оценок
     is_final = len(shown_users) >= 5 or len(available_users) == 1
 
     return render(request, 'evaluate_user.html', {
@@ -527,7 +535,6 @@ def add_comment(request, user_id):
     target_user = get_object_or_404(UserProfile, user__id=user_id)
     author_profile = request.user.userprofile
 
-    # Проверка условий
     is_mutual = Favorite.objects.filter(
         user=target_user,
         favorite_user=author_profile
