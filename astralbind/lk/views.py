@@ -305,8 +305,11 @@ def evaluate_user(request):
     except UserProfile.DoesNotExist:
         return redirect('profile_edit')
 
-    favorite_users = Favorite.objects.filter(user=user_profile).values_list('favorite_user_id', flat=True)
     
+    if not user_profile.sex or not request.user.first_name or not request.user.last_name:
+        return redirect('profile_edit')
+    favorite_users = Favorite.objects.filter(user=user_profile).values_list('favorite_user_id', flat=True)
+
 
     try:
         current_user_sex = request.user.userprofile.sex
@@ -323,10 +326,7 @@ def evaluate_user(request):
 
     try:
         user_filters = UserFilters.objects.get(user=request.user)
-    except UserFilters.DoesNotExist:
-        return redirect('profile_edit')  
 
-    if user_filters:
         if user_filters.city:
             users = users.filter(city=user_filters.city)
         if user_filters.zodiac_sign:
@@ -338,8 +338,8 @@ def evaluate_user(request):
             for hobby in user_filters.hobbies.all():
                 query |= Q(hobbies=hobby)
             users = users.filter(query).distinct()
-    else:
-        return redirect('profile_edit')
+    except UserFilters.DoesNotExist:
+        pass
 
     shown_users = request.session.get('shown_users', [])
     available_users = users.exclude(id__in=shown_users)
