@@ -119,6 +119,17 @@ def profile_edit(request):
         user_profile.sex = request.POST.get('sex')
         user_profile.age = request.POST.get('age')
 
+        # Privacy settings
+        user_profile.hide_age = request.POST.get('hide_age') == 'True'
+        user_profile.hide_city = request.POST.get('hide_city') == 'True'
+        user_profile.hide_zodiac = request.POST.get('hide_zodiac') == 'True'
+        user_profile.hide_education = request.POST.get('hide_education') == 'True'
+        user_profile.hide_hobbies = request.POST.get('hide_hobbies') == 'True'
+        user_profile.hide_hobby_description = request.POST.get('hide_hobby_description') == 'True'
+        user_profile.hide_life_goal = request.POST.get('hide_life_goal') == 'True'
+        user_profile.hide_character = request.POST.get('hide_character') == 'True'
+        user_profile.hide_children = request.POST.get('hide_children') == 'True'
+
         hobbies = request.POST.getlist('hobbies')
         user_profile.hobbies.set(Hobby.objects.filter(id__in=hobbies))
 

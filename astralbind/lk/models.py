@@ -108,6 +108,17 @@ class UserProfile(models.Model):
     )
     city = models.PositiveSmallIntegerField(('city'), choices=CITIES, blank=True, default=1)
 
+    # Privacy settings
+    hide_age = models.BooleanField(default=False, verbose_name="Скрыть возраст")
+    hide_city = models.BooleanField(default=False, verbose_name="Скрыть город")
+    hide_zodiac = models.BooleanField(default=False, verbose_name="Скрыть знак зодиака")
+    hide_education = models.BooleanField(default=False, verbose_name="Скрыть образование")
+    hide_hobbies = models.BooleanField(default=False, verbose_name="Скрыть хобби")
+    hide_hobby_description = models.BooleanField(default=False, verbose_name="Скрыть описание хобби")
+    hide_life_goal = models.BooleanField(default=False, verbose_name="Скрыть цель в жизни")
+    hide_character = models.BooleanField(default=False, verbose_name="Скрыть характер")
+    hide_children = models.BooleanField(default=False, verbose_name="Скрыть информацию о детях")
+
     weights_for_ahp = models.CharField(max_length = 100, null=True)
     user_CR = models.PositiveSmallIntegerField(default=0)
 

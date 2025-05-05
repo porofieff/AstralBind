@@ -328,6 +328,27 @@
                     color: #0056d3;
                     font-weight: 600;
                 }
+
+                .privacy-options {
+                    margin-top: 10px;
+                    padding: 10px;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    border-left: 3px solid #4dabf7;
+                }
+
+                .radio-label {
+                    display: inline-flex;
+                    align-items: center;
+                    margin-right: 15px;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                    color: #555;
+                }
+
+                .radio-label input[type="radio"] {
+                    margin-right: 5px;
+                }
         </style>
     </head>
     <body class="light-theme">
@@ -399,6 +420,16 @@
                             max="120"
                             placeholder="Укажите ваш возраст"
                         />
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_age" value="False" {% if not user_profile.hide_age %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_age" value="True" {% if user_profile.hide_age %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -418,6 +449,16 @@
                             </option>
                             {% endfor %}
                         </select>
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_city" value="False" {% if not user_profile.hide_city %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_city" value="True" {% if user_profile.hide_city %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                 <div class="input-group">
@@ -443,6 +484,16 @@
                             </option>
                             {% endfor %}
                         </select>
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_education" value="False" {% if not user_profile.hide_education %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_education" value="True" {% if user_profile.hide_education %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
 
@@ -457,6 +508,16 @@
                             </option>
                             {% endfor %}
                         </select>
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_zodiac" value="False" {% if not user_profile.hide_zodiac %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_zodiac" value="True" {% if user_profile.hide_zodiac %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -492,6 +553,16 @@
                             </div>
                         </div>
                         {% endfor %}
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_hobbies" value="False" {% if not user_profile.hide_hobbies %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_hobbies" value="True" {% if user_profile.hide_hobbies %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -505,6 +576,16 @@
                             max="100"
                             placeholder="Количество"
                         />
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_children" value="False" {% if not user_profile.hide_children %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_children" value="True" {% if user_profile.hide_children %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -514,6 +595,16 @@
                             name="hobby_description"
                             placeholder="Описание ваших увлечений"
                         >{{ user_profile.hobby_description|default:"" }}</textarea>
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_hobby_description" value="False" {% if not user_profile.hide_hobby_description %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_hobby_description" value="True" {% if user_profile.hide_hobby_description %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -523,6 +614,16 @@
                             name="life_goal"
                             placeholder="Ваша главная цель"
                         >{{ user_profile.life_goal|default:"" }}</textarea>
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_life_goal" value="False" {% if not user_profile.hide_life_goal %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_life_goal" value="True" {% if user_profile.hide_life_goal %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="input-group">
@@ -532,6 +633,16 @@
                             name="character"
                             placeholder="Особенности характера"
                         >{{ user_profile.character|default:"" }}</textarea>
+                        <div class="privacy-options">
+                            <label class="radio-label">
+                                <input type="radio" name="hide_character" value="False" {% if not user_profile.hide_character %}checked{% endif %}>
+                                <span>Оставить открытым</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="hide_character" value="True" {% if user_profile.hide_character %}checked{% endif %}>
+                                <span>Скрыть информацию</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="input-group">

@@ -224,33 +224,35 @@
                 </a>
             </h3>
 
+            {% if not favorite_data.favorite.favorite_user.hide_city %}
             <p class="profile-info">
                 📍 Город: {{ favorite_data.favorite.favorite_user.get_city_display }}
             </p>
+            {% endif %}
 
-            {% if favorite_data.favorite.favorite_user.age %}
+            {% if favorite_data.favorite.favorite_user.age and not favorite_data.favorite.favorite_user.hide_age %}
             <p class="profile-info">
                 🎂 Возраст: {{ favorite_data.favorite.favorite_user.age }} лет
             </p>
             {% endif %}
 
-            {% if favorite_data.favorite.favorite_user.zodiac_sign %}
+            {% if favorite_data.favorite.favorite_user.zodiac_sign and not favorite_data.favorite.favorite_user.hide_zodiac %}
             <p class="profile-info">
                 ♌ Знак зодиака: {{ favorite_data.favorite.favorite_user.zodiac_sign.name }}
             </p>
-            {% else %}
+            {% elif not favorite_data.favorite.favorite_user.hide_zodiac %}
             <p class="profile-info">♌ Знак зодиака: <em>Не указан</em></p>
             {% endif %}
 
-            {% if favorite_data.favorite.favorite_user.education %}
+            {% if favorite_data.favorite.favorite_user.education and not favorite_data.favorite.favorite_user.hide_education %}
             <p class="profile-info">
                 🎓 Образование: {{ favorite_data.favorite.favorite_user.education.name }}
             </p>
-            {% else %}
+            {% elif not favorite_data.favorite.favorite_user.hide_education %}
             <p class="profile-info">🎓 Образование: <em>Не указано</em></p>
             {% endif %}
 
-            {% if favorite_data.favorite.favorite_user.hobbies.all %}
+            {% if favorite_data.favorite.favorite_user.hobbies.all and not favorite_data.favorite.favorite_user.hide_hobbies %}
             <div class="profile-info">
                 <strong>Хобби:</strong>
                 {% for hobby in favorite_data.favorite.favorite_user.hobbies.all %}

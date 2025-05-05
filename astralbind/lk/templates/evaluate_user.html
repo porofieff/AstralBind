@@ -208,23 +208,25 @@
 
         <div class="profile-info-section">
     <h2>Основные данные</h2>
-    <p class="profile-info-item">📍 Город: {{ user_profile.get_city_display }}</p>
-    {% if user_profile.age %}
+    {% if not user_profile.hide_city %}
+        <p class="profile-info-item">📍 Город: {{ user_profile.get_city_display }}</p>
+    {% endif %}
+    {% if user_profile.age and not user_profile.hide_age %}
         <p class="profile-info-item">🎂 Возраст: {{ user_profile.age }} лет</p>
     {% endif %}
-    {% if user_profile.zodiac_sign %}
+    {% if user_profile.zodiac_sign and not user_profile.hide_zodiac %}
         <p class="profile-info-item">♌ Знак зодиака: {{ user_profile.zodiac_sign.name }}</p>
-    {% else %}
+    {% elif not user_profile.hide_zodiac %}
         <p class="profile-info-item">♌ Знак зодиака: <em>Не указан</em></p>
     {% endif %}
-    {% if user_profile.education %}
+    {% if user_profile.education and not user_profile.hide_education %}
         <p class="profile-info-item">🎓 Образование: {{ user_profile.education.name }}</p>
-    {% else %}
+    {% elif not user_profile.hide_education %}
         <p class="profile-info-item">🎓 Образование: <em>Не указано</em></p>
     {% endif %}
 </div>
 
-        {% if user_profile.hobbies.all %}
+        {% if user_profile.hobbies.all and not user_profile.hide_hobbies %}
         <div class="profile-info-section">
             <h2>Хобби</h2>
             <div class="hobbies-list">
@@ -235,21 +237,21 @@
         </div>
         {% endif %}
 
-        {% if user_profile.hobby_description %}
+        {% if user_profile.hobby_description and not user_profile.hide_hobby_description %}
         <div class="profile-info-section">
             <h2>О хобби</h2>
             <p class="profile-info-item">{{ user_profile.hobby_description }}</p>
         </div>
         {% endif %}
 
-        {% if user_profile.character %}
+        {% if user_profile.character and not user_profile.hide_character %}
         <div class="profile-info-section">
             <h2>Характер</h2>
             <p class="profile-info-item">{{ user_profile.character }}</p>
         </div>
         {% endif %}
 
-        {% if user_profile.life_goal %}
+        {% if user_profile.life_goal and not user_profile.hide_life_goal %}
         <div class="profile-info-section">
             <h2>Цель в жизни</h2>
             <p class="profile-info-item">{{ user_profile.life_goal }}</p>

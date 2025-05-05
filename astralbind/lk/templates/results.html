@@ -207,29 +207,31 @@
                 <h3 class="profile-name">
                     {{ result.user.user.first_name }} {{ result.user.user.last_name }}
                 </h3>
+                {% if not result.user.hide_city %}
                 <p class="profile-info">
                     📍 Город: {{ result.user.get_city_display }}
                 </p>
-                {% if result.user.age %}
+                {% endif %}
+                {% if result.user.age and not result.user.hide_age %}
                 <p class="profile-info">
                     🎂 Возраст: {{ result.user.age }} лет
                 </p>
                 {% endif %}
-                {% if result.user.zodiac_sign %}
+                {% if result.user.zodiac_sign and not result.user.hide_zodiac %}
                 <p class="profile-info">
                     ♌ Знак зодиака: {{ result.user.zodiac_sign.name }}
                 </p>
-                {% else %}
+                {% elif not result.user.hide_zodiac %}
                 <p class="profile-info">♌ Знак зодиака: <em>Не указан</em></p>
                 {% endif %}
-                {% if result.user.education %}
+                {% if result.user.education and not result.user.hide_education %}
                 <p class="profile-info">
                     🎓 Образование: {{ result.user.education.name }}
                 </p>
-                {% else %}
+                {% elif not result.user.hide_education %}
                 <p class="profile-info">🎓 Образование: <em>Не указано</em></p>
                 {% endif %}
-                {% if result.user.hobbies.all %}
+                {% if result.user.hobbies.all and not result.user.hide_hobbies %}
                 <div class="hobbies-list">
                     {% for hobby in result.user.hobbies.all %}
                     <span class="hobby-tag">{{ hobby.name }}</span>
