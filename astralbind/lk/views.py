@@ -233,10 +233,6 @@ def start_chat(request, user_id):
     return redirect('chat-room', room_name=room.room_name)
 
 @login_required
-def select_ahp(request):
-    return render(request, 'select_ahp.html')
-
-@login_required
 def main_ahp(request):
     return render(request, 'main_ahp.html')
 
@@ -285,14 +281,6 @@ def filter_ahp(request):
                        'educations': educations})
 
 @login_required
-def view_form(request):
-    return render(request, 'evaluate_user.html')
-
-from django.db.models import Q
-
-
-
-@login_required
 def evaluate_user(request):
     if 'new_search' in request.GET:
         request.session['shown_users'] = []
@@ -305,7 +293,7 @@ def evaluate_user(request):
     except UserProfile.DoesNotExist:
         return redirect('profile_edit')
 
-    
+
     if not user_profile.sex or not request.user.first_name or not request.user.last_name:
         return redirect('profile_edit')
     favorite_users = Favorite.objects.filter(user=user_profile).values_list('favorite_user_id', flat=True)
@@ -320,7 +308,7 @@ def evaluate_user(request):
     opposite_sex = 2 if current_user_sex == 1 else 1
 
     users = UserProfile.objects.exclude(
-        Q(user=request.user) | 
+        Q(user=request.user) |
         Q(id__in=favorite_users)
     ).filter(sex=opposite_sex)
 
@@ -476,14 +464,14 @@ def toggle_favorite(request, user_id):
             if room_name:
                 return redirect('chat-room', room_name=room_name)
             return redirect('chats_list')
-        
+
         elif redirect_to == 'results':
             return redirect('results')
         elif redirect_to == 'favorites':
             return redirect('favorite_list')
         else:
             return redirect('main_page')
-            
+
     except Exception as e:
         return redirect('main_page')
 
