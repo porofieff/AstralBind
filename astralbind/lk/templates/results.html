@@ -210,6 +210,11 @@
                 <p class="profile-info">
                     📍 Город: {{ result.user.get_city_display }}
                 </p>
+                {% if result.user.age %}
+                <p class="profile-info">
+                    🎂 Возраст: {{ result.user.age }} лет
+                </p>
+                {% endif %}
                 {% if result.user.zodiac_sign %}
                 <p class="profile-info">
                     ♌ Знак зодиака: {{ result.user.zodiac_sign.name }}

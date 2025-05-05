@@ -117,6 +117,7 @@ def profile_edit(request):
         user_profile.life_goal = request.POST.get('life_goal')
         user_profile.character = request.POST.get('character')
         user_profile.sex = request.POST.get('sex')
+        user_profile.age = request.POST.get('age')
 
         hobbies = request.POST.getlist('hobbies')
         user_profile.hobbies.set(Hobby.objects.filter(id__in=hobbies))

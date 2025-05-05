@@ -389,6 +389,19 @@
                     </div>
 
                     <div class="input-group">
+                        <label for="age">Возраст 🎂</label>
+                        <input
+                            type="number"
+                            id="age"
+                            name="age"
+                            value="{{ user_profile.age|default:'' }}"
+                            min="18"
+                            max="120"
+                            placeholder="Укажите ваш возраст"
+                        />
+                    </div>
+
+                    <div class="input-group">
                         <label for="city">Город 🏙️</label>
                         <select
                             id="city"

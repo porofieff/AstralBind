@@ -195,6 +195,9 @@
                     {% if target_user.sex %}
                         <p><strong>Пол:</strong> {{ target_user.get_sex_display }}</p>
                     {% endif %}
+                    {% if target_user.age %}
+                        <p><strong>Возраст:</strong> {{ target_user.age }} лет</p>
+                    {% endif %}
                     {% if target_user.children_count %}
                         <p><strong>Дети:</strong> {{ target_user.children_count }} ребёнок(а)</p>
                     {% endif %}

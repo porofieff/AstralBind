@@ -228,6 +228,12 @@
                 📍 Город: {{ favorite_data.favorite.favorite_user.get_city_display }}
             </p>
 
+            {% if favorite_data.favorite.favorite_user.age %}
+            <p class="profile-info">
+                🎂 Возраст: {{ favorite_data.favorite.favorite_user.age }} лет
+            </p>
+            {% endif %}
+
             {% if favorite_data.favorite.favorite_user.zodiac_sign %}
             <p class="profile-info">
                 ♌ Знак зодиака: {{ favorite_data.favorite.favorite_user.zodiac_sign.name }}

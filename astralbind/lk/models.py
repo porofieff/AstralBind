@@ -83,6 +83,7 @@ class UserProfile(models.Model):
         verbose_name="Образование"
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    age = models.PositiveIntegerField(null=True, blank=True, verbose_name="Возраст")
     photo = models.ImageField(
         upload_to = 'user_photos/',
         default='user_photos/photo_base.jpg',

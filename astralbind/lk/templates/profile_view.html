@@ -309,6 +309,9 @@
 {% endif %}
                     <p><strong>Логин:</strong> {{ user.username }}</p>
                     <p><strong>Email:</strong> {{ user.email }}</p>
+                    {% if user.userprofile.age %}
+                        <p><strong>Возраст:</strong> {{ user.userprofile.age }} лет</p>
+                    {% endif %}
                     {% if user.userprofile.city %}
                         <p><strong>Город:</strong> {{ user.userprofile.get_city_display }}</p>
                     {% endif %}

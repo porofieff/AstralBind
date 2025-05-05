@@ -209,6 +209,9 @@
         <div class="profile-info-section">
     <h2>Основные данные</h2>
     <p class="profile-info-item">📍 Город: {{ user_profile.get_city_display }}</p>
+    {% if user_profile.age %}
+        <p class="profile-info-item">🎂 Возраст: {{ user_profile.age }} лет</p>
+    {% endif %}
     {% if user_profile.zodiac_sign %}
         <p class="profile-info-item">♌ Знак зодиака: {{ user_profile.zodiac_sign.name }}</p>
     {% else %}
