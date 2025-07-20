@@ -17,35 +17,9 @@ import random
 import numpy as np
 import statistics as stat
 from django.urls import reverse
+from ahp_mothods import *
 import json
 
-translate = {
-    '1': 0.2,
-    '2': 0.3,
-    '3': 1.0,
-    '4': 3.0,
-    '5': 5.0
-}
-
-RI = {
-    1: 0.00,
-    2: 0.00,
-    3: 0.58,
-    4: 0.90,
-    5: 1.12,
-}
-
-def norm_calculate(matrix):
-    weight_criter = []
-    arr_avg_geom = []
-    for i in matrix:
-        elem_matrix = [float(j) for j in i]
-        avg_geom = stat.geometric_mean(elem_matrix)
-        arr_avg_geom.append(avg_geom)
-    for i in range(len(arr_avg_geom)):
-        value = arr_avg_geom[i] / sum(arr_avg_geom)
-        weight_criter.append(value)
-    return weight_criter
 
 def index(request):
     return render(request, 'index.html')
@@ -119,7 +93,6 @@ def profile_edit(request):
         user_profile.sex = request.POST.get('sex')
         user_profile.age = request.POST.get('age')
 
-        # Privacy settings
         user_profile.hide_age = request.POST.get('hide_age') == 'True'
         user_profile.hide_city = request.POST.get('hide_city') == 'True'
         user_profile.hide_zodiac = request.POST.get('hide_zodiac') == 'True'
@@ -140,50 +113,23 @@ def profile_edit(request):
         user_profile.education_vs_zodiac = request.POST.get('education_vs_zodiac')
         user_profile.hobby_vs_zodiac = request.POST.get('hobby_vs_zodiac')
 
-        self_city_vs_hobby = translate[request.POST.get('city_vs_hobby')]
+        self_city_vs_hobby = float(translate[request.POST.get('city_vs_hobby')])
         self_city_vs_zodiac = translate[request.POST.get('city_vs_zodiac')]
         self_city_vs_education = translate[request.POST.get('city_vs_education')]
         self_education_vs_hobby = translate[request.POST.get('education_vs_hobby')]
         self_education_vs_zodiac = translate[request.POST.get('education_vs_zodiac')]
         self_hobby_vs_zodiac = translate[request.POST.get('hobby_vs_zodiac')]
 
-        self_matrix = np.ones((4, 4), dtype=float)
-        self_matrix[0][1] = self_city_vs_hobby
-        self_matrix[1][0] = 1 / self_city_vs_hobby
-        self_matrix[0][2] = self_city_vs_zodiac
-        self_matrix[2][0] = 1 / self_city_vs_zodiac
-        self_matrix[0][3] = self_city_vs_education
-        self_matrix[3][0] = 1 / self_city_vs_education
-        self_matrix[1][3] = 1 / self_education_vs_hobby
-        self_matrix[3][1] = self_education_vs_hobby
-        self_matrix[2][3] = 1 / self_education_vs_zodiac
-        self_matrix[3][2] = self_education_vs_zodiac
-        self_matrix[1][2] = self_hobby_vs_zodiac
-        self_matrix[2][1] = 1 / self_hobby_vs_zodiac
 
-        weight_criter = []
-        arr_avg_geom = []
-        for i in self_matrix:
-            elem_self_matrix = [float(j) for j in i]
-            avg_geom = stat.geometric_mean(elem_self_matrix)
-            arr_avg_geom.append(avg_geom)
-        for i in range(len(arr_avg_geom)):
-            value = arr_avg_geom[i] / sum(arr_avg_geom)
-            weight_criter.append(value)
+        self_matrix = matrix_filling(self_city_vs_hobby, self_city_vs_zodiac, self_city_vs_education,
+            self_education_vs_hobby, self_education_vs_zodiac, self_hobby_vs_zodiac)
+
+        weight_criter = get_weight_critier(self_matrix)
 
         json_weight_criter = json.dumps(weight_criter)
         user_profile.weights_for_ahp = json_weight_criter
 
-        w = self_matrix.sum(axis=0)
-        normalized_self_matrix = self_matrix / w
-        w = normalized_self_matrix.mean(axis=1)
-        self_matrixw = self_matrix.dot(w)
-        lambda_max = np.mean(self_matrixw / w)
-        n = self_matrix.shape[0]
-        CI = (lambda_max - n) / (n - 1)
-
-        CR = CI / RI.get(len(self_matrix)) * 100
-        user_profile.user_CR = CR
+        user_profile.user_CR = get_user_CR(self_matrix)
 
         if 'photo' in request.FILES:
             uploaded_file = request.FILES['photo']
@@ -197,7 +143,8 @@ def profile_edit(request):
     else:
         zodiac_signs = ZodiacSign.objects.all()
         hobby_groups = HobbyGroup.objects.prefetch_related('hobby_set').all()
-        return render(request, 'profile_edit.html', {'user_profile': user_profile, 'hobby_groups': hobby_groups, 'zodiac_signs': zodiac_signs, 'educations': educations})
+        return render(request, 'profile_edit.html', {'user_profile': user_profile, 'hobby_groups': hobby_groups,
+            'zodiac_signs': zodiac_signs, 'educations': educations})
 
 @login_required
 def profile_view(request):

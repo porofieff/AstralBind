@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .models import Pair_room, Message
 from lk.models import UserProfile, Favorite
+from chat_room import *
 
 @login_required
 def chat_view(request, match_id):
@@ -22,8 +23,10 @@ def chat_view(request, match_id):
 @login_required
 def chat_room(request, room_name):
     room = get_object_or_404(Pair_room, room_name=room_name)
+
     if request.user not in [room.user1.user, room.user2.user]:
         return HttpResponseForbidden("Доступ запрещен")
+
     messages = Message.objects.filter(room=room).order_by('created_at')
     interlocutor = room.user1 if request.user == room.user2.user else room.user2
 
@@ -48,6 +51,7 @@ def chat_room(request, room_name):
 @require_POST
 def toggle_favorite(request, user_id):
     target_user = get_object_or_404(UserProfile, user__id=user_id)
+
     favorite, created = Favorite.objects.get_or_create(
         user=request.user.userprofile,
         favorite_user=target_user
