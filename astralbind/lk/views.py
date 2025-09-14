@@ -114,12 +114,11 @@ def profile_edit(request):
         user_profile.hobby_vs_zodiac = request.POST.get('hobby_vs_zodiac')
 
         self_city_vs_hobby = float(translate[request.POST.get('city_vs_hobby')])
-        self_city_vs_zodiac = translate[request.POST.get('city_vs_zodiac')]
-        self_city_vs_education = translate[request.POST.get('city_vs_education')]
-        self_education_vs_hobby = translate[request.POST.get('education_vs_hobby')]
-        self_education_vs_zodiac = translate[request.POST.get('education_vs_zodiac')]
-        self_hobby_vs_zodiac = translate[request.POST.get('hobby_vs_zodiac')]
-
+        self_city_vs_zodiac = float(translate[request.POST.get('city_vs_zodiac')])
+        self_city_vs_education = float(translate[request.POST.get('city_vs_education')])
+        self_education_vs_hobby = float(translate[request.POST.get('education_vs_hobby')])
+        self_education_vs_zodiac = float(translate[request.POST.get('education_vs_zodiac')])
+        self_hobby_vs_zodiac = float(translate[request.POST.get('hobby_vs_zodiac')])
 
         self_matrix = matrix_filling(self_city_vs_hobby, self_city_vs_zodiac, self_city_vs_education,
             self_education_vs_hobby, self_education_vs_zodiac, self_hobby_vs_zodiac)
