@@ -1,21 +1,25 @@
-from .forms import CustomUserCreationForm, CommentForm
-from .forms import UserProfileForm
-from .models import UserProfile, Hobby, ZodiacSign, Education, HobbyGroup, UserFilters, City, Favorite, Comment
-from chat.models import Pair_room, Message
-import random
-import numpy as np
-import statistics as stat
-from django.urls import reverse
 import json
+import random
+import statistics as stat
 
+import numpy as np
+from chat.models import Message, Pair_room
+from django.urls import reverse
 
-translate = {
-    '1': 0.2,
-    '2': 0.3,
-    '3': 1.0,
-    '4': 3.0,
-    '5': 5.0
-}
+from .forms import CommentForm, CustomUserCreationForm, UserProfileForm
+from .models import (
+    City,
+    Comment,
+    Education,
+    Favorite,
+    Hobby,
+    HobbyGroup,
+    UserFilters,
+    UserProfile,
+    ZodiacSign,
+)
+
+translate = {"1": 0.2, "2": 0.3, "3": 1.0, "4": 3.0, "5": 5.0}
 
 RI = {
     1: 0.00,
@@ -42,9 +46,14 @@ def norm_calculate(matrix) -> list:
     return weight_criter
 
 
-def matrix_filling(city_vs_hobby, city_vs_zodiac, city_vs_education,
-                education_vs_hobby, education_vs_zodiac, hobby_vs_zodiac) -> Matrix:
-
+def matrix_filling(
+    city_vs_hobby,
+    city_vs_zodiac,
+    city_vs_education,
+    education_vs_hobby,
+    education_vs_zodiac,
+    hobby_vs_zodiac,
+) -> np.ndarray:
     matrix = np.ones((4, 4), dtype=float)
     matrix[0][1] = city_vs_hobby
     matrix[1][0] = 1 / city_vs_hobby
